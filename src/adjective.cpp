@@ -22,3 +22,18 @@ Node* Adjective::propertyNode() const
 {
     return m_property;
 }
+
+Noun* Adjective::object() const
+{
+    return m_object;
+}
+
+void Adjective::setObject(Noun* n_object)
+{
+    m_object=n_object;
+}
+
+Adjective* Adjective::get()
+{
+    return this;
+}

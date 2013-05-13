@@ -14,7 +14,7 @@ class Property : public NodeContent
 
         friend std::ostream& operator<<(std::ostream& n_out, const Property& n_property)
         {
-            n_out << "Property: " << n_property.word();
+            n_out << "Property: " << n_property.str();
             return n_out;
         }
 

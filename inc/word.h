@@ -10,12 +10,19 @@ class Word
         enum Type
         {
             UNKNOWN,
-            NAME,
+            NOUN,
             VERB,
             ADJECTIVE,
             CONJUNCTION,
             PREPOSITION,
             ADVERB
+        };
+
+        enum Function
+        {
+            NONE,
+            SUBJECT,
+            ACCUSATIVE
         };
 
         Word();
@@ -26,7 +33,7 @@ class Word
 
         Type type() const;
 
-        bool operator==(const std::string& n_str);
+        virtual Word* get();
 
     protected:
 

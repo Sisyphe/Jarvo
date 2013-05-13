@@ -5,7 +5,13 @@
 
 class Parser
 {
-        static void parse(const std::string& n_str);
+        void Parse(const std::string& n_str);
+
+        void extractRawWords
+        (
+            const std::string& n_str,
+            std::vector<std::string>& n_raw_words
+        ) const;
 
     protected:
 

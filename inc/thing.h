@@ -17,7 +17,7 @@ class Thing : public NodeContent
 
         friend std::ostream& operator<<(std::ostream& n_out, const Thing& n_thing)
         {
-            n_out << "Thing: " << n_thing.word();
+            n_out << "Thing: " << n_thing.str();
             return n_out;
         }
 

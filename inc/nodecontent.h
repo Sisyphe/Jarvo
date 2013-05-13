@@ -3,8 +3,6 @@
 
 #include <string>
 
-typedef std::string Word;
-
 class NodeContent
 {
     public:

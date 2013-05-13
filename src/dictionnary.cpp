@@ -5,24 +5,28 @@ Dictionnary::Dictionnary()
 {
 }
 
-Name* Dictionnary::getName(const std::string& n_str)
+DictEntry Dictionnary::getEntry(const std::string& n_str)
 {
-    std::set<Name>::iterator t_found;
-    t_found=find(m_names.begin(),m_names.end(),t_str);
+    DictEntry t_entry;
+    std::set<DictEntry>::iterator t_found;
+    t_found=find(m_known_words.begin(),m_known_words.end(),n_str);
 
-    if(t_found!=m_names.end())
-        return &(*t_found);
-    else
-        return 0;
+    if(t_found!=m_known_words.end())
+    {
+        t_entry=*t_found;
+        t_entry.found=true;
+    }
+    else t_entry.found=false;
+
+    return t_entry;
 }
 
-Adjective* Dictionnary::getAdjective(const std::string& n_str)
+Noun Dictionnary::getNoun(const DictEntry& n_entry)
 {
-    std::set<Adjective>::iterator t_found;
-    t_found=find(m_adjectives.begin(),m_adjectives.end(),t_str);
+    return m_nouns.at(n_entry.index);
+}
 
-    if(t_found!=m_adjectives.end())
-        return &(*t_found);
-    else
-        return 0;
+Adjective Dictionnary::getAdjective(const DictEntry& n_entry)
+{
+    return m_adjectives.at(n_entry.index);
 }

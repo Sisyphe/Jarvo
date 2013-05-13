@@ -18,7 +18,7 @@ Word::Type Word::type() const
     return m_type;
 }
 
-bool Word::operator==(const std::string& n_str)
+Word* Word::get()
 {
-    return m_str==n_str;
+    return this;
 }

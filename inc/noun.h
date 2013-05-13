@@ -4,20 +4,21 @@
 #include "word.h"
 #include <node.h>
 
-class Name : public Word
+class Noun : public Word
 {
     public:
 
-        Name(Node* n_thing=0);
-
-        Name(const std::string& n_str, Node* n_thing=0);
+        Noun(Node* n_thing=0);
+        Noun(const std::string& n_str, Node* n_thing=0);
 
         void setThingNode(Node* n_thing);
-
         Node* thingNode() const;
+
+        virtual Noun* get();
 
     protected:
 
+        Node* m_thing;
         Word::Type m_type;
 };
 
