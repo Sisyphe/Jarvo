@@ -1,13 +1,14 @@
 #include "adjective.h"
 
 Adjective::Adjective(Node* n_property)
-    :m_type(Word::ADJECTIVE)
 {
+    m_type=Word::ADJECTIVE;
     setPropertyNode(n_property);
 }
 
 Adjective::Adjective(const std::string& n_str, Node* n_property)
 {
+    m_type=Word::ADJECTIVE;
     setString(n_str);
     setPropertyNode(n_property);
 }
@@ -31,9 +32,4 @@ Noun* Adjective::object() const
 void Adjective::setObject(Noun* n_object)
 {
     m_object=n_object;
-}
-
-Adjective* Adjective::get()
-{
-    return this;
 }

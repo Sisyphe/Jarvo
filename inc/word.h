@@ -26,14 +26,12 @@ class Word
         };
 
         Word();
-
         Word(const std::string& n_str);
+        virtual ~Word(){}
 
         void setString(const std::string& n_str);
 
         Type type() const;
-
-        virtual Word* get();
 
     protected:
 

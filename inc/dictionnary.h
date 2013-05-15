@@ -15,38 +15,38 @@ struct DictEntry
     Word::Type type;
     Word::Function function;
     bool isPlural;
-
-
     unsigned int index;
-    bool found;
+};
 
-    bool operator==(const std::string& n_str) const
+struct FindEntry
+{
+    FindEntry(const std::string& n_str_to_find) : m_str_to_find(n_str_to_find){}
+
+    bool operator()(DictEntry* n_entry)
     {
-        return str==n_str;
+        return n_entry->str==m_str_to_find;
     }
 
-    bool operator==(const DictEntry& n_entry) const
-    {
-        return (str==n_entry.str && type==n_entry.type);
-    }
+    std::string m_str_to_find;
 };
 
 class Dictionnary
 {
     public:
 
-        Dictionnary();
+        ~Dictionnary();
 
-        DictEntry getEntry(const std::string& n_str);
-        Noun getNoun(const DictEntry& n_entry);
-        Adjective getAdjective(const DictEntry& n_entry);
+        DictEntry* getEntry(const std::string& n_str);
+        DictEntry* createNewEntry(const std::string& n_str);
+        Noun* getNoun(DictEntry* n_entry);
+        Adjective* getAdjective(DictEntry* n_entry);
 
     protected:
 
-        std::set<DictEntry> m_known_words;
+        std::set<DictEntry*> m_known_words;
 
-        std::vector<Noun> m_nouns;
-        std::vector<Adjective> m_adjectives;
+        std::vector<Noun*> m_nouns;
+        std::vector<Adjective*> m_adjectives;
         //std::set<Verb> m_verbs;
         //std::set<Adverb> m_adverbs;
         //std::set<Preposition> m_prepositions;

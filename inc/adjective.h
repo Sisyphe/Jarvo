@@ -11,6 +11,7 @@ class Adjective : public Word
 
         Adjective(Node* n_property=0);
         Adjective(const std::string& n_str, Node* n_property=0);
+        virtual ~Adjective(){}
 
         void setPropertyNode(Node* n_property);
         Node* propertyNode() const;
@@ -18,12 +19,9 @@ class Adjective : public Word
         Noun* object() const;
         void setObject(Noun* n_object);
 
-        virtual Adjective* get();
-
     protected:
 
         Node* m_property;
-        Word::Type m_type;
         Noun* m_object;
 };
 

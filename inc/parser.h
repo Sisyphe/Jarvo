@@ -5,7 +5,9 @@
 
 class Parser
 {
-        void Parse(const std::string& n_str);
+    public:
+
+        void parse(const std::string& n_str);
 
         void extractRawWords
         (

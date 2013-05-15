@@ -17,8 +17,3 @@ Word::Type Word::type() const
 {
     return m_type;
 }
-
-Word* Word::get()
-{
-    return this;
-}

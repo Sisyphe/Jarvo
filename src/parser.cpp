@@ -1,78 +1,89 @@
 #include "parser.h"
 #include <list>
 
-void Parser::Parse(const std::string& n_str)
+void Parser::parse(const std::string& n_str)
 {
     std::vector<std::string> t_raw_words;
-    std::list<DictEntry> t_words;
-    Noun t_subject, t_accusative;
-    std::vector<Adjective> t_adjectives;
+    Noun *t_subject=0, *t_object=0;
+    std::vector<Adjective*> t_object_adjs, t_subject_adjs;
 
     extractRawWords(n_str,t_raw_words);
 
+    bool t_error=false;
     std::vector<std::string>::iterator t_raw_word=t_raw_words.begin();
 
-    for(; t_raw_word!=t_raw_words.end(); ++t_raw_word)
+    while(t_raw_word!=t_raw_words.end() && !t_error)
     {
-        t_words.push_back(m_dict.getEntry(*t_raw_word));
-    }
+        DictEntry* t_entry=m_dict.getEntry(*t_raw_word);
 
-    Adjective t_adjective;
-    Noun* t_noun;
-    int t_adj_counter=0;
-    std::list<DictEntry>::iterator t_entries=t_words.begin();
-    for(; t_entries!=t_words.begin(); ++t_entries)
-    {
-        DictEntry t_entry=*t_entries;
-
-        if((t_entry).type==Word::NOUN)
+        switch(t_entry->type)
         {
-            if(t_entry.function==Word::SUBJECT)
+            case Word::ADJECTIVE:
             {
-                t_subject=m_dict.getNoun(t_entry);
-                t_noun=&t_subject;
-            }
-            else if(t_entry.function==Word::ACCUSATIVE)
-            {
-                t_accusative=m_dict.getNoun(t_entry);
-                t_noun=&t_accusative;
-            }
+                Adjective* t_adjective=m_dict.getAdjective(t_entry);
 
-            ++entries;
-            int t_last_adj=t_adj_counter;
-
-            for(; t_entries!=t_words.begin(); ++t_entries)
-            {
-                if(
-                   (*t_entries).type==Word::ADJECTIVE &&
-                   (*t_entries).isPlural==t_entry.isPlural &&
-                   (*t_entries).function==t_entry.function
-                )
+                switch(t_entry->function)
                 {
-                    t_adjective=m_dict.getAdjective(*t_entries);
-                    t_adjective.setObject(&t_noun);
-                    t_adjectives.push_back(t_adjective);
-                    ++adj_counter;
+                    case Word::SUBJECT:
+                        t_subject_adjs.push_back(t_adjective);
+                        if(t_subject)
+                        {
+                            t_adjective->setObject(t_subject);
+                        }
+                        break;
+
+                    case Word::ACCUSATIVE:
+                        t_object_adjs.push_back(t_adjective);
+                        if(t_object)
+                        {
+                            t_adjective->setObject(t_object);
+                        }
+                        break;
+
+                    default: t_error=true;
                 }
-                else break;
+
+                break;
             }
 
-            for(int i=t_last_adj; i<=t_adj_counter; ++i)
+            case Word::NOUN:
             {
-                t_adjectives.at(i).setObject(t_noun);
+                Noun* t_noun=m_dict.getNoun(t_entry);
+
+                switch(t_entry->function)
+                {
+                    case Word::SUBJECT:
+                        if(!t_subject)
+                        {
+                            t_subject=t_noun;
+                            for(unsigned int i=0; i<t_subject_adjs.size(); ++i)
+                            {
+                                t_subject_adjs[i]->setObject(t_subject);
+                            }
+                            break;
+                        }
+
+                    case Word::ACCUSATIVE:
+                        if(!t_object)
+                        {
+                            t_object=t_noun;
+                            for(unsigned int i=0; i<t_object_adjs.size(); ++i)
+                            {
+                                t_object_adjs[i]->setObject(t_object);
+                            }
+                            break;
+                        }
+
+                    default: t_error=true;
+                }
+
+                break;
             }
 
+            default: /* Work in progress... */;
         }
-        else if((t_entry).type==Word::ADJECTIVE)
-        {
-            m_dict.getAdjective(*t_entries);
 
-            for(; t_entries!=t_words.begin(); ++t_entries)
-            {
-                if();
-            }
-
-        }
+        ++t_raw_word;
     }
 }
 
