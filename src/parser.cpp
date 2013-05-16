@@ -1,11 +1,11 @@
 #include "parser.h"
-#include <list>
+#include <vector>
+#include "sentence.h"
 
 void Parser::parse(const std::string& n_str)
 {
+    Sentence* t_sentence=new Sentence;
     std::vector<std::string> t_raw_words;
-    Noun *t_subject=0, *t_object=0;
-    std::vector<Adjective*> t_object_adjs, t_subject_adjs;
 
     extractRawWords(n_str,t_raw_words);
 
@@ -14,30 +14,20 @@ void Parser::parse(const std::string& n_str)
 
     while(t_raw_word!=t_raw_words.end() && !t_error)
     {
-        DictEntry* t_entry=m_dict.getEntry(*t_raw_word);
+        Word* t_entry=m_dict.getEntry(*t_raw_word);
 
         switch(t_entry->type)
         {
             case Word::ADJECTIVE:
             {
-                Adjective* t_adjective=m_dict.getAdjective(t_entry);
-
                 switch(t_entry->function)
                 {
                     case Word::SUBJECT:
-                        t_subject_adjs.push_back(t_adjective);
-                        if(t_subject)
-                        {
-                            t_adjective->setObject(t_subject);
-                        }
+                        t_sentence->subject_adjs.push_back(t_entry);
                         break;
 
                     case Word::ACCUSATIVE:
-                        t_object_adjs.push_back(t_adjective);
-                        if(t_object)
-                        {
-                            t_adjective->setObject(t_object);
-                        }
+                        t_sentence->object_adjs.push_back(t_entry);
                         break;
 
                     default: t_error=true;
@@ -48,35 +38,31 @@ void Parser::parse(const std::string& n_str)
 
             case Word::NOUN:
             {
-                Noun* t_noun=m_dict.getNoun(t_entry);
-
                 switch(t_entry->function)
                 {
                     case Word::SUBJECT:
-                        if(!t_subject)
+                        if(!t_sentence->subject)
                         {
-                            t_subject=t_noun;
-                            for(unsigned int i=0; i<t_subject_adjs.size(); ++i)
-                            {
-                                t_subject_adjs[i]->setObject(t_subject);
-                            }
+                            t_sentence->subject=t_entry;
                             break;
                         }
 
                     case Word::ACCUSATIVE:
-                        if(!t_object)
+                        if(!t_sentence->object)
                         {
-                            t_object=t_noun;
-                            for(unsigned int i=0; i<t_object_adjs.size(); ++i)
-                            {
-                                t_object_adjs[i]->setObject(t_object);
-                            }
+                            t_sentence->object=t_entry;
                             break;
                         }
 
                     default: t_error=true;
                 }
 
+                break;
+            }
+
+            case Word::VERB:
+            {
+                t_sentence->verb=t_entry;
                 break;
             }
 

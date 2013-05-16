@@ -22,9 +22,7 @@ SOURCES += src/main.cpp \
            src/relationcontent.cpp \
            src/parser.cpp \
     src/dictionnary.cpp \
-    src/word.cpp \
-    src/adjective.cpp \
-    src/noun.cpp
+    src/sentence.cpp
 
 HEADERS += inc/thing.h \
            inc/node.h \
@@ -36,5 +34,4 @@ HEADERS += inc/thing.h \
            inc/parser.h \
     inc/dictionnary.h \
     inc/word.h \
-    inc/adjective.h \
-    inc/noun.h
+    inc/sentence.h

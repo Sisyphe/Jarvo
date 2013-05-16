@@ -16,13 +16,9 @@ class Adjective : public Word
         void setPropertyNode(Node* n_property);
         Node* propertyNode() const;
 
-        Noun* object() const;
-        void setObject(Noun* n_object);
-
     protected:
 
         Node* m_property;
-        Noun* m_object;
 };
 
 #endif // ADJECTIVE_H

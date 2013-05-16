@@ -2,6 +2,7 @@
 #define WORD_H
 
 #include <string>
+#include "node.h"
 
 class Word
 {
@@ -9,7 +10,7 @@ class Word
 
         enum Type
         {
-            UNKNOWN,
+            UNKNOWN_TYPE,
             NOUN,
             VERB,
             ADJECTIVE,
@@ -18,25 +19,39 @@ class Word
             ADVERB
         };
 
-        enum Function
+        enum Case
         {
-            NONE,
+            NO_CASE,
             SUBJECT,
-            ACCUSATIVE
+            ACCUSATIVE // Object case
         };
 
-        Word();
-        Word(const std::string& n_str);
-        virtual ~Word(){}
+        enum Tense // Stand for tenses and moods
+        {
+            NO_TENSE,
+            PAST,
+            PRESENT,
+            FUTURE,
+            INFINITIVE,
+            JUSSIVE,
+            CONDITIONAL
+        };
 
-        void setString(const std::string& n_str);
+        Word()
+            :type(UNKNOWN_TYPE),
+             function(NO_CASE),
+             tense(NO_TENSE),
+             isPlural(false),
+             node(0)
+        {}
 
-        Type type() const;
-
-    protected:
-
-        std::string m_str;
-        Type m_type;
+        std::string str;
+        std::string str_base;
+        Word::Type type;
+        Case function;
+        Tense tense;
+        bool isPlural;
+        Node* node;
 };
 
 #endif // WORD_H
