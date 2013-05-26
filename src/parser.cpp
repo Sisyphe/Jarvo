@@ -2,9 +2,8 @@
 #include <vector>
 #include "sentence.h"
 
-void Parser::parse(const std::string& n_str)
+void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 {
-    Sentence* t_sentence=new Sentence;
     std::vector<std::string> t_raw_words;
 
     extractRawWords(n_str,t_raw_words);
@@ -23,11 +22,15 @@ void Parser::parse(const std::string& n_str)
                 switch(t_entry->function)
                 {
                     case Word::SUBJECT:
-                        t_sentence->subject_adjs.push_back(t_entry);
-                        break;
+
+                        if(!n_sentence.object && !n_sentence.verb)
+                        {
+                            n_sentence.subject_adjs.push_back(t_entry);
+                            break;
+                        }
 
                     case Word::ACCUSATIVE:
-                        t_sentence->object_adjs.push_back(t_entry);
+                        n_sentence.object_adjs.push_back(t_entry);
                         break;
 
                     default: t_error=true;
@@ -41,16 +44,16 @@ void Parser::parse(const std::string& n_str)
                 switch(t_entry->function)
                 {
                     case Word::SUBJECT:
-                        if(!t_sentence->subject)
+                        if(!n_sentence.subject)
                         {
-                            t_sentence->subject=t_entry;
+                            n_sentence.subject=t_entry;
                             break;
                         }
 
                     case Word::ACCUSATIVE:
-                        if(!t_sentence->object)
+                        if(!n_sentence.object)
                         {
-                            t_sentence->object=t_entry;
+                            n_sentence.object=t_entry;
                             break;
                         }
 
@@ -62,7 +65,7 @@ void Parser::parse(const std::string& n_str)
 
             case Word::VERB:
             {
-                t_sentence->verb=t_entry;
+                n_sentence.verb=t_entry;
                 break;
             }
 

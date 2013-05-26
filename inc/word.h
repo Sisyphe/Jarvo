@@ -3,6 +3,7 @@
 
 #include <string>
 #include "node.h"
+#include "linkgraph.h"
 
 class Word
 {
@@ -16,7 +17,8 @@ class Word
             ADJECTIVE,
             CONJUNCTION,
             PREPOSITION,
-            ADVERB
+            ADVERB,
+            PRONOUN
         };
 
         enum Case
@@ -52,6 +54,7 @@ class Word
         Tense tense;
         bool isPlural;
         Node* node;
+        LinkNode* link_node;
 };
 
 #endif // WORD_H

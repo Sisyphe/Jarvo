@@ -3,11 +3,11 @@
 
 #include <vertice.h>
 #include <edge.h>
-#include "nodecontent.h"
+#include "thing.h"
 #include "relationcontent.h"
 
-typedef Vertice<NodeContent,RelationContent> Node;
+typedef Vertice<Thing,RelationContent> Node;
 
-typedef Edge<NodeContent,RelationContent> Relation;
+typedef Edge<Thing,RelationContent> Relation;
 
 #endif // NODE_H

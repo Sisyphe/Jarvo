@@ -12,7 +12,7 @@ class NodeContent
             ENTITY,
             THING,
             PROPERTY,
-            ACTION
+            LINK
         };
 
         NodeContent(){}

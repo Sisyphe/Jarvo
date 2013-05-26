@@ -1,8 +1,8 @@
 #include "relationcontent.h"
 #include "node.h"
 
-RelationContent::RelationContent(RelationContent::Type n_type)
-     :m_type(n_type)
+RelationContent::RelationContent(Vertice<Link, bool>* n_link_node)
+     :m_link_node(n_link_node)
 {
     std::pair<Time,RelationContent::State> t_creation_log;
     time(&t_creation_log.first);
@@ -10,12 +10,16 @@ RelationContent::RelationContent(RelationContent::Type n_type)
     m_history.push_back(t_creation_log);
 }
 
-RelationContent::Type RelationContent::type() const
-{
-    return m_type;
-}
-
 RelationContent::State RelationContent::state() const
 {
     return m_history.back().second;
+}
+
+Link RelationContent::link() const
+{
+    if(m_link_node)
+    {
+        return m_link_node->content();
+    }
+    else return Link();
 }

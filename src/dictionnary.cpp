@@ -1,6 +1,55 @@
 #include "dictionnary.h"
 #include <algorithm>
 
+Dictionnary::Dictionnary()
+{
+    Word* t_entry=0;
+
+    t_entry=new Word;
+    t_entry->str="mi";
+    t_entry->str_base="mi";
+    t_entry->type=Word::PRONOUN;
+    t_entry->function=Word::SUBJECT;
+    t_entry->tense=Word::NO_TENSE;
+    t_entry->isPlural=false;
+    t_entry->node=0;
+    t_entry->link_node=0;
+    m_known_words.insert(t_entry);
+
+    t_entry=new Word;
+    t_entry->str="min";
+    t_entry->str_base="mi";
+    t_entry->type=Word::PRONOUN;
+    t_entry->function=Word::ACCUSATIVE;
+    t_entry->tense=Word::NO_TENSE;
+    t_entry->isPlural=false;
+    t_entry->node=0;
+    t_entry->link_node=0;
+    m_known_words.insert(t_entry);
+
+    t_entry=new Word;
+    t_entry->str="ti";
+    t_entry->str_base="ti";
+    t_entry->type=Word::PRONOUN;
+    t_entry->function=Word::SUBJECT;
+    t_entry->tense=Word::NO_TENSE;
+    t_entry->isPlural=false;
+    t_entry->node=0;
+    t_entry->link_node=0;
+    m_known_words.insert(t_entry);
+
+    t_entry=new Word;
+    t_entry->str="tin";
+    t_entry->str_base="ti";
+    t_entry->type=Word::PRONOUN;
+    t_entry->function=Word::ACCUSATIVE;
+    t_entry->tense=Word::NO_TENSE;
+    t_entry->isPlural=false;
+    t_entry->node=0;
+    t_entry->link_node=0;
+    m_known_words.insert(t_entry);
+}
+
 Dictionnary::~Dictionnary()
 {
     std::set<Word*>::iterator t_words_it=m_known_words.begin();
@@ -35,6 +84,8 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
     t_entry->str=n_str;
     t_entry->isPlural=false;
     t_entry->function=Word::SUBJECT;
+    t_entry->node=0;
+    t_entry->link_node=0;
     std::string t_str(n_str);
 
     unsigned int char_pos=t_str.size()-1;

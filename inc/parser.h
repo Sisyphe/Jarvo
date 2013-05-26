@@ -2,12 +2,13 @@
 #define PARSER_H
 
 #include "dictionnary.h"
+#include "sentence.h"
 
 class Parser
 {
     public:
 
-        void parse(const std::string& n_str);
+        void parse(Sentence& n_sentence, const std::string& n_str);
 
         void extractRawWords
         (

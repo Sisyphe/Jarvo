@@ -21,6 +21,7 @@ class Dictionnary
 {
     public:
 
+        Dictionnary();
         ~Dictionnary();
 
         Word* getEntry(const std::string& n_str);

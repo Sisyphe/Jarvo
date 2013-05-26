@@ -1,12 +1,16 @@
 #include <iostream>
-#include "parser.h"
+#include "jarvo.h"
 
 int main()
 {
-    std::cout << "Hello World!" << std::endl;
+    Jarvo jarvo;
 
-    Parser parser;
-    parser.parse("malgranda papagoj estas katoj");
+    jarvo.feed("papago estas birdo");
+    jarvo.feed("birdo estas besto");
+    jarvo.feed("kato estas besto");
+    jarvo.feed("kato mangxas birdon");
+
+    jarvo.dumpBrain();
 
     return 0;
 }
