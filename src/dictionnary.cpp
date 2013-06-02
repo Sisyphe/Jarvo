@@ -149,6 +149,14 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
     }
 
     t_entry->str_base=t_str;
+
+    std::set<Word*>::iterator t_found;
+    t_found=std::find_if(m_known_words.begin(),m_known_words.end(),FindEntry(t_str));
+
+    if(t_found!=m_known_words.end())
+    {
+        t_entry->node=(*t_found)->node;
+    }
     m_known_words.insert(t_entry);
 
     return t_entry;

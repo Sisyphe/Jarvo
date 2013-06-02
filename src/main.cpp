@@ -5,12 +5,13 @@ int main()
 {
     Jarvo jarvo;
 
-    jarvo.feed("papago estas birdo");
-    jarvo.feed("birdo estas besto");
-    jarvo.feed("kato estas besto");
-    jarvo.feed("kato mangxas birdon");
-    jarvo.feed("cxu kato estas birdo ?");
-    jarvo.feed("cxu papago estas besto ?");
+    jarvo.feed("Papago estas birdo.");
+    jarvo.feed("Birdo estas besto.");
+    jarvo.feed("Kato estas besto.");
+    jarvo.feed("Kato mangxas birdon.");
+    jarvo.feed("Cxu kato estas birdo ?");
+    jarvo.feed("Cxu papago estas besto ?");
+    jarvo.feed("Cxu kato mangxas beston ?");
 
     jarvo.dumpBrain();
 

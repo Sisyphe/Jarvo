@@ -110,7 +110,7 @@ void Jarvo::processYesNoQuestion(Sentence& t_sentence)
 
         if(!t_subject_node)
         {
-            m_mouth.speak("Mi ne sciis kio estas " + t_sentence.subject->str_base + ".");
+            say("Mi ne sciis kio estas " + t_sentence.subject->str_base + ".");
         }
     }
 
@@ -120,7 +120,7 @@ void Jarvo::processYesNoQuestion(Sentence& t_sentence)
 
         if(!t_object_node)
         {
-            m_mouth.speak("Mi ne sciis kio estas " + t_sentence.object->str_base + ".");
+            say("Mi ne sciis kio estas " + t_sentence.object->str_base + ".");
         }
     }
 
