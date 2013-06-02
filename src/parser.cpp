@@ -11,6 +11,13 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
     bool t_error=false;
     std::vector<std::string>::iterator t_raw_word=t_raw_words.begin();
 
+    if(*t_raw_word == "cxu")
+    {
+        n_sentence.is_interrogative=true;
+        n_sentence.is_yes_no_question=true;
+        ++t_raw_word;
+    }
+
     while(t_raw_word!=t_raw_words.end() && !t_error)
     {
         Word* t_entry=m_dict.getEntry(*t_raw_word);
@@ -83,14 +90,26 @@ void Parser::extractRawWords
 ) const
 {
     std::string t_raw_word;
-    int t_find_start=0;
-    unsigned int t_found_pos=0;
 
-    while(t_found_pos < n_str.size())
+    for(int i=0; i < n_str.size(); ++i)
     {
-        t_found_pos=n_str.find(' ', t_find_start);
-        t_raw_word=n_str.substr(t_find_start,t_found_pos-t_find_start);
-        n_raw_words.push_back(t_raw_word);
-        t_find_start=t_found_pos+1;
+        switch(n_str[i])
+        {
+            case '.':
+            case '?':
+            case '!':
+                break;
+
+            case ' ':
+                n_raw_words.push_back(t_raw_word);
+                t_raw_word.erase();
+                break;
+
+            default:
+                t_raw_word.push_back(tolower(n_str[i]));
+                break;
+        }
     }
+
+    if(!t_raw_word.empty()) n_raw_words.push_back(t_raw_word);
 }

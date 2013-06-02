@@ -11,6 +11,7 @@
 #include "link.h"
 #include "word.h"
 #include "linkgraph.h"
+#include "mouth.h"
 
 class Jarvo
 {
@@ -18,10 +19,15 @@ class Jarvo
 
         typedef Graph<Thing,RelationContent> Network;
 
+        Jarvo();
+
         Node* createThingFromWord(const Word& n_word);
 
         void feed(const std::string& n_input);
+        void processStatement(Sentence& t_sentence);
+        void processYesNoQuestion(Sentence& t_sentence);
 
+        void say(const std::string& n_str);
         void dumpBrain() const;
 
     protected:
@@ -29,6 +35,7 @@ class Jarvo
         Network m_network;
         LinkGraph m_links;
         Parser m_parser;
+        Mouth m_mouth;
 };
 
 #endif // JARVO_H

@@ -20,6 +20,19 @@ class Link : public NodeContent
         std::string verb() const;
         void setVerb(const std::string& n_verb);
 
+        static Link isEquivalentLink;
+
+        friend std::ostream& operator<<(std::ostream& n_out, const Link& n_link)
+        {
+            n_out << n_link.verb();
+            return n_out;
+        }
+
+        bool operator== (const Link& n_link) const
+        {
+            return m_verb == n_link.verb();
+        }
+
     protected:
 
         std::string m_verb;

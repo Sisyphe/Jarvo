@@ -1,6 +1,6 @@
 #include "link.h"
 
-Link Link::isEntityOf=Link("esti");
+Link Link::isEquivalentLink=Link("esti");
 
 Link::Link(const std::string& n_verb)
     :m_type(NodeContent::LINK)

@@ -9,6 +9,8 @@ int main()
     jarvo.feed("birdo estas besto");
     jarvo.feed("kato estas besto");
     jarvo.feed("kato mangxas birdon");
+    jarvo.feed("cxu kato estas birdo ?");
+    jarvo.feed("cxu papago estas besto ?");
 
     jarvo.dumpBrain();
 

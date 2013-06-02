@@ -5,23 +5,24 @@
 #include "graph.h"
 #include <set>
 
-typedef Vertice<Link,bool> LinkNode;
-typedef Edge<Link,bool> LinkRelation;
+typedef Vertice<Link*,bool> LinkNode;
+typedef Edge<Link*,bool> LinkRelation;
 
-class LinkGraph : public Graph<Link,bool>
+class LinkGraph : public Graph<Link*,bool>
 {
     public:
 
         LinkGraph();
+        virtual ~LinkGraph();
 
-        LinkNode* findLinkNode(const Link& n_link);
+        LinkNode* findLinkNode(const std::string& n_link_str);
         LinkNode* addLinkNode(const Link& n_link);
 
         LinkNode* esti() const;
 
     protected:
 
-        std::map<Link,LinkNode*,Link::Comp> m_link_nodes;
+        std::map<Link*,LinkNode*> m_link_nodes;
         LinkNode* m_esti;
 };
 

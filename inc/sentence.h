@@ -16,6 +16,8 @@ class Sentence
         Word* verb;
         Word* object;
         std::vector<Word*> object_adjs;
+        bool is_interrogative;
+        bool is_yes_no_question;
 };
 
 #endif // SENTENCE_H

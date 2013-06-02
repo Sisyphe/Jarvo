@@ -1,5 +1,11 @@
 #include "jarvo.h"
 #include "findthing.h"
+#include "findconnection.h"
+
+Jarvo::Jarvo()
+{
+    say("Saluton mastro.");
+}
 
 Node* Jarvo::createThingFromWord(const Word& n_word)
 {
@@ -25,11 +31,29 @@ Node* Jarvo::createThingFromWord(const Word& n_word)
 void Jarvo::feed(const std::string& n_input)
 {
     Sentence t_sentence;
+
+    std::cout << "Input: " << n_input << std::endl;
+
+    m_parser.parse(t_sentence,n_input);
+
+    if(t_sentence.is_interrogative)
+    {
+        if(t_sentence.is_yes_no_question)
+        {
+            processYesNoQuestion(t_sentence);
+        }
+    }
+    else
+    {
+        processStatement(t_sentence);
+    }
+}
+
+void Jarvo::processStatement(Sentence& t_sentence)
+{
     Node* t_subject_node=0;
     Node* t_object_node=0;
     LinkNode* t_link_node=0;
-
-    m_parser.parse(t_sentence,n_input);
 
     if(t_sentence.subject)
     {
@@ -38,6 +62,7 @@ void Jarvo::feed(const std::string& n_input)
         if(!t_subject_node)
         {
             t_subject_node=createThingFromWord(*t_sentence.subject);
+            t_sentence.subject->node=t_subject_node;
         }
     }
 
@@ -48,6 +73,7 @@ void Jarvo::feed(const std::string& n_input)
         if(!t_object_node)
         {
             t_object_node=createThingFromWord(*t_sentence.object);
+            t_sentence.object->node=t_object_node;
         }
     }
 
@@ -59,7 +85,7 @@ void Jarvo::feed(const std::string& n_input)
         {
             Link t_link(t_sentence.verb->str_base);
 
-            t_link_node=m_links.findLinkNode(t_link);
+            t_link_node=m_links.findLinkNode(t_link.verb());
 
             if(!t_link_node)
             {
@@ -67,9 +93,73 @@ void Jarvo::feed(const std::string& n_input)
             }
 
             //t_link_node->content().triggerOn(t_subject_node,t_object_node);
-            m_network.addEdge(RelationContent(t_link_node),t_subject_node,t_object_node);
+            t_subject_node->addOutputEdge(RelationContent(t_link_node),t_object_node);
         }
     }
+}
+
+void Jarvo::processYesNoQuestion(Sentence& t_sentence)
+{
+    Node* t_subject_node=0;
+    Node* t_object_node=0;
+    LinkNode* t_link_node=0;
+
+    if(t_sentence.subject)
+    {
+        t_subject_node=t_sentence.subject->node;
+
+        if(!t_subject_node)
+        {
+            m_mouth.speak("Mi ne sciis kio estas " + t_sentence.subject->str_base + ".");
+        }
+    }
+
+    if(t_sentence.object)
+    {
+        t_object_node=t_sentence.object->node;
+
+        if(!t_object_node)
+        {
+            m_mouth.speak("Mi ne sciis kio estas " + t_sentence.object->str_base + ".");
+        }
+    }
+
+    if(t_sentence.verb)
+    {
+        t_link_node=t_sentence.verb->link_node;
+
+        if(!t_link_node)
+        {
+            Link t_link(t_sentence.verb->str_base);
+
+            t_link_node=m_links.findLinkNode(t_link.verb());
+
+            if(!t_link_node)
+            {
+                say(t_sentence.subject->str + " ne " + t_sentence.verb->str + " " + t_sentence.object->str);
+                t_link_node=m_links.addLinkNode(t_link);
+            }
+
+            //t_link_node->content().triggerOn(t_subject_node,t_object_node);
+        }
+    }
+
+    FindConnection t_finder(t_object_node,*t_link_node->content());
+    m_network.applyOnOutputVertices(t_subject_node,&t_finder);
+    if(t_finder.isConnectionFound())
+    {
+        say("Je.");
+    }
+    else
+    {
+        say("Ne.");
+    }
+}
+
+void Jarvo::say(const std::string& n_str)
+{
+    std::cout << "- " << n_str << std::endl;
+    m_mouth.speak(n_str);
 }
 
 void Jarvo::dumpBrain() const
