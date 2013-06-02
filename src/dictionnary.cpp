@@ -28,8 +28,8 @@ Dictionnary::Dictionnary()
     m_known_words.insert(t_entry);
 
     t_entry=new Word;
-    t_entry->str="ti";
-    t_entry->str_base="ti";
+    t_entry->str="vi";
+    t_entry->str_base="vi";
     t_entry->type=Word::PRONOUN;
     t_entry->function=Word::SUBJECT;
     t_entry->tense=Word::NO_TENSE;
@@ -39,8 +39,8 @@ Dictionnary::Dictionnary()
     m_known_words.insert(t_entry);
 
     t_entry=new Word;
-    t_entry->str="tin";
-    t_entry->str_base="ti";
+    t_entry->str="vin";
+    t_entry->str_base="vi";
     t_entry->type=Word::PRONOUN;
     t_entry->function=Word::ACCUSATIVE;
     t_entry->tense=Word::NO_TENSE;

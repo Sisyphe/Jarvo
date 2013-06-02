@@ -47,6 +47,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
             }
 
             case Word::NOUN:
+            case Word::PRONOUN:
             {
                 switch(t_entry->function)
                 {
