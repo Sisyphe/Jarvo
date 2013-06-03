@@ -90,6 +90,7 @@ void Jarvo::processStatement(Sentence& t_sentence)
             if(!t_link_node)
             {
                 t_link_node=m_links.addLinkNode(t_link);
+                t_sentence.verb->link_node=t_link_node;
             }
 
             //t_link_node->content().triggerOn(t_subject_node,t_object_node);
@@ -103,6 +104,7 @@ void Jarvo::processYesNoQuestion(Sentence& t_sentence)
     Node* t_subject_node=0;
     Node* t_object_node=0;
     LinkNode* t_link_node=0;
+    bool t_error=false;
 
     if(t_sentence.subject)
     {
@@ -110,7 +112,10 @@ void Jarvo::processYesNoQuestion(Sentence& t_sentence)
 
         if(!t_subject_node)
         {
-            say("Mi ne sciis kio estas " + t_sentence.subject->str_base + ".");
+            say("Ne. Mi ne sciis kio estas " + t_sentence.subject->str_base + ".");
+            t_subject_node=createThingFromWord(*t_sentence.subject);
+            t_sentence.subject->node=t_subject_node;
+            t_error=true;
         }
     }
 
@@ -120,7 +125,10 @@ void Jarvo::processYesNoQuestion(Sentence& t_sentence)
 
         if(!t_object_node)
         {
-            say("Mi ne sciis kio estas " + t_sentence.object->str_base + ".");
+            say("Ne. Mi ne sciis kio estas " + t_sentence.object->str_base + ".");
+            t_object_node=createThingFromWord(*t_sentence.object);
+            t_sentence.object->node=t_object_node;
+            t_error=true;
         }
     }
 
@@ -138,21 +146,24 @@ void Jarvo::processYesNoQuestion(Sentence& t_sentence)
             {
                 say(t_sentence.subject->str + " ne " + t_sentence.verb->str + " " + t_sentence.object->str);
                 t_link_node=m_links.addLinkNode(t_link);
+                t_sentence.verb->link_node=t_link_node;
+                t_error=true;
             }
-
-            //t_link_node->content().triggerOn(t_subject_node,t_object_node);
         }
     }
 
-    FindConnection t_finder(t_object_node,*t_link_node->content());
-    m_network.applyOnOutputVertices(t_subject_node,&t_finder);
-    if(t_finder.isConnectionFound())
+    if(!t_error)
     {
-        say("Je.");
-    }
-    else
-    {
-        say("Ne.");
+        FindConnection t_finder(t_object_node,*t_link_node->content());
+        m_network.applyOnOutputVertices(t_subject_node,&t_finder);
+        if(t_finder.isConnectionFound())
+        {
+            say("Je.");
+        }
+        else
+        {
+            say("Ne.");
+        }
     }
 }
 

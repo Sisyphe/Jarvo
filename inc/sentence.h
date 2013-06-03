@@ -2,8 +2,6 @@
 #define SENTENCE_H
 
 #include "word.h"
-#include "noun.h"
-#include "adjective.h"
 
 class Sentence
 {

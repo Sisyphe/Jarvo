@@ -15,10 +15,8 @@ LIBS += -L ../Graf/lib -lGraf -lportaudio -lespeak
 
 SOURCES += src/main.cpp \
            src/thing.cpp \
-           src/entity.cpp \
            src/jarvo.cpp \
            src/nodecontent.cpp \
-           src/property.cpp \
            src/relationcontent.cpp \
            src/parser.cpp \
     src/dictionnary.cpp \
@@ -31,10 +29,8 @@ SOURCES += src/main.cpp \
 
 HEADERS += inc/thing.h \
            inc/node.h \
-           inc/entity.h \
            inc/jarvo.h \
            inc/nodecontent.h \
-           inc/property.h \
            inc/relationcontent.h \
            inc/parser.h \
     inc/dictionnary.h \

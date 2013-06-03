@@ -3,7 +3,6 @@
 
 #include <graph.h>
 #include "thing.h"
-#include "entity.h"
 #include "nodecontent.h"
 #include "node.h"
 #include "parser.h"
