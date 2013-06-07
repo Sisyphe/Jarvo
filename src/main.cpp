@@ -7,14 +7,14 @@ int main()
 
     jarvo.feed("La papagoj estas birdoj.");
     jarvo.feed("La birdoj estas bestoj.");
-    jarvo.feed("Kato estas besto.");
-    jarvo.feed("Kato mangxas birdon.");
+    jarvo.feed("La Katoj estas bestoj.");
+    jarvo.feed("La katoj mangxas birdojn.");
     jarvo.feed("Mi havas vin.");
     jarvo.feed("Vi estas komputilo.");
     jarvo.feed("Vi parolas Esperanton.");
-    jarvo.feed("Komputilo estas masxino.");
+    jarvo.feed("La Komputiloj estas masxinoj.");
     jarvo.feed("Cxu mi havas masxino ?");
-    jarvo.feed("Cxu papago estas birdo ?");
+    jarvo.feed("Cxu la papagoj estas birdoj ?");
     jarvo.feed("Cxu papago estas besto ?");
     jarvo.feed("Cxu papago mangxas katon ?");
     jarvo.feed("Cxu kato mangxas beston ?");

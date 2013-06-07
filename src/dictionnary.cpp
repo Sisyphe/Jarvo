@@ -25,6 +25,7 @@ Dictionnary::Dictionnary()
     t_entry->isPlural=false;
     t_entry->node=0;
     t_entry->link_node=0;
+    t_entry->is_unique=true;
     m_known_words.insert(t_entry);
 
     t_entry=new Word;
@@ -36,6 +37,7 @@ Dictionnary::Dictionnary()
     t_entry->isPlural=false;
     t_entry->node=0;
     t_entry->link_node=0;
+    t_entry->is_unique=true;
     m_known_words.insert(t_entry);
 
     t_entry=new Word;
@@ -47,6 +49,7 @@ Dictionnary::Dictionnary()
     t_entry->isPlural=false;
     t_entry->node=0;
     t_entry->link_node=0;
+    t_entry->is_unique=true;
     m_known_words.insert(t_entry);
 
     t_entry=new Word;
@@ -58,6 +61,7 @@ Dictionnary::Dictionnary()
     t_entry->isPlural=false;
     t_entry->node=0;
     t_entry->link_node=0;
+    t_entry->is_unique=true;
     m_known_words.insert(t_entry);
 }
 

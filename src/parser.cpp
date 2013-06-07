@@ -46,8 +46,8 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                 break;
             }
 
-            case Word::NOUN:
             case Word::PRONOUN:
+            case Word::NOUN:
             {
                 switch(t_entry->function)
                 {
@@ -55,7 +55,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                         if(!n_sentence.subject)
                         {
                             n_sentence.subject=t_entry;
-                            if(t_next_noun_is_defined && t_entry->isPlural)
+                            if((t_next_noun_is_defined && t_entry->isPlural) || t_entry->is_unique)
                             {
                                 n_sentence.subject_is_entity=true;
                             }
@@ -67,7 +67,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                         if(!n_sentence.object)
                         {
                             n_sentence.object=t_entry;
-                            if(t_next_noun_is_defined && t_entry->isPlural)
+                            if((t_next_noun_is_defined && t_entry->isPlural) || t_entry->is_unique)
                             {
                                 n_sentence.object_is_entity=true;
                             }

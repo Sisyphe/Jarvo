@@ -1,6 +1,7 @@
 #include "jarvo.h"
 #include "findthing.h"
 #include "findconnection.h"
+#include <fstream>
 
 Jarvo::Jarvo()
 {
@@ -45,6 +46,18 @@ Node* Jarvo::createThingFromWord(const Word& n_word)
     return t_thing_node;
 }
 
+Node* Jarvo::createThingFromEntity(Node* n_entity_node)
+{
+    Node* t_thing_node=0;
+
+    t_thing_node=m_network.addVertice(Thing(n_entity_node->content().str(),false));
+
+    LinkNode* t_link_node=m_links.esti();
+    t_thing_node->addOutputEdge(RelationContent(t_link_node),n_entity_node);
+
+    return t_thing_node;
+}
+
 void Jarvo::feed(const std::string& n_input)
 {
     Sentence t_sentence;
@@ -78,15 +91,12 @@ void Jarvo::processStatement(Sentence& n_sentence)
 
         if(!t_subject_node)
         {
-            if(n_sentence.subject_is_entity)
-            {
-                t_subject_node=createEntityFromWord(*n_sentence.subject);
-            }
-            else
-            {
-                t_subject_node=createThingFromWord(*n_sentence.subject);
-            }
+            t_subject_node=createEntityFromWord(*n_sentence.subject);
             n_sentence.subject->node=t_subject_node;
+            if(!n_sentence.subject_is_entity)
+            {
+                t_subject_node=createThingFromEntity(t_subject_node);
+            }
         }
     }
 
@@ -96,21 +106,23 @@ void Jarvo::processStatement(Sentence& n_sentence)
 
         if(!t_object_node)
         {
-            if(n_sentence.subject_is_entity)
-            {
-                t_object_node=createEntityFromWord(*n_sentence.object);
+            t_object_node=createEntityFromWord(*n_sentence.object);
+            n_sentence.object->node=t_object_node;
 
-                if(n_sentence.verb->str_base == "esti" && n_sentence.object_is_entity)
+            if(n_sentence.verb->str_base == "esti")
+            {
+                if(!n_sentence.subject_is_entity && !n_sentence.object_is_entity)
                 {
-                    LinkNode* t_link_node=m_links.esti();
-                    t_object_node->addOutputEdge(RelationContent(t_link_node), t_subject_node);
+                    t_object_node=createThingFromEntity(t_object_node);
                 }
             }
             else
             {
-                t_object_node=createThingFromWord(*n_sentence.object);
+                if(!n_sentence.subject_is_entity || !n_sentence.object_is_entity)
+                {
+                    t_object_node=createThingFromEntity(t_object_node);
+                }
             }
-            n_sentence.object->node=t_object_node;
         }
     }
 
@@ -212,5 +224,12 @@ void Jarvo::say(const std::string& n_str)
 
 void Jarvo::dumpBrain() const
 {
-    std::cout << m_network.toDot() << std::endl;
+    std::string t_out;
+    t_out=m_network.toDot();
+    std::cout << t_out << std::endl;
+
+    std::ofstream t_file;
+    t_file.open("brain.dot");
+    t_file << t_out;
+    t_file.close();
 }

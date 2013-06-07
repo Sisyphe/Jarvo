@@ -56,6 +56,7 @@ class Word
         bool isPlural;
         Node* node;
         LinkNode* link_node;
+        bool is_unique;
 };
 
 #endif // WORD_H

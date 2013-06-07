@@ -16,13 +16,9 @@ class Jarvo
 {
     public:
 
-        typedef Graph<Thing,RelationContent> Network;
+        typedef Graph<Thing, RelationContent> Network;
 
         Jarvo();
-
-        Node* getEntity(const Word& n_word);
-        Node* createEntityFromWord(const Word& n_word);
-        Node* createThingFromWord(const Word& n_word);
 
         void feed(const std::string& n_input);
         void processStatement(Sentence& n_sentence);
@@ -32,6 +28,11 @@ class Jarvo
         void dumpBrain() const;
 
     protected:
+
+        Node* getEntity(const Word& n_word);
+        Node* createEntityFromWord(const Word& n_word);
+        Node* createThingFromWord(const Word& n_word);
+        Node* createThingFromEntity(Node* n_entity);
 
         Network m_network;
         LinkGraph m_links;
