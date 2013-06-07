@@ -20,6 +20,7 @@ class FindConnection: public VerticeProcess<Thing,RelationContent>
         Node* m_in_node;
         Node* m_out_node;
         Link m_link;
+        Node* m_link_found_node;
         bool m_is_found;
         bool m_is_link_found;
 };

@@ -10,7 +10,6 @@ Jarvo::Jarvo()
 Node* Jarvo::createThingFromWord(const Word& n_word)
 {
     Node* t_thing_node=0;
-    Node* t_entity_node=0;
     FindThing t_process(n_word);
 
     m_network.applyOnAllVertices(&t_process);
@@ -155,7 +154,7 @@ void Jarvo::processYesNoQuestion(Sentence& t_sentence)
     if(!t_error)
     {
         FindConnection t_finder(t_object_node,*t_link_node->content());
-        m_network.applyOnOutputVertices(t_subject_node,&t_finder);
+        m_network.postfixedTraversalOf(t_subject_node,Node::OUTPUT,&t_finder);
         if(t_finder.isConnectionFound())
         {
             say("Je.");

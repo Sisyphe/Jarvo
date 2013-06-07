@@ -1,4 +1,5 @@
 #include <iostream>
+#define ESPEAK
 #include "jarvo.h"
 
 int main()
@@ -11,12 +12,14 @@ int main()
     jarvo.feed("Kato mangxas birdon.");
     jarvo.feed("Mi havas vin.");
     jarvo.feed("Vi estas komputilo.");
-    jarvo.feed("Cxu mi havas komputilon ?");
+    jarvo.feed("Vi parolas Esperanton.");
+    jarvo.feed("Komputilo estas masxino.");
+    //jarvo.feed("Cxu mi havas masxino ?");
     jarvo.feed("Cxu kato estas birdo ?");
-    jarvo.feed("Cxu papago estas besto ?");
+    /*jarvo.feed("Cxu papago estas besto ?");
     jarvo.feed("Cxu papago mangxas katon ?");
     jarvo.feed("Cxu kato mangxas beston ?");
-    jarvo.feed("Cxu martigno havas komputilon ?");
+    jarvo.feed("Cxu martigno havas komputilon ?");*/
 
     std::string n_str;
 
