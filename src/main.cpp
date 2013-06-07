@@ -14,12 +14,12 @@ int main()
     jarvo.feed("Vi estas komputilo.");
     jarvo.feed("Vi parolas Esperanton.");
     jarvo.feed("Komputilo estas masxino.");
-    //jarvo.feed("Cxu mi havas masxino ?");
+    jarvo.feed("Cxu mi havas masxino ?");
     jarvo.feed("Cxu kato estas birdo ?");
-    /*jarvo.feed("Cxu papago estas besto ?");
+    jarvo.feed("Cxu papago estas besto ?");
     jarvo.feed("Cxu papago mangxas katon ?");
     jarvo.feed("Cxu kato mangxas beston ?");
-    jarvo.feed("Cxu martigno havas komputilon ?");*/
+    jarvo.feed("Cxu martigno havas komputilon ?");
 
     std::string n_str;
 

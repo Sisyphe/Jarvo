@@ -31,7 +31,7 @@ bool FindConnection::checkEdge(Relation *n_relation)
     if(*t_link == m_link)
     {
         m_is_link_found=true;
-        m_link_found_node=n_relation->outputVertice();
+        m_link_found_node=n_relation->inputVertice();
         stop=false;
     }
     else if(*t_link == Link::isEquivalentLink)
