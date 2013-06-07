@@ -18,7 +18,8 @@ class Word
             CONJUNCTION,
             PREPOSITION,
             ADVERB,
-            PRONOUN
+            PRONOUN,
+            ARTICLE
         };
 
         enum Case

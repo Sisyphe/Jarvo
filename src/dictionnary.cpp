@@ -6,6 +6,17 @@ Dictionnary::Dictionnary()
     Word* t_entry=0;
 
     t_entry=new Word;
+    t_entry->str="la";
+    t_entry->str_base="la";
+    t_entry->type=Word::ARTICLE;
+    t_entry->function=Word::NO_CASE;
+    t_entry->tense=Word::NO_TENSE;
+    t_entry->isPlural=false;
+    t_entry->node=0;
+    t_entry->link_node=0;
+    m_known_words.insert(t_entry);
+
+    t_entry=new Word;
     t_entry->str="mi";
     t_entry->str_base="mi";
     t_entry->type=Word::PRONOUN;

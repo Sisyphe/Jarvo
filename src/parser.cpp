@@ -4,6 +4,7 @@
 
 void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 {
+    bool t_next_noun_is_defined=false;
     std::vector<std::string> t_raw_words;
 
     extractRawWords(n_str,t_raw_words);
@@ -29,7 +30,6 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                 switch(t_entry->function)
                 {
                     case Word::SUBJECT:
-
                         if(!n_sentence.object && !n_sentence.verb)
                         {
                             n_sentence.subject_adjs.push_back(t_entry);
@@ -55,6 +55,10 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                         if(!n_sentence.subject)
                         {
                             n_sentence.subject=t_entry;
+                            if(t_next_noun_is_defined && t_entry->isPlural)
+                            {
+                                n_sentence.subject_is_entity=true;
+                            }
                             break;
                         }
 
@@ -62,6 +66,10 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                         if(!n_sentence.object)
                         {
                             n_sentence.object=t_entry;
+                            if(t_next_noun_is_defined && t_entry->isPlural)
+                            {
+                                n_sentence.object_is_entity=true;
+                            }
                             break;
                         }
 
@@ -73,11 +81,24 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 
             case Word::VERB:
             {
-                n_sentence.verb=t_entry;
+                if(t_next_noun_is_defined)
+                {
+                    t_error=true;
+                }
+                else
+                {
+                    n_sentence.verb=t_entry;
+                }
                 break;
             }
 
-            default: /* Work in progress... */;
+            case Word::ARTICLE:
+            {
+                t_next_noun_is_defined=true;
+                break;
+            }
+
+            default: t_error=true /* Work in progress... */;
         }
 
         ++t_raw_word;

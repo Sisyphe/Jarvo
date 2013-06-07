@@ -7,22 +7,40 @@ Jarvo::Jarvo()
     say("Saluton mastro.");
 }
 
-Node* Jarvo::createThingFromWord(const Word& n_word)
+Node* Jarvo::getEntity(const Word& n_word)
 {
-    Node* t_thing_node=0;
-    FindThing t_process(n_word);
+    FindThing t_process(n_word,true);
 
     m_network.applyOnAllVertices(&t_process);
-    if(t_process.isThingFound())
+
+    return t_process.thingNode();
+}
+
+Node* Jarvo::createEntityFromWord(const Word& n_word)
+{
+    Node* t_entity_node=0;
+
+    t_entity_node=getEntity(n_word);
+
+    if(!t_entity_node)
     {
-        t_thing_node=m_network.addVertice(Thing(n_word.str_base,false));
+        t_entity_node=m_network.addVertice(Thing(n_word.str_base,true));
     }
-    else t_thing_node=t_process.thingNode();
 
-//    t_entity_node=m_network.addVertice(Thing(n_word.str_base));
+    return t_entity_node;
+}
 
-//    LinkNode* t_link_node=m_links.esti();
-//    m_network.addEdge(RelationContent(t_link_node),t_entity_node,t_thing_node);
+Node* Jarvo::createThingFromWord(const Word& n_word)
+{
+    Node* t_entity_node=0;
+    Node* t_thing_node=0;
+
+    t_entity_node=createEntityFromWord(n_word);
+
+    t_thing_node=m_network.addVertice(Thing(n_word.str_base,false));
+
+    LinkNode* t_link_node=m_links.esti();
+    t_thing_node->addOutputEdge(RelationContent(t_link_node),t_entity_node);
 
     return t_thing_node;
 }
@@ -48,48 +66,68 @@ void Jarvo::feed(const std::string& n_input)
     }
 }
 
-void Jarvo::processStatement(Sentence& t_sentence)
+void Jarvo::processStatement(Sentence& n_sentence)
 {
     Node* t_subject_node=0;
     Node* t_object_node=0;
     LinkNode* t_link_node=0;
 
-    if(t_sentence.subject)
+    if(n_sentence.subject)
     {
-        t_subject_node=t_sentence.subject->node;
+        t_subject_node=n_sentence.subject->node;
 
         if(!t_subject_node)
         {
-            t_subject_node=createThingFromWord(*t_sentence.subject);
-            t_sentence.subject->node=t_subject_node;
+            if(n_sentence.subject_is_entity)
+            {
+                t_subject_node=createEntityFromWord(*n_sentence.subject);
+            }
+            else
+            {
+                t_subject_node=createThingFromWord(*n_sentence.subject);
+            }
+            n_sentence.subject->node=t_subject_node;
         }
     }
 
-    if(t_sentence.object)
+    if(n_sentence.object)
     {
-        t_object_node=t_sentence.object->node;
+        t_object_node=n_sentence.object->node;
 
         if(!t_object_node)
         {
-            t_object_node=createThingFromWord(*t_sentence.object);
-            t_sentence.object->node=t_object_node;
+            if(n_sentence.subject_is_entity)
+            {
+                t_object_node=createEntityFromWord(*n_sentence.object);
+
+                if(n_sentence.verb->str_base == "esti" && n_sentence.object_is_entity)
+                {
+                    LinkNode* t_link_node=m_links.esti();
+                    t_object_node->addOutputEdge(RelationContent(t_link_node), t_subject_node);
+                }
+            }
+            else
+            {
+                t_object_node=createThingFromWord(*n_sentence.object);
+            }
+            n_sentence.object->node=t_object_node;
         }
     }
 
-    if(t_sentence.verb)
+    if(n_sentence.verb)
     {
-        t_link_node=t_sentence.verb->link_node;
+        t_link_node=n_sentence.verb->link_node;
 
         if(!t_link_node)
         {
-            Link t_link(t_sentence.verb->str_base);
+            Link t_link(n_sentence.verb->str_base);
 
             t_link_node=m_links.findLinkNode(t_link.verb());
 
             if(!t_link_node)
             {
                 t_link_node=m_links.addLinkNode(t_link);
-                t_sentence.verb->link_node=t_link_node;
+                n_sentence.verb->link_node=t_link_node;
             }
 
             //t_link_node->content().triggerOn(t_subject_node,t_object_node);

@@ -20,7 +20,7 @@ class Thing : public NodeContent
         friend std::ostream& operator<<(std::ostream& n_out, const Thing& n_thing)
         {
             n_out << "Thing";
-            if(!n_thing.isEntity()) n_out << "*";
+            if(n_thing.isEntity()) n_out << "*";
             n_out << ": " << n_thing.str();
             return n_out;
         }

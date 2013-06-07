@@ -1,6 +1,8 @@
 #include "mouth.h"
 #include <iostream>
 
+#define ESPEAK
+
 #ifdef ESPEAK
 #include <speak_lib.h>
 #endif

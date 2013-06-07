@@ -1,8 +1,9 @@
 #include "findthing.h"
 
-FindThing::FindThing(const Word &n_word)
+FindThing::FindThing(const Word &n_word, bool n_is_looking_for_entity)
     :m_word(n_word),
-     m_node(0)
+     m_node(0),
+     m_is_looking_for_entity(n_is_looking_for_entity)
 {
 }
 
@@ -22,7 +23,8 @@ bool FindThing::applyOn(Node* n_node)
 
     if
     (
-       !n_node->content().isEntity() &&
+       (n_node->content().isEntity() ||
+       !m_is_looking_for_entity) &&
        n_node->content().str()==m_word.str_base
     )
     {

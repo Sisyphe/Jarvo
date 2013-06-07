@@ -1,13 +1,12 @@
 #include <iostream>
-#define ESPEAK
 #include "jarvo.h"
 
 int main()
 {
     Jarvo jarvo;
 
-    jarvo.feed("Papago estas birdo.");
-    jarvo.feed("Birdo estas besto.");
+    jarvo.feed("La papagoj estas birdoj.");
+    jarvo.feed("La birdoj estas bestoj.");
     jarvo.feed("Kato estas besto.");
     jarvo.feed("Kato mangxas birdon.");
     jarvo.feed("Mi havas vin.");
