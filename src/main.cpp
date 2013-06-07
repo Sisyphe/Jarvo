@@ -14,7 +14,7 @@ int main()
     jarvo.feed("Vi parolas Esperanton.");
     jarvo.feed("Komputilo estas masxino.");
     jarvo.feed("Cxu mi havas masxino ?");
-    jarvo.feed("Cxu kato estas birdo ?");
+    jarvo.feed("Cxu papago estas birdo ?");
     jarvo.feed("Cxu papago estas besto ?");
     jarvo.feed("Cxu papago mangxas katon ?");
     jarvo.feed("Cxu kato mangxas beston ?");

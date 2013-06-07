@@ -162,7 +162,7 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
     t_entry->str_base=t_str;
 
     std::set<Word*>::iterator t_found;
-    t_found=std::find_if(m_known_words.begin(),m_known_words.end(),FindEntry(t_str));
+    t_found=std::find_if(m_known_words.begin(),m_known_words.end(),FindEntry(t_str,true));
 
     if(t_found!=m_known_words.end())
     {

@@ -59,6 +59,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                             {
                                 n_sentence.subject_is_entity=true;
                             }
+                            t_next_noun_is_defined=false;
                             break;
                         }
 
@@ -70,6 +71,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                             {
                                 n_sentence.object_is_entity=true;
                             }
+                            t_next_noun_is_defined=false;
                             break;
                         }
 
