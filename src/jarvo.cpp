@@ -93,10 +93,11 @@ void Jarvo::processStatement(Sentence& n_sentence)
         {
             t_subject_node=createEntityFromWord(*n_sentence.subject);
             n_sentence.subject->node=t_subject_node;
-            if(!n_sentence.subject_is_entity)
-            {
-                t_subject_node=createThingFromEntity(t_subject_node);
-            }
+        }
+
+        if(!n_sentence.subject_is_entity)
+        {
+            t_subject_node=createThingFromEntity(t_subject_node);
         }
     }
 
@@ -108,20 +109,20 @@ void Jarvo::processStatement(Sentence& n_sentence)
         {
             t_object_node=createEntityFromWord(*n_sentence.object);
             n_sentence.object->node=t_object_node;
+        }
 
-            if(n_sentence.verb->str_base == "esti")
+        if(n_sentence.verb->str_base == "esti")
+        {
+            if(!n_sentence.subject_is_entity && !n_sentence.object_is_entity)
             {
-                if(!n_sentence.subject_is_entity && !n_sentence.object_is_entity)
-                {
-                    t_object_node=createThingFromEntity(t_object_node);
-                }
+                t_object_node=createThingFromEntity(t_object_node);
             }
-            else
+        }
+        else
+        {
+            if(!n_sentence.subject_is_entity || !n_sentence.object_is_entity)
             {
-                if(!n_sentence.subject_is_entity || !n_sentence.object_is_entity)
-                {
-                    t_object_node=createThingFromEntity(t_object_node);
-                }
+                t_object_node=createThingFromEntity(t_object_node);
             }
         }
     }

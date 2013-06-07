@@ -8,7 +8,7 @@ int main()
     jarvo.feed("La papagoj estas birdoj.");
     jarvo.feed("La birdoj estas bestoj.");
     jarvo.feed("La Katoj estas bestoj.");
-    jarvo.feed("La katoj mangxas birdojn.");
+    jarvo.feed("Kato mangxas birdon.");
     jarvo.feed("Mi havas vin.");
     jarvo.feed("Vi estas komputilo.");
     jarvo.feed("Vi parolas Esperanton.");
@@ -18,6 +18,7 @@ int main()
     jarvo.feed("Cxu papago estas besto ?");
     jarvo.feed("Cxu papago mangxas katon ?");
     jarvo.feed("Cxu kato mangxas beston ?");
+    jarvo.feed("Cxu la katoj mangxas la bestojn ?");
     jarvo.feed("Cxu martigno havas komputilon ?");
 
     std::string n_str;
