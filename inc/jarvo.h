@@ -1,22 +1,13 @@
 #ifndef JARVO_H
 #define JARVO_H
 
-#include <graph.h>
-#include "thing.h"
-#include "nodecontent.h"
-#include "node.h"
 #include "parser.h"
-#include "relationcontent.h"
-#include "link.h"
-#include "word.h"
-#include "linkgraph.h"
+#include "brain.h"
 #include "mouth.h"
 
 class Jarvo
 {
     public:
-
-        typedef Graph<Thing, RelationContent> Network;
 
         Jarvo();
 
@@ -29,13 +20,7 @@ class Jarvo
 
     protected:
 
-        Node* getEntity(const Word& n_word);
-        Node* createEntityFromWord(const Word& n_word);
-        Node* createThingFromWord(const Word& n_word);
-        Node* createThingFromEntity(Node* n_entity);
-
-        Network m_network;
-        LinkGraph m_links;
+        Brain m_brain;
         Parser m_parser;
         Mouth m_mouth;
 };

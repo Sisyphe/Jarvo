@@ -17,7 +17,7 @@ Node* FindThing::thingNode() const
     return m_node;
 }
 
-bool FindThing::applyOn(Node* n_node)
+bool FindThing::process(Node* n_node)
 {
     bool t_continue=true;
 
@@ -38,4 +38,14 @@ bool FindThing::applyOn(Node* n_node)
 bool FindThing::checkEdge(Relation* n_relation)
 {
     return true;
+}
+
+typename Node::LinkDirection FindThing::direction() const
+{
+    return Node::BOTH;
+}
+
+FindThing::TraversalMode FindThing::traversalMode() const
+{
+    return FindThing::PREFIXED;
 }

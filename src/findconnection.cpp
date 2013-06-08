@@ -14,7 +14,7 @@ bool FindConnection::isConnectionFound() const
     return m_is_found;
 }
 
-bool FindConnection::applyOn(Node *n_node)
+bool FindConnection::process(Node *n_node)
 {
     if(n_node == m_link_found_node)
     {
@@ -47,4 +47,14 @@ bool FindConnection::checkEdge(Relation *n_relation)
     }
 
     return !stop;
+}
+
+typename Node::LinkDirection FindConnection::direction() const
+{
+    return Node::OUTPUT;
+}
+
+FindConnection::TraversalMode FindConnection::traversalMode() const
+{
+    return FindConnection::POSTFIXED;
 }

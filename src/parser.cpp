@@ -115,7 +115,7 @@ void Parser::extractRawWords
 {
     std::string t_raw_word;
 
-    for(int i=0; i < n_str.size(); ++i)
+    for(unsigned int i=0; i < n_str.size(); ++i)
     {
         switch(n_str[i])
         {

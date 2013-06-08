@@ -15,8 +15,10 @@ class FindThing : public VerticeProcess<Thing,RelationContent>
         bool isThingFound() const;
         Node* thingNode() const;
 
-        virtual bool applyOn(Node *n_node);
+        virtual bool process(Node *n_node);
         virtual bool checkEdge(Relation *n_relation);
+        virtual typename Node::LinkDirection direction() const;
+        virtual TraversalMode traversalMode() const;
 
     protected:
 

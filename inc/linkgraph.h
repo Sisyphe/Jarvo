@@ -7,6 +7,7 @@
 
 typedef Vertice<Link*,bool> LinkNode;
 typedef Edge<Link*,bool> LinkRelation;
+typedef VerticeProcess<Link*,bool> LinkProcess;
 
 class LinkGraph : public Graph<Link*,bool>
 {

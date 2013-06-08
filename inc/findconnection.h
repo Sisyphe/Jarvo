@@ -12,8 +12,10 @@ class FindConnection: public VerticeProcess<Thing,RelationContent>
         FindConnection(Node* n_out_node, const Link& n_link);
 
         bool isConnectionFound() const;
-        virtual bool applyOn(Node *n_node);
+        virtual bool process(Node *n_node);
         virtual bool checkEdge(Relation *n_relation);
+        virtual Node::LinkDirection direction() const;
+        virtual TraversalMode traversalMode() const;
 
     protected:
 
