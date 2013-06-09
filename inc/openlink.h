@@ -13,11 +13,10 @@ class OpenLink: public Link
         virtual ~OpenLink(){}
 
         Handler* getHandler(Node* n_node) const;
-        virtual bool tryToHandle(const Relation& n_relation);
+        virtual bool tryToHandle(Node* n_node);
 
     protected:
 
-        std::string m_verb;
         Brain& m_brain;
         std::map<Node*,Handler*> m_handable_things;
         std::list<Handler*> m_handlers;

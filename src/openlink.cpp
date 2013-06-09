@@ -2,11 +2,14 @@
 #include <algorithm>
 #include "findconnection.h"
 #include "findthing.h"
+#include "openfileaction.h"
 
 OpenLink::OpenLink(Brain& n_brain)
-    :m_verb("aperti"),
-     m_brain(n_brain)
+    :m_brain(n_brain)
 {
+    m_verb="aperti";
+    m_handlers.push_back(new OpenFileAction());
+
     Node* t_node=0;
     std::list<Handler*>::iterator it=m_handlers.begin();
 
@@ -29,27 +32,26 @@ Handler* OpenLink::getHandler(Node* n_node) const
 
     while(it != m_handable_things.end() && !t_found)
     {
-        t_found=m_brain.findRelation(n_node,Link::isEquivalentLink,(*it).first);
-        ++it;
+        FindConnection t_finder((*it).first,Link::isEquivalentLink);
+        m_brain.traverseNetwork(&t_finder,n_node);
+        t_found=t_finder.isConnectionFound();
+        if(!t_found) ++it;
     }
 
-    return (t_found)? (*(it--)).second : 0;
+    return (t_found)? (*it).second : 0;
 }
 
-bool OpenLink::tryToHandle(const Relation& n_relation)
+bool OpenLink::tryToHandle(Node *n_node)
 {
     bool t_is_handled=false;
     Handler* t_handler=0;
 
-    if(n_relation.outputVertice()->content().str() == "vi")
-    {
-        t_handler=getHandler(n_relation.inputVertice());
+    t_handler=getHandler(n_node);
 
-        if(t_handler)
-        {
-            t_handler->handle(n_relation.inputVertice());
-            t_is_handled=true;
-        }
+    if(t_handler)
+    {
+        t_handler->handle(n_node);
+        t_is_handled=true;
     }
 
     return t_is_handled;

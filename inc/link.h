@@ -35,7 +35,7 @@ class Link : public NodeContent
             return m_verb == n_link.verb();
         }
 
-        virtual bool tryToHandle(const Relation& n_relation) {return false;}
+        virtual bool tryToHandle(Node* n_node) {return false;}
 
     protected:
 

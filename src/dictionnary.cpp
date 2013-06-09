@@ -96,9 +96,10 @@ Word* Dictionnary::getEntry(const std::string& n_str)
 Word* Dictionnary::createNewEntry(const std::string& n_str)
 {
     Word* t_entry=new Word;
+    t_entry->type=Word::UNKNOWN_TYPE;
     t_entry->str=n_str;
     t_entry->isPlural=false;
-    t_entry->function=Word::SUBJECT;
+    t_entry->function=Word::NO_CASE;
     t_entry->node=0;
     t_entry->link_node=0;
     std::string t_str(n_str);
@@ -120,47 +121,69 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
         t_char=t_str[char_pos];
     }
 
-    if(t_char=='o') // Noun
-    {
-        t_entry->type=Word::NOUN;
-    }
-    else if(t_char=='a') // Adjective
-    {
-        t_entry->type=Word::ADJECTIVE;
-    }
-    else // Verb
-    {
-        t_entry->type=Word::VERB;
-        t_entry->function=Word::NO_CASE;
 
-        if(t_char=='i')
+    switch(t_char)
+    {
+        case 'o': // Noun
         {
+            t_entry->type=Word::NOUN;
+            if(t_entry->function==Word::NO_CASE)
+            {
+                t_entry->function=Word::SUBJECT;
+            }
+            break;
+        }
+        case 'a': // Adjective
+        {
+            t_entry->type=Word::ADJECTIVE;
+            if(t_entry->function==Word::NO_CASE)
+            {
+                t_entry->function=Word::SUBJECT;
+            }
+            break;
+        }
+        case 'i': // Infinitive verb
+        {
+            t_entry->type=Word::VERB;
+            t_entry->function=Word::NO_CASE;
             t_entry->tense=Word::INFINITIVE;
+            break;
         }
-        else if(t_char=='u')
+        case 'u': // Jussive verb
         {
+            t_entry->type=Word::VERB;
+            t_entry->function=Word::NO_CASE;
             t_entry->tense=Word::JUSSIVE;
+            t_str[char_pos]='i';
+            break;
         }
-        else if(t_char=='s')
+        case 's': // Active verb
         {
+            t_entry->type=Word::VERB;
+            t_entry->function=Word::NO_CASE;
             t_str.erase(char_pos--);
             t_char=t_str[char_pos];
+            t_str[char_pos]='i';
 
-            if(t_char=='i')
+            switch(t_char)
             {
-                t_entry->tense=Word::PAST;
-            }
-            else if(t_char=='a')
-            {
-                t_entry->tense=Word::PRESENT;
-            }
-            else if(t_char=='o')
-            {
-                t_entry->tense=Word::FUTURE;
+                case 'i': // Past tense
+                {
+                    t_entry->tense=Word::PAST;
+                    break;
+                }
+                case 'a': // Present tense
+                {
+                    t_entry->tense=Word::PRESENT;
+                    break;
+                }
+                case 'o': // Future tense
+                {
+                    t_entry->tense=Word::FUTURE;
+                    break;
+                }
             }
         }
-
-        t_str[char_pos]='i';
     }
 
     t_entry->str_base=t_str;

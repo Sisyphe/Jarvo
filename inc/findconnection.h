@@ -20,7 +20,6 @@ class FindConnection: public VerticeProcess<Thing,RelationContent>
 
     protected:
 
-        Node* m_in_node;
         Node* m_out_node;
         Link m_link;
         Node* m_link_found_node;

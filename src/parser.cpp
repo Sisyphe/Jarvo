@@ -46,12 +46,26 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                 break;
             }
 
+            case Word::UNKNOWN_TYPE:
+            {
+                if(!n_sentence.verb)
+                {
+                    t_entry->function=Word::SUBJECT;
+                }
+                else
+                {
+                    t_entry->function=Word::ACCUSATIVE;
+                }
+
+                t_entry->is_unique=true;
+            }
             case Word::PRONOUN:
             case Word::NOUN:
             {
                 switch(t_entry->function)
                 {
                     case Word::SUBJECT:
+                    {
                         if(!n_sentence.subject)
                         {
                             n_sentence.subject=t_entry;
@@ -62,8 +76,9 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                             t_next_noun_is_defined=false;
                             break;
                         }
-
+                    }
                     case Word::ACCUSATIVE:
+                    {
                         if(!n_sentence.object)
                         {
                             n_sentence.object=t_entry;
@@ -74,7 +89,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                             t_next_noun_is_defined=false;
                             break;
                         }
-
+                    }
                     default: t_error=true;
                 }
 
@@ -119,19 +134,25 @@ void Parser::extractRawWords
     {
         switch(n_str[i])
         {
-            case '.':
-            case '?':
-            case '!':
-                break;
-
             case ' ':
+            {
                 n_raw_words.push_back(t_raw_word);
                 t_raw_word.erase();
                 break;
+            }
+
+            case '.':
+            case '?':
+            case '!':
+            {
+                if((i+1)==n_str.size()) break;
+            }
 
             default:
+            {
                 t_raw_word.push_back(tolower(n_str[i]));
                 break;
+            }
         }
     }
 

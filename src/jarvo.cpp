@@ -23,7 +23,7 @@ void Jarvo::feed(const std::string& n_input)
             processYesNoQuestion(t_sentence);
         }
     }
-    else if(t_sentence.verb->tense == Word::JUSSIVE)
+    else if(t_sentence.verb && t_sentence.verb->tense == Word::JUSSIVE)
     {
         processCommand(t_sentence);
     }

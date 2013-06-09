@@ -9,11 +9,6 @@ class OpenFileAction: public Handler
 
         OpenFileAction();
         virtual void handle(Node* n_node);
-
-    protected:
-
-        std::list< std::string> m_handables;
-
 };
 
 #endif // OPENFILEACTION_H
