@@ -29,7 +29,10 @@ SOURCES +=  src/main.cpp \
             src/mouth.cpp \
             src/findconnection.cpp \
             src/brain.cpp \
-            src/findlink.cpp
+            src/findlink.cpp \
+            src/openlink.cpp \
+            src/handler.cpp \
+            src/openfileaction.cpp
 
 HEADERS +=  inc/thing.h \
             inc/node.h \
@@ -46,4 +49,7 @@ HEADERS +=  inc/thing.h \
             inc/mouth.h \
             inc/findconnection.h \
             inc/brain.h \
-            inc/findlink.h
+            inc/findlink.h \
+            inc/openlink.h \
+            inc/handler.h \
+            inc/openfileaction.h

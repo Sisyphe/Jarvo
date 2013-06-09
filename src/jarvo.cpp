@@ -23,6 +23,10 @@ void Jarvo::feed(const std::string& n_input)
             processYesNoQuestion(t_sentence);
         }
     }
+    else if(t_sentence.verb->tense == Word::JUSSIVE)
+    {
+        processCommand(t_sentence);
+    }
     else
     {
         processStatement(t_sentence);
@@ -100,6 +104,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
     Node* t_object_node=0;
     LinkNode* t_link_node=0;
     bool t_error=false;
+    bool t_is_relation_found=false;
 
     if(n_sentence.subject)
     {
@@ -143,9 +148,10 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
 
     if(!t_error)
     {
-        FindConnection t_finder(t_object_node,*t_link_node->content());
-        m_brain.traverseNetwork(t_subject_node,&t_finder);
-        if(t_finder.isConnectionFound())
+        t_is_relation_found=m_brain.findRelation(t_subject_node,
+                                                 *t_link_node->content(),
+                                                 t_object_node);
+        if(t_is_relation_found)
         {
             say("Je.");
         }
@@ -153,6 +159,53 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
         {
             say("Ne.");
         }
+    }
+}
+
+void Jarvo::processCommand(Sentence& n_sentence)
+{
+    Node* t_object_node=0;
+    LinkNode* t_link_node=0;
+    bool t_error=false;
+
+    if(n_sentence.object)
+    {
+        t_object_node=n_sentence.object->node;
+
+        if(!t_object_node)
+        {
+            say("Pardonu. Mi ne sciis kio estas " + n_sentence.object->str_base + ".");
+            t_object_node=m_brain.createThingFromWord(*n_sentence.object);
+            n_sentence.object->node=t_object_node;
+            t_error=true;
+        }
+    }
+
+    if(n_sentence.verb)
+    {
+        t_link_node=n_sentence.verb->link_node;
+
+        if(!t_link_node)
+        {
+            Link t_link(n_sentence.verb->str_base);
+
+            t_link_node=m_brain.getLink(t_link);
+
+            if(!t_link_node)
+            {
+                say("Pardonu. Mi ne scias kiel " + n_sentence.verb->str_base + ".");
+                t_link_node=m_brain.createLinkNode(t_link);
+                t_error=true;
+            }
+
+            n_sentence.verb->link_node=t_link_node;
+        }
+    }
+
+    if(!t_error)
+    {
+        say("Mi provas " + n_sentence.verb->str_base + " " + n_sentence.object->str +"...");
+        t_link_node->content()->tryToHandle(t_object_node);
     }
 }
 

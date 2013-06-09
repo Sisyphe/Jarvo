@@ -5,9 +5,10 @@
 #include <vector>
 #include <utility>
 #include <string>
-#include "link.h"
 #include "vertice.h"
 #include "thing.h"
+
+class Link;
 
 typedef time_t Time;
 
@@ -29,11 +30,7 @@ class RelationContent
 
         Link* link() const;
 
-        friend std::ostream& operator<<(std::ostream& n_out, const RelationContent& n_content)
-        {
-            n_out << n_content.link()->verb();
-            return n_out;
-        }
+        friend std::ostream& operator<<(std::ostream& n_out, const RelationContent& n_content);
 
     protected:
 

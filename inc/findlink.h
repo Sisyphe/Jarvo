@@ -17,6 +17,7 @@ class FindLink: public VerticeProcess<Link*, bool>
 
         virtual bool process(LinkNode* n_node);
         virtual bool checkEdge(LinkRelation* n_relation);
+        virtual TraversalMode traversalMode() const {return ALL;}
 
     protected:
 

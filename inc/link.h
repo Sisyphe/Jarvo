@@ -2,6 +2,7 @@
 #define LINK_H
 
 #include "nodecontent.h"
+#include "node.h"
 
 class Link : public NodeContent
 {
@@ -16,6 +17,7 @@ class Link : public NodeContent
         };
 
         Link(const std::string& n_verb=std::string());
+        virtual ~Link(){}
 
         std::string verb() const;
         void setVerb(const std::string& n_verb);
@@ -32,6 +34,8 @@ class Link : public NodeContent
         {
             return m_verb == n_link.verb();
         }
+
+        virtual bool tryToHandle(const Relation& n_relation) {return false;}
 
     protected:
 

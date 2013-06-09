@@ -1,5 +1,6 @@
 #include "relationcontent.h"
 #include "node.h"
+#include "link.h"
 
 RelationContent::RelationContent(Vertice<Link*,bool>* n_link_node)
      :m_link_node(n_link_node)
@@ -25,4 +26,10 @@ Link* RelationContent::link() const
     }
 
     return t_link;
+}
+
+std::ostream& operator<<(std::ostream& n_out, const RelationContent& n_content)
+{
+    n_out << n_content.link()->verb();
+    return n_out;
 }

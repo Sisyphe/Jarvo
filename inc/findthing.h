@@ -11,6 +11,7 @@ class FindThing : public VerticeProcess<Thing,RelationContent>
     public:
 
         FindThing(const Word& n_word, bool n_is_looking_for_entity=false);
+        FindThing(const std::string& n_str, bool n_is_looking_for_entity=false);
 
         bool isThingFound() const;
         Node* thingNode() const;
@@ -22,7 +23,7 @@ class FindThing : public VerticeProcess<Thing,RelationContent>
 
     protected:
 
-        Word m_word;
+        std::string m_str;
         Node* m_node;
         bool m_is_looking_for_entity;
 };

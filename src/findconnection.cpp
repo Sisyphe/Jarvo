@@ -4,9 +4,15 @@ FindConnection::FindConnection(Node* n_out_node, const Link& n_link)
     :m_out_node(n_out_node),
      m_link(n_link),
      m_link_found_node(0),
-     m_is_link_found(false)
+     m_is_link_found(false),
+     m_relation(0)
 {
     m_is_found=false;
+}
+
+Relation* FindConnection::foundRelation() const
+{
+    return m_relation;
 }
 
 bool FindConnection::isConnectionFound() const
@@ -43,6 +49,7 @@ bool FindConnection::checkEdge(Relation *n_relation)
     if(m_is_link_found &&  n_relation->inputVertice() == m_out_node)
     {
         m_is_found=true;
+        m_relation=n_relation;
         stop=true;
     }
 

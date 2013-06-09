@@ -5,7 +5,9 @@ int main()
 {
     Jarvo jarvo;
 
-    jarvo.feed("La papagoj estas birdoj.");
+    jarvo.feed("La foldo estas dosiero.");
+    jarvo.feed("Apertu foldon !");
+    /*jarvo.feed("La papagoj estas birdoj.");
     jarvo.feed("La birdoj estas bestoj.");
     jarvo.feed("La Katoj estas bestoj.");
     jarvo.feed("Kato mangxas birdon.");
@@ -19,7 +21,7 @@ int main()
     jarvo.feed("Cxu papago mangxas katon ?");
     jarvo.feed("Cxu kato mangxas beston ?");
     jarvo.feed("Cxu la katoj mangxas la bestojn ?");
-    jarvo.feed("Cxu martigno havas komputilon ?");
+    jarvo.feed("Cxu martigno havas komputilon ?");*/
 
     std::string n_str;
 

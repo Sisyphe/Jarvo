@@ -1,25 +1,42 @@
 #include "brain.h"
 #include "findlink.h"
 #include "findthing.h"
+#include "findconnection.h"
 #include <fstream>
+#include "openlink.h"
 
-Brain::Brain(){}
+Brain::Brain()
+{
+    m_links.addVertice(new OpenLink(*this));
+}
 
 Brain::~Brain(){}
 
-void Brain::traverseNetwork(Node* n_node, NetworkProcess* n_process)
+bool Brain::findRelation(Node* n_out_node, const Link& n_link, Node* n_in_node)
+{
+    FindConnection t_finder(n_in_node,n_link);
+    traverseNetwork(&t_finder,n_out_node);
+    return t_finder.isConnectionFound();
+}
+
+void Brain::traverseNetwork(NetworkProcess* n_process, Node* n_node)
 {
     m_network.applyOn(n_node,n_process);
 }
 
-void Brain::traverseLinkGraph(LinkNode* n_link_node, LinkProcess* n_process)
+void Brain::traverseLinkGraph(LinkProcess* n_process, LinkNode* n_link_node)
 {
     m_links.applyOn(n_link_node,n_process);
 }
 
 Node* Brain::getEntity(const Word& n_word)
 {
-    FindThing t_process(n_word,true);
+    return getEntity(n_word.str_base);
+}
+
+Node* Brain::getEntity(const std::string& n_str)
+{
+    FindThing t_process(n_str,true);
 
     m_network.applyOnAllVertices(&t_process);
 
@@ -28,13 +45,18 @@ Node* Brain::getEntity(const Word& n_word)
 
 Node* Brain::createEntityFromWord(const Word& n_word)
 {
+    return createEntityFromString(n_word.str_base);
+}
+
+Node* Brain::createEntityFromString(const std::string& n_str)
+{
     Node* t_entity_node=0;
 
-    t_entity_node=getEntity(n_word);
+    t_entity_node=getEntity(n_str);
 
     if(!t_entity_node)
     {
-        t_entity_node=m_network.addVertice(Thing(n_word.str_base,true));
+        t_entity_node=m_network.addVertice(Thing(n_str,true));
     }
 
     return t_entity_node;
