@@ -3,12 +3,15 @@
 #include "findconnection.h"
 #include "findthing.h"
 #include "openfileaction.h"
+#include "openfolderaction.h"
 
 OpenLink::OpenLink(Brain& n_brain)
     :m_brain(n_brain)
 {
     m_verb="aperti";
+
     m_handlers.push_back(new OpenFileAction());
+    m_handlers.push_back(new OpenFolderAction());
 
     Node* t_node=0;
     std::list<Handler*>::iterator it=m_handlers.begin();

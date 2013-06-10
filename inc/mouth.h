@@ -8,7 +8,7 @@ class Mouth
     public:
 
         Mouth();
-        void speak(const std::string& n_str);
+        static void speak(const std::string& n_str);
 };
 
 #endif

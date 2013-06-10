@@ -113,7 +113,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
         if(!t_subject_node)
         {
             say("Ne. Mi ne sciis kio estas " + n_sentence.subject->str_base + ".");
-            t_subject_node=m_brain.createThingFromWord(*n_sentence.subject);
+            t_subject_node=m_brain.createEntityFromWord(*n_sentence.subject);
             n_sentence.subject->node=t_subject_node;
             t_error=true;
         }
@@ -126,7 +126,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
         if(!t_object_node)
         {
             say("Ne. Mi ne sciis kio estas " + n_sentence.object->str_base + ".");
-            t_object_node=m_brain.createThingFromWord(*n_sentence.object);
+            t_object_node=m_brain.createEntityFromWord(*n_sentence.object);
             n_sentence.object->node=t_object_node;
             t_error=true;
         }
@@ -204,15 +204,23 @@ void Jarvo::processCommand(Sentence& n_sentence)
 
     if(!t_error)
     {
-        say("Mi provas " + n_sentence.verb->str_base + " " + n_sentence.object->str +"...");
-        t_link_node->content()->tryToHandle(t_object_node);
+        say("Mi provas " + n_sentence.verb->str_base + " ĝin...");
+
+        if(t_link_node->content()->tryToHandle(t_object_node))
+        {
+            say("Mi " + n_sentence.verb->str_base + "s ĝin !");
+        }
+        else
+        {
+            say("Pardonu. Mi ne scias kiel " + n_sentence.verb->str_base + " ĝin.");
+        }
     }
 }
 
 void Jarvo::say(const std::string& n_str)
 {
     std::cout << "- " << n_str << std::endl;
-    m_mouth.speak(n_str);
+    Mouth::speak(n_str);
 }
 
 void Jarvo::dumpBrain() const

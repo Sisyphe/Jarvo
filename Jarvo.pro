@@ -32,7 +32,8 @@ SOURCES +=  src/main.cpp \
             src/findlink.cpp \
             src/openlink.cpp \
             src/handler.cpp \
-            src/openfileaction.cpp
+            src/openfileaction.cpp \
+            src/openfolderaction.cpp
 
 HEADERS +=  inc/thing.h \
             inc/node.h \
@@ -52,4 +53,5 @@ HEADERS +=  inc/thing.h \
             inc/findlink.h \
             inc/openlink.h \
             inc/handler.h \
-            inc/openfileaction.h
+            inc/openfileaction.h \
+            inc/openfolderaction.h

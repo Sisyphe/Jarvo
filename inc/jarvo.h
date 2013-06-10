@@ -16,7 +16,7 @@ class Jarvo
         void processYesNoQuestion(Sentence& t_sentence);
         void processCommand(Sentence& t_sentence);
 
-        void say(const std::string& n_str);
+        static void say(const std::string& n_str);
         void dumpBrain() const;
 
     protected:

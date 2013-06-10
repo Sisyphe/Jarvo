@@ -19,11 +19,11 @@ int main()
     jarvo.feed("Cxu papago mangxas katon ?");
     jarvo.feed("Cxu kato mangxas beston ?");
     jarvo.feed("Cxu la katoj mangxas la bestojn ?");
-    jarvo.feed("Cxu martigno havas komputilon ?");
-    jarvo.feed("../brain.png estas dosiero.");
-    jarvo.feed("Apertu ../brain.png !");
-    jarvo.feed("../brain.dot estas dosiero");
-    jarvo.feed("apertu ../brain.dot");
+    jarvo.feed("Cxu Noël havas komputilon ?");
+    jarvo.feed("brain.png estas dosiero.");
+    jarvo.feed("Apertu brain.png !");
+    jarvo.feed("brain.dot estas dosiero");
+    jarvo.feed("apertu brain.dot");
 
     std::string n_str;
     std::cout << "Prompt: ";
