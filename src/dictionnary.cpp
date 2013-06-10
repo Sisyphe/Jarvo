@@ -102,6 +102,8 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
     t_entry->function=Word::NO_CASE;
     t_entry->node=0;
     t_entry->link_node=0;
+
+    bool t_is_unknown=false;
     std::string t_str(n_str);
 
     unsigned int char_pos=t_str.size()-1;
@@ -182,11 +184,25 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
                     t_entry->tense=Word::FUTURE;
                     break;
                 }
+                default: t_is_unknown=true;
             }
+
+            break;
         }
+        default: t_is_unknown=true;
     }
 
     t_entry->str_base=t_str;
+
+    if(t_is_unknown)
+    {
+        t_entry->type=Word::UNKNOWN_TYPE;
+        t_entry->str=n_str;
+        t_entry->str_base=n_str;
+        t_entry->isPlural=false;
+        t_entry->function=Word::NO_CASE;
+        t_entry->tense=Word::NO_TENSE;
+    }
 
     std::set<Word*>::iterator t_found;
     t_found=std::find_if(m_known_words.begin(),m_known_words.end(),FindEntry(t_str,true));

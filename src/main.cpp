@@ -5,7 +5,7 @@ int main()
 {
     Jarvo jarvo;
 
-    jarvo.feed("La papagoj estas birdoj.");
+    /*jarvo.feed("La papagoj estas birdoj.");
     jarvo.feed("La birdoj estas bestoj.");
     jarvo.feed("La Katoj estas bestoj.");
     jarvo.feed("Kato mangxas birdon.");
@@ -23,7 +23,9 @@ int main()
     jarvo.feed("brain.png estas dosiero.");
     jarvo.feed("Apertu brain.png !");
     jarvo.feed("brain.dot estas dosiero");
-    jarvo.feed("apertu brain.dot");
+    jarvo.feed("apertu brain.dot");*/
+    jarvo.feed("/home/sisyphe/Downloads estas dosierujo.");
+    jarvo.feed("Apertu /home/sisyphe/Downloads !");
 
     std::string n_str;
     std::cout << "Prompt: ";

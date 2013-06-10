@@ -174,7 +174,7 @@ void Jarvo::processCommand(Sentence& n_sentence)
 
         if(!t_object_node)
         {
-            say("Pardonu. Mi ne sciis kio estas " + n_sentence.object->str_base + ".");
+            say("Pardonu. Mi ne scias kio estas " + n_sentence.object->str_base + ".");
             t_object_node=m_brain.createThingFromWord(*n_sentence.object);
             n_sentence.object->node=t_object_node;
             t_error=true;
