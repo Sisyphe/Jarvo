@@ -4,10 +4,13 @@
 #include "findconnection.h"
 #include <fstream>
 #include "openlink.h"
+#include "saylink.h"
 
 Brain::Brain()
 {
+    m_io=m_network.addVertice(Thing("io",true));
     m_links.addVertice(new OpenLink(*this));
+    m_links.addVertice(new SayLink(*this));
 }
 
 Brain::~Brain(){}
@@ -57,6 +60,7 @@ Node* Brain::createEntityFromString(const std::string& n_str)
     if(!t_entity_node)
     {
         t_entity_node=m_network.addVertice(Thing(n_str,true));
+        t_entity_node->addOutputEdge(RelationContent(m_links.esti()),m_io);
     }
 
     return t_entity_node;

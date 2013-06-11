@@ -1,7 +1,7 @@
 #ifndef OPENFILEACTION_H
 #define OPENFILEACTION_H
 
-#include <handler.h>
+#include "handler.h"
 
 class OpenFileAction: public Handler
 {

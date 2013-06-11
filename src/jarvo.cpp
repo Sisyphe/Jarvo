@@ -174,10 +174,10 @@ void Jarvo::processCommand(Sentence& n_sentence)
 
         if(!t_object_node)
         {
-            say("Pardonu. Mi ne scias kio estas " + n_sentence.object->str_base + ".");
-            t_object_node=m_brain.createThingFromWord(*n_sentence.object);
+            ///say("Pardonu. Mi ne scias kio estas " + n_sentence.object->str_base + ".");
+            t_object_node=m_brain.createEntityFromWord(*n_sentence.object);
             n_sentence.object->node=t_object_node;
-            t_error=true;
+            //t_error=true;
         }
     }
 

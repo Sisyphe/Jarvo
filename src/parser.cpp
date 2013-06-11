@@ -128,16 +128,47 @@ void Parser::extractRawWords
     std::vector<std::string>& n_raw_words
 ) const
 {
+    bool t_is_expecting_quote=false;
     std::string t_raw_word;
+    char t_char;
 
     for(unsigned int i=0; i < n_str.size(); ++i)
     {
-        switch(n_str[i])
+        t_char=n_str[i];
+
+        switch(t_char)
         {
             case ' ':
             {
-                n_raw_words.push_back(t_raw_word);
-                t_raw_word.erase();
+                if(!t_is_expecting_quote)
+                {
+                    if(!t_raw_word.empty())
+                    {
+                        n_raw_words.push_back(t_raw_word);
+                        t_raw_word.erase();
+                    }
+                }
+                else
+                {
+                    t_raw_word.push_back(t_char);
+                }
+                break;
+            }
+
+            case '\"':
+            {
+                if(!t_is_expecting_quote)
+                {
+                    t_raw_word.push_back(tolower(t_char));
+                    t_is_expecting_quote=true;
+                }
+                else
+                {
+                    t_raw_word.push_back(t_char);
+                    n_raw_words.push_back(t_raw_word);
+                    t_raw_word.erase();
+                    t_is_expecting_quote=false;
+                }
                 break;
             }
 
@@ -145,12 +176,27 @@ void Parser::extractRawWords
             case '?':
             case '!':
             {
-                if((i+1)==n_str.size()) break;
+                if(t_is_expecting_quote)
+                {
+                    t_raw_word.push_back(t_char);
+                }
+                else if((i+1)!=n_str.size())
+                {
+                    t_raw_word.push_back(tolower(t_char));
+                }
+                break;
             }
 
             default:
             {
-                t_raw_word.push_back(tolower(n_str[i]));
+                if(t_is_expecting_quote)
+                {
+                    t_raw_word.push_back(t_char);
+                }
+                else
+                {
+                    t_raw_word.push_back(tolower(t_char));
+                }
                 break;
             }
         }

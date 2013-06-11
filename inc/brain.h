@@ -36,6 +36,7 @@ class Brain
 
         Network m_network;
         LinkGraph m_links;
+        Vertice< Thing, RelationContent >* m_io;
 };
 
 #endif // BRAIN_H

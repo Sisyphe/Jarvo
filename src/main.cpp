@@ -23,9 +23,11 @@ int main()
     jarvo.feed("brain.png estas dosiero.");
     jarvo.feed("Apertu brain.png !");
     jarvo.feed("brain.dot estas dosiero");
-    jarvo.feed("apertu brain.dot");*/
-    jarvo.feed("/home/sisyphe/Downloads estas dosierujo.");
-    jarvo.feed("Apertu /home/sisyphe/Downloads !");
+    jarvo.feed("apertu brain.dot");
+    jarvo.feed("/home/sisyphe estas dosierujo.");
+    jarvo.feed("Apertu /home/sisyphe");
+    jarvo.feed("Diru \"Mi estas kreteno\"");*/
+    jarvo.feed("\"vlc\" estas programo");
 
     std::string n_str;
     std::cout << "Prompt: ";

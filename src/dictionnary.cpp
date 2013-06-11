@@ -196,8 +196,14 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
 
     if(t_is_unknown)
     {
+        if(t_str[0] == '\"')
+        {
+            t_str.erase(0,1);
+            t_str.erase(t_str.size()-1,1);
+        }
+        else t_str=n_str;
         t_entry->type=Word::UNKNOWN_TYPE;
-        t_entry->str=n_str;
+        t_entry->str=t_str;
         t_entry->str_base=n_str;
         t_entry->isPlural=false;
         t_entry->function=Word::NO_CASE;
