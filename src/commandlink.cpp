@@ -16,7 +16,7 @@ void CommandLink::searchNewHandlers()
 
         for(; str_it != (*it)->handable().end(); ++str_it)
         {
-            t_node=m_brain.createEntityFromString(*str_it);
+            t_node=m_brain.getOrCreateEntity(*str_it);
             m_handable_things.insert(std::pair<Node*,Handler*>(t_node,*it));
         }
     }

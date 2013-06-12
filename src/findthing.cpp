@@ -30,7 +30,7 @@ bool FindThing::process(Node* n_node)
 
     if
     (
-       (n_node->content().isEntity() ||
+       (n_node->content().type()==NodeContent::ENTITY ||
        !m_is_looking_for_entity) &&
        n_node->content().str()==m_str
     )

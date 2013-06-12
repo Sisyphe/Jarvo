@@ -8,7 +8,7 @@
 
 Brain::Brain()
 {
-    m_io=m_network.addVertice(Thing("io",true));
+    m_io=m_network.addVertice(Thing("io",NodeContent::ENTITY));
     m_links.addVertice(new OpenLink(*this));
     m_links.addVertice(new SayLink(*this));
 }
@@ -46,12 +46,12 @@ Node* Brain::getEntity(const std::string& n_str)
     return t_process.thingNode();
 }
 
-Node* Brain::createEntityFromWord(const Word& n_word)
+Node* Brain::getOrCreateEntity(const Word& n_word)
 {
-    return createEntityFromString(n_word.str_base);
+    return getOrCreateEntity(n_word.str_base);
 }
 
-Node* Brain::createEntityFromString(const std::string& n_str)
+Node* Brain::getOrCreateEntity(const std::string& n_str)
 {
     Node* t_entity_node=0;
 
@@ -59,21 +59,32 @@ Node* Brain::createEntityFromString(const std::string& n_str)
 
     if(!t_entity_node)
     {
-        t_entity_node=m_network.addVertice(Thing(n_str,true));
-        t_entity_node->addOutputEdge(RelationContent(m_links.esti()),m_io);
+        t_entity_node=createEntity(n_str);
     }
 
     return t_entity_node;
 }
 
-Node* Brain::createThingFromWord(const Word& n_word)
+Node* Brain::createEntity(const Word& n_word)
+{
+    return createEntity(n_word.str_base);
+}
+
+Node* Brain::createEntity(const std::string& n_str)
+{
+    Node* t_entity_node=m_network.addVertice(Thing(n_str,NodeContent::ENTITY));
+    t_entity_node->addOutputEdge(RelationContent(m_links.esti()),m_io);
+    return t_entity_node;
+}
+
+Node* Brain::getOrCreateThing(const Word& n_word)
 {
     Node* t_entity_node=0;
     Node* t_thing_node=0;
 
-    t_entity_node=createEntityFromWord(n_word);
+    t_entity_node=getOrCreateEntity(n_word);
 
-    t_thing_node=m_network.addVertice(Thing(n_word.str_base,false));
+    t_thing_node=m_network.addVertice(Thing(n_word.str_base));
 
     LinkNode* t_link_node=m_links.esti();
     t_thing_node->addOutputEdge(RelationContent(t_link_node),t_entity_node);
@@ -81,11 +92,11 @@ Node* Brain::createThingFromWord(const Word& n_word)
     return t_thing_node;
 }
 
-Node* Brain::createThingFromEntity(Node* n_entity_node)
+Node* Brain::createInstanceOf(Node* n_entity_node)
 {
     Node* t_thing_node=0;
 
-    t_thing_node=m_network.addVertice(Thing(n_entity_node->content().str(),false));
+    t_thing_node=m_network.addVertice(Thing(n_entity_node->content().str()));
 
     LinkNode* t_link_node=m_links.esti();
     t_thing_node->addOutputEdge(RelationContent(t_link_node),n_entity_node);
@@ -102,7 +113,7 @@ LinkNode* Brain::getLink(const Link& n_link)
     return t_process.linkNode();
 }
 
-LinkNode* Brain::createLinkNode(const Link& n_link)
+LinkNode* Brain::getOrCreateLinkNode(const Link& n_link)
 {
     LinkNode* t_node=0;
 
@@ -110,10 +121,15 @@ LinkNode* Brain::createLinkNode(const Link& n_link)
 
     if(!t_node)
     {
-        t_node=m_links.addLinkNode(n_link);
+        t_node=createLinkNode(n_link);
     }
 
     return t_node;
+}
+
+LinkNode* Brain::createLinkNode(const Link& n_link)
+{
+    return m_links.addLinkNode(n_link);
 }
 
 void Brain::dump() const

@@ -45,13 +45,13 @@ void Jarvo::processStatement(Sentence& n_sentence)
 
         if(!t_subject_node)
         {
-            t_subject_node=m_brain.createEntityFromWord(*n_sentence.subject);
+            t_subject_node=m_brain.getOrCreateEntity(*n_sentence.subject);
             n_sentence.subject->node=t_subject_node;
         }
 
         if(!n_sentence.subject_is_entity)
         {
-            t_subject_node=m_brain.createThingFromEntity(t_subject_node);
+            t_subject_node=m_brain.createInstanceOf(t_subject_node);
         }
     }
 
@@ -61,7 +61,7 @@ void Jarvo::processStatement(Sentence& n_sentence)
 
         if(!t_object_node)
         {
-            t_object_node=m_brain.createEntityFromWord(*n_sentence.object);
+            t_object_node=m_brain.getOrCreateEntity(*n_sentence.object);
             n_sentence.object->node=t_object_node;
         }
 
@@ -69,14 +69,14 @@ void Jarvo::processStatement(Sentence& n_sentence)
         {
             if(!n_sentence.subject_is_entity && !n_sentence.object_is_entity)
             {
-                t_object_node=m_brain.createThingFromEntity(t_object_node);
+                t_object_node=m_brain.createInstanceOf(t_object_node);
             }
         }
         else
         {
             if(!n_sentence.subject_is_entity || !n_sentence.object_is_entity)
             {
-                t_object_node=m_brain.createThingFromEntity(t_object_node);
+                t_object_node=m_brain.createInstanceOf(t_object_node);
             }
         }
     }
@@ -89,11 +89,10 @@ void Jarvo::processStatement(Sentence& n_sentence)
         {
             Link t_link(n_sentence.verb->str_base);
 
-            t_link_node=m_brain.createLinkNode(t_link);
+            t_link_node=m_brain.getOrCreateLinkNode(t_link);
             n_sentence.verb->link_node=t_link_node;
         }
 
-        //t_link_node->content().triggerOn(t_subject_node,t_object_node);
         t_subject_node->addOutputEdge(RelationContent(t_link_node),t_object_node);
     }
 }
@@ -113,7 +112,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
         if(!t_subject_node)
         {
             say("Ne. Mi ne sciis kio estas " + n_sentence.subject->str_base + ".");
-            t_subject_node=m_brain.createEntityFromWord(*n_sentence.subject);
+            t_subject_node=m_brain.getOrCreateEntity(*n_sentence.subject);
             n_sentence.subject->node=t_subject_node;
             t_error=true;
         }
@@ -126,7 +125,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
         if(!t_object_node)
         {
             say("Ne. Mi ne sciis kio estas " + n_sentence.object->str_base + ".");
-            t_object_node=m_brain.createEntityFromWord(*n_sentence.object);
+            t_object_node=m_brain.getOrCreateEntity(*n_sentence.object);
             n_sentence.object->node=t_object_node;
             t_error=true;
         }
@@ -140,7 +139,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
         {
             Link t_link(n_sentence.verb->str_base);
 
-            t_link_node=m_brain.createLinkNode(t_link);
+            t_link_node=m_brain.getOrCreateLinkNode(t_link);
             n_sentence.verb->link_node=t_link_node;
             t_error=true;
         }
@@ -174,10 +173,8 @@ void Jarvo::processCommand(Sentence& n_sentence)
 
         if(!t_object_node)
         {
-            ///say("Pardonu. Mi ne scias kio estas " + n_sentence.object->str_base + ".");
-            t_object_node=m_brain.createEntityFromWord(*n_sentence.object);
+            t_object_node=m_brain.getOrCreateEntity(*n_sentence.object);
             n_sentence.object->node=t_object_node;
-            //t_error=true;
         }
     }
 
@@ -194,7 +191,7 @@ void Jarvo::processCommand(Sentence& n_sentence)
             if(!t_link_node)
             {
                 say("Pardonu. Mi ne scias kiel " + n_sentence.verb->str_base + ".");
-                t_link_node=m_brain.createLinkNode(t_link);
+                t_link_node=m_brain.getOrCreateLinkNode(t_link);
                 t_error=true;
             }
 

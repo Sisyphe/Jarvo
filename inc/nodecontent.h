@@ -11,7 +11,7 @@ class NodeContent
         {
             ENTITY,
             THING,
-            PROPERTY,
+            SPECIAL_THING,
             LINK
         };
 

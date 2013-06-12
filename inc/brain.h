@@ -22,12 +22,16 @@ class Brain
 
         Node* getEntity(const Word& n_word);
         Node* getEntity(const std::string& n_str);
-        Node* createEntityFromWord(const Word& n_word);
-        Node* createThingFromWord(const Word& n_word);
-        Node* createThingFromEntity(Node* n_entity);
-        Node* createEntityFromString(const std::string& n_str);
+        Node* getOrCreateEntity(const Word& n_word);
+        Node* getOrCreateEntity(const std::string& n_str);
+        Node* createEntity(const Word& n_word);
+        Node* createEntity(const std::string& n_str);
+
+        Node* createInstanceOf(Node* n_entity);
+        Node* getOrCreateThing(const Word& n_word);
 
         LinkNode* getLink(const Link& n_link);
+        LinkNode* getOrCreateLinkNode(const Link& n_link);
         LinkNode* createLinkNode(const Link& n_link);
 
         void dump() const;
