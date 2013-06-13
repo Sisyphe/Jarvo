@@ -57,7 +57,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                     t_entry->function=Word::ACCUSATIVE;
                 }
 
-                t_entry->is_unique=true;
+                t_entry->is_special=true;
             }
             case Word::PRONOUN:
             case Word::NOUN:
@@ -69,7 +69,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                         if(!n_sentence.subject)
                         {
                             n_sentence.subject=t_entry;
-                            if((t_next_noun_is_defined && t_entry->isPlural) || t_entry->is_unique)
+                            if((t_next_noun_is_defined && t_entry->isPlural))
                             {
                                 n_sentence.subject_is_entity=true;
                             }
@@ -82,7 +82,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                         if(!n_sentence.object)
                         {
                             n_sentence.object=t_entry;
-                            if((t_next_noun_is_defined && t_entry->isPlural) || t_entry->is_unique)
+                            if((t_next_noun_is_defined && t_entry->isPlural))
                             {
                                 n_sentence.object_is_entity=true;
                             }

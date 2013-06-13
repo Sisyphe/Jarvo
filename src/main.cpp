@@ -5,28 +5,29 @@ int main()
 {
     Jarvo jarvo;
 
-    /*jarvo.feed("La papagoj estas birdoj.");
+    jarvo.feed("La papagoj estas birdoj.");
     jarvo.feed("La birdoj estas bestoj.");
     jarvo.feed("La Katoj estas bestoj.");
     jarvo.feed("Kato mangxas birdon.");
-    jarvo.feed("Mi havas vin.");
-    jarvo.feed("Vi estas komputilo.");
-    jarvo.feed("Vi parolas Esperanton.");
-    jarvo.feed("La Komputiloj estas masxinoj.");
-    jarvo.feed("Cxu mi havas masxino ?");
     jarvo.feed("Cxu la papagoj estas birdoj ?");
     jarvo.feed("Cxu papago estas besto ?");
     jarvo.feed("Cxu papago mangxas katon ?");
     jarvo.feed("Cxu kato mangxas beston ?");
     jarvo.feed("Cxu la katoj mangxas la bestojn ?");
-    jarvo.feed("Cxu Noël havas komputilon ?");
+
+    jarvo.feed("Mi havas vin.");
+   jarvo.feed("Vi estas komputilo.");
+   jarvo.feed("La Komputiloj estas masxinoj.");
+   jarvo.feed("Cxu mi havas masxino ?");
+   jarvo.feed("Cxu Noël havas komputilon ?");
+
     jarvo.feed("brain.png estas dosiero.");
-    jarvo.feed("Apertu brain.png !");
+//     jarvo.feed("Apertu brain.png !");
     jarvo.feed("brain.dot estas dosiero");
-    jarvo.feed("apertu brain.dot");
+//     jarvo.feed("apertu brain.dot");
     jarvo.feed("/home/sisyphe estas dosierujo.");
-    jarvo.feed("Apertu /home/sisyphe");
-    jarvo.feed("Diru \"Mi estas kreteno\"");*/
+//     jarvo.feed("Apertu /home/sisyphe");
+    jarvo.feed("Diru \"Mi estas kreteno\"");
     jarvo.feed("\"vlc\" estas programo");
 
     std::string n_str;

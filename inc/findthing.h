@@ -10,8 +10,8 @@ class FindThing : public VerticeProcess<Thing,RelationContent>
 {
     public:
 
-        FindThing(const Word& n_word, bool n_is_looking_for_entity=false);
-        FindThing(const std::string& n_str, bool n_is_looking_for_entity=false);
+        FindThing(const Word& n_word, NodeContent::Type n_type=NodeContent::THING);
+        FindThing(const std::string& n_str, NodeContent::Type n_type=NodeContent::THING);
 
         bool isThingFound() const;
         Node* thingNode() const;
@@ -25,7 +25,7 @@ class FindThing : public VerticeProcess<Thing,RelationContent>
 
         std::string m_str;
         Node* m_node;
-        bool m_is_looking_for_entity;
+        NodeContent::Type m_type;
 };
 
 #endif // FINDTHING_H

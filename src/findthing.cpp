@@ -1,22 +1,22 @@
 #include "findthing.h"
 
-FindThing::FindThing(const Word &n_word, bool n_is_looking_for_entity)
+FindThing::FindThing(const Word &n_word, NodeContent::Type n_type)
     :m_str(n_word.str_base),
      m_node(0),
-     m_is_looking_for_entity(n_is_looking_for_entity)
+     m_type(n_type)
 {
 }
 
-FindThing::FindThing(const std::string& n_str, bool n_is_looking_for_entity)
+FindThing::FindThing(const std::string& n_str, NodeContent::Type n_type)
     :m_str(n_str),
      m_node(0),
-     m_is_looking_for_entity(n_is_looking_for_entity)
+     m_type(n_type)
 {
 }
 
 bool FindThing::isThingFound() const
 {
-    return m_node==0;
+    return m_node!=0;
 }
 
 Node* FindThing::thingNode() const
@@ -30,9 +30,8 @@ bool FindThing::process(Node* n_node)
 
     if
     (
-       (n_node->content().type()==NodeContent::ENTITY ||
-       !m_is_looking_for_entity) &&
-       n_node->content().str()==m_str
+       n_node->content().type()==m_type
+       && n_node->content().str()==m_str
     )
     {
         t_continue=false;

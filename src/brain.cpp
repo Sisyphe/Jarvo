@@ -39,7 +39,7 @@ Node* Brain::getEntity(const Word& n_word)
 
 Node* Brain::getEntity(const std::string& n_str)
 {
-    FindThing t_process(n_str,true);
+    FindThing t_process(n_str,NodeContent::ENTITY);
 
     m_network.applyOnAllVertices(&t_process);
 
@@ -97,6 +97,38 @@ Node* Brain::createInstanceOf(Node* n_entity_node)
     Node* t_thing_node=0;
 
     t_thing_node=m_network.addVertice(Thing(n_entity_node->content().str()));
+
+    LinkNode* t_link_node=m_links.esti();
+    t_thing_node->addOutputEdge(RelationContent(t_link_node),n_entity_node);
+
+    return t_thing_node;
+}
+
+Node* Brain::getOrCreateSpecialThing(const Word& n_word)
+{
+    Node* t_thing_node=0;
+    FindThing t_process(n_word.str_base, NodeContent::SPECIAL_THING);
+
+    m_network.applyOnAllVertices(&t_process);
+
+    if(t_process.isThingFound())
+    {
+        t_thing_node=t_process.thingNode();
+    }
+    else
+    {
+        t_thing_node=m_network.addVertice(Thing(n_word.str_base, NodeContent::SPECIAL_THING));
+        t_thing_node->addOutputEdge(RelationContent(m_links.esti()),m_io);
+    }
+
+    return t_thing_node;
+}
+
+Node* Brain::createSpecialInstanceOf(Node* n_entity_node)
+{
+    Node* t_thing_node=0;
+
+    t_thing_node=m_network.addVertice(Thing(n_entity_node->content().str(),NodeContent::SPECIAL_THING));
 
     LinkNode* t_link_node=m_links.esti();
     t_thing_node->addOutputEdge(RelationContent(t_link_node),n_entity_node);
