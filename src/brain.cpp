@@ -1,7 +1,7 @@
 #include "brain.h"
 #include "findlink.h"
 #include "findthing.h"
-#include "findconnection.h"
+#include "findpath.h"
 #include <fstream>
 #include "openlink.h"
 #include "saylink.h"
@@ -15,11 +15,17 @@ Brain::Brain()
 
 Brain::~Brain(){}
 
-bool Brain::findRelation(Node* n_out_node, const Link& n_link, Node* n_in_node)
+bool Brain::connectNodes(Node* n_out_node, LinkNode* n_link_node, Node* n_in_node)
 {
-    FindConnection t_finder(n_in_node,n_link);
+    n_out_node->addOutputEdge(RelationContent(n_link_node),n_in_node);
+    return true;
+}
+
+bool Brain::pathExists(Node* n_out_node, const Link& n_link, Node* n_in_node)
+{
+    FindPath t_finder(n_in_node,n_link);
     traverseNetwork(&t_finder,n_out_node);
-    return t_finder.isConnectionFound();
+    return t_finder.isPathFound();
 }
 
 void Brain::traverseNetwork(NetworkProcess* n_process, Node* n_node)
@@ -73,7 +79,7 @@ Node* Brain::createEntity(const Word& n_word)
 Node* Brain::createEntity(const std::string& n_str)
 {
     Node* t_entity_node=m_network.addVertice(Thing(n_str,NodeContent::ENTITY));
-    t_entity_node->addOutputEdge(RelationContent(m_links.esti()),m_io);
+    connectNodes(t_entity_node,m_links.esti(),m_io);
     return t_entity_node;
 }
 
@@ -87,7 +93,7 @@ Node* Brain::getOrCreateThing(const Word& n_word)
     t_thing_node=m_network.addVertice(Thing(n_word.str_base));
 
     LinkNode* t_link_node=m_links.esti();
-    t_thing_node->addOutputEdge(RelationContent(t_link_node),t_entity_node);
+    connectNodes(t_thing_node,t_link_node,t_entity_node);
 
     return t_thing_node;
 }
@@ -99,7 +105,7 @@ Node* Brain::createInstanceOf(Node* n_entity_node)
     t_thing_node=m_network.addVertice(Thing(n_entity_node->content().str()));
 
     LinkNode* t_link_node=m_links.esti();
-    t_thing_node->addOutputEdge(RelationContent(t_link_node),n_entity_node);
+    connectNodes(t_thing_node,t_link_node,n_entity_node);
 
     return t_thing_node;
 }
@@ -118,7 +124,7 @@ Node* Brain::getOrCreateSpecialThing(const Word& n_word)
     else
     {
         t_thing_node=m_network.addVertice(Thing(n_word.str_base, NodeContent::SPECIAL_THING));
-        t_thing_node->addOutputEdge(RelationContent(m_links.esti()),m_io);
+        connectNodes(t_thing_node,m_links.esti(),m_io);
     }
 
     return t_thing_node;
@@ -131,7 +137,7 @@ Node* Brain::createSpecialInstanceOf(Node* n_entity_node)
     t_thing_node=m_network.addVertice(Thing(n_entity_node->content().str(),NodeContent::SPECIAL_THING));
 
     LinkNode* t_link_node=m_links.esti();
-    t_thing_node->addOutputEdge(RelationContent(t_link_node),n_entity_node);
+    connectNodes(t_thing_node,t_link_node,n_entity_node);
 
     return t_thing_node;
 }

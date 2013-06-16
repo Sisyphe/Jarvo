@@ -18,7 +18,8 @@ class Brain
 
         void traverseNetwork(NetworkProcess* n_process, Node* n_node=0);
         void traverseLinkGraph(LinkProcess* n_process, LinkNode* n_link_node=0);
-        bool findRelation(Node* n_out_node, const Link& n_link, Node* n_in_node);
+        bool pathExists(Node* n_out_node, const Link& n_link, Node* n_in_node);
+        bool connectNodes(Node* n_out_node, LinkNode* n_link_node, Node* n_in_node);
 
         Node* getEntity(const Word& n_word);
         Node* getEntity(const std::string& n_str);

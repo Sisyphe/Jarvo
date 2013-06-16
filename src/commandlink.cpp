@@ -1,5 +1,5 @@
 #include "commandlink.h"
-#include "findconnection.h"
+#include "findpath.h"
 #include "findthing.h"
 
 CommandLink::CommandLink(Brain& n_brain)
@@ -29,9 +29,9 @@ Handler* CommandLink::getHandler(Node* n_node) const
 
     while(it != m_handable_things.end() && !t_found)
     {
-        FindConnection t_finder((*it).first,Link::isEquivalentLink);
+        FindPath t_finder((*it).first,Link::isEquivalentLink);
         m_brain.traverseNetwork(&t_finder,n_node);
-        t_found=t_finder.isConnectionFound();
+        t_found=t_finder.isPathFound();
         if(!t_found) ++it;
     }
 

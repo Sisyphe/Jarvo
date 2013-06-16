@@ -1,6 +1,6 @@
 #include "jarvo.h"
 #include "findthing.h"
-#include "findconnection.h"
+#include "findpath.h"
 #include <fstream>
 
 Jarvo::Jarvo()
@@ -179,7 +179,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
 
     if(!t_error)
     {
-        t_is_relation_found=m_brain.findRelation(t_subject_node,
+        t_is_relation_found=m_brain.pathExists(t_subject_node,
                                                  *t_link_node->content(),
                                                  t_object_node);
         if(t_is_relation_found)

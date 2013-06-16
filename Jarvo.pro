@@ -27,7 +27,7 @@ SOURCES +=  src/main.cpp \
             src/findthing.cpp \
             src/linkgraph.cpp \
             src/mouth.cpp \
-            src/findconnection.cpp \
+            src/findpath.cpp \
             src/brain.cpp \
             src/findlink.cpp \
             src/openlink.cpp \
@@ -49,7 +49,7 @@ HEADERS +=  inc/thing.h \
             inc/findthing.h \
             inc/linkgraph.h \
             inc/mouth.h \
-            inc/findconnection.h \
+            inc/findpath.h \
             inc/brain.h \
             inc/findlink.h \
             inc/openlink.h \

@@ -28,6 +28,8 @@ class RelationContent
 
         State state() const;
 
+        void enable();
+
         Link* link() const;
 
         friend std::ostream& operator<<(std::ostream& n_out, const RelationContent& n_content);

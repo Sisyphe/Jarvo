@@ -16,6 +16,17 @@ RelationContent::State RelationContent::state() const
     return m_history.back().second;
 }
 
+void RelationContent::enable()
+{
+    if(state() == RelationContent::DISABLED)
+    {
+        std::pair<Time,RelationContent::State> t_log;
+        time(&t_log.first);
+        t_log.second=ENABLED;
+        m_history.push_back(t_log);
+    }
+}
+
 Link* RelationContent::link() const
 {
     Link* t_link=0;

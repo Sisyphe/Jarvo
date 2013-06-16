@@ -4,15 +4,16 @@
 #include <verticeprocess.h>
 #include "node.h"
 #include "link.h"
+#include <list>
 
-class FindConnection: public VerticeProcess<Thing,RelationContent>
+class FindPath: public VerticeProcess<Thing,RelationContent>
 {
     public:
 
-        FindConnection(Node* n_out_node, const Link& n_link);
+        FindPath(Node* n_out_node, const Link& n_link);
 
-        bool isConnectionFound() const;
-        Relation* foundRelation() const;
+        bool isPathFound() const;
+        std::list<Relation*>* foundPath() const;
         virtual bool process(Node *n_node);
         virtual bool checkEdge(Relation *n_relation);
         virtual Node::LinkDirection direction() const;
@@ -23,9 +24,10 @@ class FindConnection: public VerticeProcess<Thing,RelationContent>
         Node* m_out_node;
         Link m_link;
         Node* m_link_found_node;
+        std::list<Relation*>::iterator m_found_relation_it;
         bool m_is_found;
         bool m_is_link_found;
-        Relation* m_relation;
+        std::list<Relation*>* m_relation_list;
 };
 
 #endif
