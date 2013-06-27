@@ -34,7 +34,8 @@ SOURCES +=  src/main.cpp \
             src/handler.cpp \
             src/openfileaction.cpp \
             src/openfolderaction.cpp \
-            src/commandlink.cpp
+            src/commandlink.cpp \
+            src/time.cpp
 
 HEADERS +=  inc/thing.h \
             inc/node.h \
@@ -58,4 +59,5 @@ HEADERS +=  inc/thing.h \
             inc/openfolderaction.h \
             inc/commandlink.h \
             inc/saylink.h \
-            inc/openprogramaction.h
+            inc/openprogramaction.h \
+            inc/time.h

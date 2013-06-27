@@ -6,7 +6,7 @@ RelationContent::RelationContent(Vertice<Link*,bool>* n_link_node)
      :m_link_node(n_link_node)
 {
     std::pair<Time,RelationContent::State> t_creation_log;
-    time(&t_creation_log.first);
+//     time(&t_creation_log.first);
     t_creation_log.second=ENABLED;
     m_history.push_back(t_creation_log);
 }
@@ -21,7 +21,7 @@ void RelationContent::enable()
     if(state() == RelationContent::DISABLED)
     {
         std::pair<Time,RelationContent::State> t_log;
-        time(&t_log.first);
+//         time(&t_log.first);
         t_log.second=ENABLED;
         m_history.push_back(t_log);
     }

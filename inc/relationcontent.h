@@ -1,7 +1,7 @@
 #ifndef RELATION_CONTENT_H
 #define RELATION_CONTENT_H
 
-#include <ctime>
+#include <time.h>
 #include <vector>
 #include <utility>
 #include <string>
@@ -9,8 +9,6 @@
 #include "thing.h"
 
 class Link;
-
-typedef time_t Time;
 
 class RelationContent
 {
