@@ -1,6 +1,6 @@
 #include "findpath.h"
 
-FindPath::FindPath(Node* n_out_node, const Link& n_link)
+FindPath::FindPath(ThingNode* n_out_node, const Link& n_link)
     :m_out_node(n_out_node),
      m_link(n_link),
      m_link_found_node(0),
@@ -20,7 +20,7 @@ bool FindPath::isPathFound() const
     return m_is_found;
 }
 
-bool FindPath::process(Node *n_node)
+bool FindPath::process(ThingNode *n_node)
 {
     if(n_node == m_link_found_node)
     {
@@ -59,9 +59,9 @@ bool FindPath::checkEdge(Relation *n_relation)
     return !stop;
 }
 
-typename Node::LinkDirection FindPath::direction() const
+typename ThingNode::LinkDirection FindPath::direction() const
 {
-    return Node::OUTPUT;
+    return ThingNode::OUTPUT;
 }
 
 FindPath::TraversalMode FindPath::traversalMode() const

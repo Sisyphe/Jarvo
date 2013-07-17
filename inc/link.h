@@ -30,12 +30,12 @@ class Link : public NodeContent
             return n_out;
         }
 
-        bool operator== (const Link& n_link) const
+        bool operator==(const Link& n_link) const
         {
             return m_verb == n_link.verb();
         }
 
-        virtual bool tryToHandle(Node* n_node) {return false;}
+        virtual bool tryToHandle(ThingNode* n_node) {return false;}
 
     protected:
 

@@ -54,7 +54,7 @@ class Word
         Case function;
         Tense tense;
         bool isPlural;
-        Node* node;
+        ThingNode* node;
         LinkNode* link_node;
         bool is_special;
 };

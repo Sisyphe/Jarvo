@@ -7,7 +7,7 @@ CommandLink::CommandLink(Brain& n_brain)
 
 void CommandLink::searchNewHandlers()
 {
-    Node* t_node=0;
+    ThingNode* t_node=0;
     std::list<Handler*>::iterator it=m_handlers.begin();
 
     for(; it != m_handlers.end(); ++it)
@@ -17,15 +17,15 @@ void CommandLink::searchNewHandlers()
         for(; str_it != (*it)->handable().end(); ++str_it)
         {
             t_node=m_brain.getOrCreateEntity(*str_it);
-            m_handable_things.insert(std::pair<Node*,Handler*>(t_node,*it));
+            m_handable_things.insert(std::pair<ThingNode*,Handler*>(t_node,*it));
         }
     }
 }
 
-Handler* CommandLink::getHandler(Node* n_node) const
+Handler* CommandLink::getHandler(ThingNode* n_node) const
 {
     bool t_found=false;
-    std::map<Node*,Handler*>::const_iterator it=m_handable_things.begin();
+    std::map<ThingNode*,Handler*>::const_iterator it=m_handable_things.begin();
 
     while(it != m_handable_things.end() && !t_found)
     {
@@ -38,7 +38,7 @@ Handler* CommandLink::getHandler(Node* n_node) const
     return (t_found)? (*it).second : 0;
 }
 
-bool CommandLink::tryToHandle(Node *n_node)
+bool CommandLink::tryToHandle(ThingNode *n_node)
 {
     bool t_is_handled=false;
     Handler* t_handler=0;

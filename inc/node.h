@@ -6,7 +6,7 @@
 #include "thing.h"
 #include "relationcontent.h"
 
-typedef Vertice<Thing,RelationContent> Node;
+typedef Vertice<Thing,RelationContent> ThingNode;
 
 typedef Edge<Thing,RelationContent> Relation;
 

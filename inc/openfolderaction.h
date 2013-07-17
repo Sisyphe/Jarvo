@@ -8,7 +8,7 @@ class OpenFolderAction: public Handler
     public:
 
         OpenFolderAction();
-        virtual void handle(Node* n_node);
+        virtual void handle(ThingNode* n_node);
 
 };
 

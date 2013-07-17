@@ -8,7 +8,7 @@ class OpenFileAction: public Handler
     public:
 
         OpenFileAction();
-        virtual void handle(Node* n_node);
+        virtual void handle(ThingNode* n_node);
 };
 
 #endif // OPENFILEACTION_H

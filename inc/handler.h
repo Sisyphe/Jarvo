@@ -10,7 +10,7 @@ class Handler
     public:
 
         virtual ~Handler(){}
-        virtual void handle(Node* n_node)=0;
+        virtual void handle(ThingNode* n_node)=0;
         virtual const std::list<std::string>& handable() const;
 
     protected:

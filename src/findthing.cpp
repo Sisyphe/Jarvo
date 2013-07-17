@@ -19,12 +19,12 @@ bool FindThing::isThingFound() const
     return m_node!=0;
 }
 
-Node* FindThing::thingNode() const
+ThingNode* FindThing::thingNode() const
 {
     return m_node;
 }
 
-bool FindThing::process(Node* n_node)
+bool FindThing::process(ThingNode* n_node)
 {
     bool t_continue=true;
 
@@ -46,9 +46,9 @@ bool FindThing::checkEdge(Relation* n_relation)
     return true;
 }
 
-typename Node::LinkDirection FindThing::direction() const
+typename ThingNode::LinkDirection FindThing::direction() const
 {
-    return Node::BOTH;
+    return ThingNode::BOTH;
 }
 
 FindThing::TraversalMode FindThing::traversalMode() const

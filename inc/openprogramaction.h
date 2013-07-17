@@ -13,7 +13,7 @@ public:
         m_handables.push_back("programo");
     }
 
-    virtual void handle(Node* n_node)
+    virtual void handle(ThingNode* n_node)
     {
         system(n_node->content().str().c_str());
     }

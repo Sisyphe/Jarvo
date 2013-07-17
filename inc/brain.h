@@ -16,23 +16,23 @@ class Brain
         Brain();
         ~Brain();
 
-        void traverseNetwork(NetworkProcess* n_process, Node* n_node=0);
+        void traverseNetwork(NetworkProcess* n_process, ThingNode* n_node=0);
         void traverseLinkGraph(LinkProcess* n_process, LinkNode* n_link_node=0);
-        bool pathExists(Node* n_out_node, const Link& n_link, Node* n_in_node);
-        bool connectNodes(Node* n_out_node, LinkNode* n_link_node, Node* n_in_node);
+        bool pathExists(ThingNode* n_out_node, const Link& n_link, ThingNode* n_in_node);
+        bool connectNodes(ThingNode* n_out_node, LinkNode* n_link_node, ThingNode* n_in_node);
 
-        Node* getEntity(const Word& n_word);
-        Node* getEntity(const std::string& n_str);
-        Node* getOrCreateEntity(const Word& n_word);
-        Node* getOrCreateEntity(const std::string& n_str);
-        Node* createEntity(const Word& n_word);
-        Node* createEntity(const std::string& n_str);
+        ThingNode* getEntity(const Word& n_word);
+        ThingNode* getEntity(const std::string& n_str);
+        ThingNode* getOrCreateEntity(const Word& n_word);
+        ThingNode* getOrCreateEntity(const std::string& n_str);
+        ThingNode* createEntity(const Word& n_word);
+        ThingNode* createEntity(const std::string& n_str);
 
-        Node* createInstanceOf(Node* n_entity);
-        Node* getOrCreateThing(const Word& n_word);
+        ThingNode* createInstanceOf(ThingNode* n_entity);
+        ThingNode* getOrCreateThing(const Word& n_word);
 
-        Node* createSpecialInstanceOf(Node* n_entity_node);
-        Node* getOrCreateSpecialThing(const Word& n_word);
+        ThingNode* createSpecialInstanceOf(ThingNode* n_entity_node);
+        ThingNode* getOrCreateSpecialThing(const Word& n_word);
 
         LinkNode* getLink(const Link& n_link);
         LinkNode* getOrCreateLinkNode(const Link& n_link);

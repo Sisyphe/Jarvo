@@ -35,7 +35,8 @@ SOURCES +=  src/main.cpp \
             src/openfileaction.cpp \
             src/openfolderaction.cpp \
             src/commandlink.cpp \
-            src/time.cpp
+            src/time.cpp \
+            src/findinstance.cpp
 
 HEADERS +=  inc/thing.h \
             inc/node.h \
@@ -60,4 +61,5 @@ HEADERS +=  inc/thing.h \
             inc/commandlink.h \
             inc/saylink.h \
             inc/openprogramaction.h \
-            inc/time.h
+            inc/time.h \
+            inc/findinstance.h

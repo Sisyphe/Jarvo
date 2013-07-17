@@ -14,7 +14,7 @@ class SayThingHandler: public Handler
             m_handables.push_back("io");
         }
 
-        virtual void handle(Node* n_node)
+        virtual void handle(ThingNode* n_node)
         {
             Mouth::speak(n_node->content().str());
         }

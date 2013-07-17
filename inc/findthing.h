@@ -14,17 +14,17 @@ class FindThing : public VerticeProcess<Thing,RelationContent>
         FindThing(const std::string& n_str, NodeContent::Type n_type=NodeContent::THING);
 
         bool isThingFound() const;
-        Node* thingNode() const;
+        ThingNode* thingNode() const;
 
-        virtual bool process(Node *n_node);
+        virtual bool process(ThingNode *n_node);
         virtual bool checkEdge(Relation *n_relation);
-        virtual typename Node::LinkDirection direction() const;
+        virtual typename ThingNode::LinkDirection direction() const;
         virtual TraversalMode traversalMode() const;
 
     protected:
 
         std::string m_str;
-        Node* m_node;
+        ThingNode* m_node;
         NodeContent::Type m_type;
 };
 
