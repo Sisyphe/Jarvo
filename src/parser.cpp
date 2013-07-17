@@ -5,12 +5,17 @@
 void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 {
     bool t_next_noun_is_defined=false;
+    Word* t_entry = 0;
+    Word* t_article = 0;
+    bool t_error=false;
     std::vector<std::string> t_raw_words;
+    std::vector<std::string>::iterator t_raw_word;
+    NounGroup* subject_group = &n_sentence.subject_group;
+    NounGroup* object_group = &n_sentence.object_group;
+    VerbGroup* verb_group = &n_sentence.verb_group;
 
     extractRawWords(n_str,t_raw_words);
-
-    bool t_error=false;
-    std::vector<std::string>::iterator t_raw_word=t_raw_words.begin();
+    t_raw_word=t_raw_words.begin();
 
     if(*t_raw_word == "cxu")
     {
@@ -21,7 +26,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 
     while(t_raw_word!=t_raw_words.end() && !t_error)
     {
-        Word* t_entry=m_dict.getEntry(*t_raw_word);
+        t_entry=m_dict.getEntry(*t_raw_word);
 
         switch(t_entry->type)
         {
@@ -30,14 +35,14 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                 switch(t_entry->function)
                 {
                     case Word::SUBJECT:
-                        if(!n_sentence.object && !n_sentence.verb)
+                        if(!object_group->noun && !verb_group->verb)
                         {
-                            n_sentence.subject_adjs.push_back(t_entry);
+                            subject_group->addWord(t_entry);
                             break;
                         }
 
                     case Word::ACCUSATIVE:
-                        n_sentence.object_adjs.push_back(t_entry);
+                        object_group->addWord(t_entry);
                         break;
 
                     default: t_error=true;
@@ -48,7 +53,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 
             case Word::UNKNOWN_TYPE:
             {
-                if(!n_sentence.verb)
+                if(!verb_group->verb)
                 {
                     t_entry->function=Word::SUBJECT;
                 }
@@ -66,27 +71,27 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                 {
                     case Word::SUBJECT:
                     {
-                        if(!n_sentence.subject)
+                        if(!subject_group->noun)
                         {
-                            n_sentence.subject=t_entry;
-                            if((t_next_noun_is_defined && t_entry->isPlural))
+                            if(t_next_noun_is_defined)
                             {
-                                n_sentence.subject_is_entity=true;
+                                subject_group->addWord(t_article);
+                                t_next_noun_is_defined=false;
                             }
-                            t_next_noun_is_defined=false;
+                            subject_group->addWord(t_entry);
                             break;
                         }
                     }
                     case Word::ACCUSATIVE:
                     {
-                        if(!n_sentence.object)
+                        if(!object_group->noun)
                         {
-                            n_sentence.object=t_entry;
-                            if((t_next_noun_is_defined && t_entry->isPlural))
+                            if(t_next_noun_is_defined)
                             {
-                                n_sentence.object_is_entity=true;
+                                object_group->addWord(t_article);
+                                t_next_noun_is_defined=false;
                             }
-                            t_next_noun_is_defined=false;
+                            object_group->addWord(t_entry);
                             break;
                         }
                     }
@@ -104,13 +109,14 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                 }
                 else
                 {
-                    n_sentence.verb=t_entry;
+                    verb_group->addWord(t_entry);
                 }
                 break;
             }
 
             case Word::ARTICLE:
             {
+                t_article = t_entry;
                 t_next_noun_is_defined=true;
                 break;
             }

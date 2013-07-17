@@ -40,13 +40,8 @@ class Word
             CONDITIONAL
         };
 
-        Word()
-            :type(UNKNOWN_TYPE),
-             function(NO_CASE),
-             tense(NO_TENSE),
-             isPlural(false),
-             node(0)
-        {}
+        Word();
+        bool operator==(const Word& other);
 
         std::string str;
         std::string str_base;

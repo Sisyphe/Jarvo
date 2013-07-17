@@ -1,19 +1,16 @@
 #include "word.h"
 #include <algorithm>
 
-Word::Word(){}
 
-Word::Word(const std::string& n_str)
-{
-    setString(n_str);
-}
+Word::Word():
+    type(UNKNOWN_TYPE),
+    function(NO_CASE),
+    tense(NO_TENSE),
+    isPlural(false),
+    node(0)
+{}
 
-void Word::setString(const std::string& n_str)
+bool Word::operator==(const Word& other)
 {
-    m_str=n_str;
-}
-
-Word::Type Word::type() const
-{
-    return m_type;
+    return (str == other.str);
 }

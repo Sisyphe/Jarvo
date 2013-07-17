@@ -34,7 +34,11 @@ SOURCES +=  src/main.cpp \
             src/handler.cpp \
             src/openfileaction.cpp \
             src/openfolderaction.cpp \
-            src/commandlink.cpp
+            src/commandlink.cpp \
+            src/wordgroup.cpp \
+            src/word.cpp \
+            src/noungroup.cpp \
+            src/verbgroup.cpp \
 
 HEADERS +=  inc/thing.h \
             inc/node.h \
@@ -58,4 +62,7 @@ HEADERS +=  inc/thing.h \
             inc/openfolderaction.h \
             inc/commandlink.h \
             inc/saylink.h \
-            inc/openprogramaction.h
+            inc/openprogramaction.h \
+            inc/wordgroup.h \
+            inc/noungroup.h \
+            inc/verbgroup.h \

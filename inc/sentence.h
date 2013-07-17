@@ -1,7 +1,8 @@
 #ifndef SENTENCE_H
 #define SENTENCE_H
 
-#include "word.h"
+#include "noungroup.h"
+#include "verbgroup.h"
 
 class Sentence
 {
@@ -9,13 +10,13 @@ class Sentence
 
         Sentence();
 
-        Word* subject;
-        bool subject_is_entity;
-        std::vector<Word*> subject_adjs;
-        Word* verb;
-        Word* object;
-        bool object_is_entity;
-        std::vector<Word*> object_adjs;
+        Word* subject() const;
+        Word* verb() const;
+        Word* object() const;
+
+        NounGroup subject_group;
+        VerbGroup verb_group;
+        NounGroup object_group;
         bool is_interrogative;
         bool is_yes_no_question;
 };
