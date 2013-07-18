@@ -35,68 +35,30 @@ void Jarvo::feed(const std::string& n_input)
 
 void Jarvo::processStatement(Sentence& n_sentence)
 {
+    bool need_instance = false;
     Node* t_subject_node=0;
     Node* t_object_node=0;
     LinkNode* t_link_node=0;
 
     if(n_sentence.subject())
     {
-        t_subject_node=n_sentence.subject()->node;
-
-        if(!t_subject_node)
-        {
-            if(!n_sentence.subject()->is_special)
-            {
-                t_subject_node=m_brain.getOrCreateEntity(*n_sentence.subject());
-                n_sentence.subject()->node=t_subject_node;
-            }
-            else
-            {
-                t_subject_node=m_brain.getOrCreateSpecialThing(*n_sentence.subject());
-                n_sentence.subject()->node=t_subject_node;
-            }
-        }
-
-        if(!n_sentence.subject_group.is_entity && !n_sentence.subject()->is_special)
-        {
-            t_subject_node=m_brain.createInstanceOf(t_subject_node);
-        }
+        need_instance = !n_sentence.subject_group.is_entity
+                     && !n_sentence.subject()->is_special;
+        t_subject_node = m_brain.getOrCreateNode(n_sentence.subject(), need_instance);
     }
 
     if(n_sentence.object())
     {
-        t_object_node=n_sentence.object()->node;
+        need_instance = (n_sentence.verb()->str_base == "esti"
+                     && !n_sentence.subject_group.is_entity
+                     && !n_sentence.subject()->is_special
+                     && !n_sentence.object_group.is_entity)
+                     || (n_sentence.verb()->str_base != "esti"
+                    && (!n_sentence.subject_group.is_entity
+                     || !n_sentence.object_group.is_entity)
+                     && !n_sentence.object()->is_special);
 
-        if(!t_object_node)
-        {
-            if(!n_sentence.object()->is_special)
-            {
-                t_object_node=m_brain.getOrCreateEntity(*n_sentence.object());
-                n_sentence.object()->node=t_object_node;
-            }
-            else
-            {
-                t_object_node=m_brain.getOrCreateSpecialThing(*n_sentence.object());
-                n_sentence.object()->node=t_object_node;
-            }
-        }
-
-        if(n_sentence.verb()->str_base == "esti")
-        {
-            if(!n_sentence.subject_group.is_entity && !n_sentence.subject()->is_special && !n_sentence.object_group.is_entity)
-            {
-                t_object_node=m_brain.createInstanceOf(t_object_node);
-            }
-        }
-        else if
-        (
-            (!n_sentence.subject_group.is_entity
-            || !n_sentence.object_group.is_entity)
-            && !n_sentence.object()->is_special
-        )
-        {
-            t_object_node=m_brain.createInstanceOf(t_object_node);
-        }
+        t_object_node = m_brain.getOrCreateNode(n_sentence.object(), need_instance);
     }
 
     if(n_sentence.verb())
@@ -105,9 +67,7 @@ void Jarvo::processStatement(Sentence& n_sentence)
 
         if(!t_link_node)
         {
-            Link t_link(n_sentence.verb()->str_base);
-
-            t_link_node=m_brain.getOrCreateLinkNode(t_link);
+            t_link_node=m_brain.getOrCreateLinkNode(Link(n_sentence.verb()->str_base));
             n_sentence.verb()->link_node=t_link_node;
         }
 
@@ -129,16 +89,8 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
 
         if(!t_subject_node)
         {
+            m_brain.getOrCreateNode(n_sentence.subject());
             say("Ne. Mi ne sciis kio estas " + n_sentence.subject()->str_base + ".");
-            if(!n_sentence.object()->is_special)
-            {
-                t_subject_node=m_brain.getOrCreateEntity(*n_sentence.subject());
-            }
-            else
-            {
-                t_subject_node=m_brain.getOrCreateSpecialThing(*n_sentence.subject());
-            }
-            n_sentence.subject()->node=t_subject_node;
             t_error=true;
         }
     }
@@ -149,16 +101,8 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
 
         if(!t_object_node)
         {
+            m_brain.getOrCreateNode(n_sentence.object());
             say("Ne. Mi ne sciis kio estas " + n_sentence.object()->str_base + ".");
-            if(!n_sentence.object()->is_special)
-            {
-                t_object_node=m_brain.getOrCreateEntity(*n_sentence.object());
-            }
-            else
-            {
-                t_object_node=m_brain.getOrCreateSpecialThing(*n_sentence.object());
-            }
-            n_sentence.object()->node=t_object_node;
             t_error=true;
         }
     }
@@ -223,7 +167,6 @@ void Jarvo::processCommand(Sentence& n_sentence)
             if(!t_link_node)
             {
                 say("Pardonu. Mi ne scias kiel " + n_sentence.verb()->str_base + ".");
-                t_link_node=m_brain.getOrCreateLinkNode(t_link);
                 t_error=true;
             }
 

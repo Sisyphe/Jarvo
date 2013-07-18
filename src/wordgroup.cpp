@@ -26,6 +26,19 @@ bool WordGroup::isEmpty() const
     return m_word_list.empty();
 }
 
+std::string WordGroup::str() const
+{
+    std::vector<Word*>::const_iterator it = m_word_list.begin();
+    std::string str;
+
+    for(; it != m_word_list.end(); ++it)
+    {
+        str += (*it)->str;
+    }
+
+    return str;
+}
+
 bool WordGroup::operator==(const WordGroup& other)
 {
     bool is_equal = true;

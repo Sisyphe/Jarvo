@@ -142,6 +142,32 @@ Node* Brain::createSpecialInstanceOf(Node* n_entity_node)
     return t_thing_node;
 }
 
+Node* Brain::getOrCreateNode(Word* n_word, bool need_instance)
+{
+    Node* t_node=n_word->node;
+
+    if(!t_node)
+    {
+        if(n_word->is_special)
+        {
+            t_node = getOrCreateSpecialThing(*n_word);
+        }
+        else
+        {
+            t_node = getOrCreateEntity(n_word->str_base);
+        }
+
+        n_word->node = t_node;
+    }
+
+    if(need_instance)
+    {
+        t_node = createInstanceOf(t_node);
+    }
+
+    return t_node;
+}
+
 LinkNode* Brain::getLink(const Link& n_link)
 {
     FindLink t_process(n_link);

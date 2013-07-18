@@ -34,6 +34,8 @@ class Brain
         Node* createSpecialInstanceOf(Node* n_entity_node);
         Node* getOrCreateSpecialThing(const Word& n_word);
 
+        Node* getOrCreateNode(Word* n_word, bool need_instance=false);
+
         LinkNode* getLink(const Link& n_link);
         LinkNode* getOrCreateLinkNode(const Link& n_link);
         LinkNode* createLinkNode(const Link& n_link);

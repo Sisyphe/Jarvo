@@ -2,7 +2,8 @@
 
 NounGroup::NounGroup():
     noun(0),
-    is_defined(false)
+    is_defined(false),
+    is_entity(false)
 {
 
 }
@@ -14,12 +15,14 @@ bool NounGroup::addWord(Word* n_word)
     if(n_word->type == Word::ARTICLE)
     {
         is_defined = true;
-        is_entity = (noun->isPlural && is_defined);
+        is_entity = (noun && noun->isPlural && is_defined);
     }
-    else if(n_word->type == Word::NOUN || n_word->type == Word::PRONOUN)
+    else if(n_word->type == Word::NOUN
+         || n_word->type == Word::PRONOUN
+         || n_word->type == Word::UNKNOWN_TYPE)
     {
         noun = n_word;
-        is_entity = (noun->isPlural && is_defined);
+        is_entity = (noun && noun->isPlural && is_defined);
     }
     else if(n_word->type == Word::ADJECTIVE)
     {

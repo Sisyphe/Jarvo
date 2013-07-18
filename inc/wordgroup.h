@@ -3,6 +3,7 @@
 
 #include "word.h"
 #include <vector>
+#include <string>
 
 class WordGroup
 {
@@ -13,6 +14,7 @@ class WordGroup
 
         virtual bool addWord(Word* n_word);
         bool isEmpty() const;
+        std::string str() const;
 
         bool operator==(const WordGroup& other);
 
