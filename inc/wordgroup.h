@@ -5,6 +5,20 @@
 #include <vector>
 #include <string>
 
+struct Qualifier
+{
+    Qualifier(Word* n_adjective):
+        adverb(0),
+        adjective(n_adjective){}
+
+    Qualifier(Word* n_adverb, Word* n_adjective):
+        adverb(n_adverb),
+        adjective(n_adjective){}
+
+    Word* adverb;
+    Word* adjective;
+};
+
 class WordGroup
 {
     public:
@@ -14,7 +28,7 @@ class WordGroup
 
         virtual bool addWord(Word* n_word);
         bool isEmpty() const;
-        std::string str() const;
+        virtual std::string str() const;
 
         bool operator==(const WordGroup& other);
 

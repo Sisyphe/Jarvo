@@ -20,7 +20,7 @@ bool FindLink::process(LinkNode* n_node)
 {
     bool t_continue=true;
 
-    if(n_node->content()->verb() == m_link.verb())
+    if(*n_node->content() == m_link)
     {
         t_continue=false;
         m_node=n_node;

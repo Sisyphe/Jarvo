@@ -30,3 +30,30 @@ bool VerbGroup::addWord(Word* n_word)
 
     return true;
 }
+
+std::vector<std::string> VerbGroup::getAdjectiveStrings() const
+{
+    std::vector<std::string> t_strings;
+    std::vector<Word*>::const_iterator it = adjectives.begin();
+
+    for(; it != adjectives.end(); ++it)
+    {
+        t_strings.push_back((*it)->str_base);
+    }
+
+    return t_strings;
+}
+
+std::vector<std::string> VerbGroup::getAdverbStrings() const
+{
+    std::vector<std::string> t_strings;
+    std::vector<Word*>::const_iterator it = adverbs.begin();
+
+    for(; it != adverbs.end(); ++it)
+    {
+        t_strings.push_back((*it)->str_base);
+    }
+
+    return t_strings;
+}
+

@@ -26,7 +26,7 @@ class Word
         {
             NO_CASE,
             SUBJECT,
-            ACCUSATIVE // Object case
+            OBJECT
         };
 
         enum Tense // Stand for tenses and moods

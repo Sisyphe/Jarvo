@@ -4,15 +4,21 @@
 
 void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 {
+    std::vector<Word*> t_waiting_adverbs;
+    std::vector<Word*>::iterator t_adverb_it;
     bool t_next_noun_is_defined=false;
     Word* t_entry = 0;
     Word* t_article = 0;
     bool t_error=false;
     std::vector<std::string> t_raw_words;
     std::vector<std::string>::iterator t_raw_word;
-    NounGroup* subject_group = &n_sentence.subject_group;
-    NounGroup* object_group = &n_sentence.object_group;
-    VerbGroup* verb_group = &n_sentence.verb_group;
+    NounGroup* t_subject_group = &n_sentence.subject_group;
+    NounGroup* t_object_group = &n_sentence.object_group;
+    VerbGroup* t_verb_group = &n_sentence.verb_group;
+    NounGroup* t_group = 0;
+    std::map<Word::Case, NounGroup*> t_groups;
+    t_groups[Word::SUBJECT] = &n_sentence.subject_group;
+    t_groups[Word::OBJECT] = &n_sentence.object_group;
 
     extractRawWords(n_str,t_raw_words);
     t_raw_word=t_raw_words.begin();
@@ -32,34 +38,29 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
         {
             case Word::ADJECTIVE:
             {
-                switch(t_entry->function)
+                t_group = t_groups[t_entry->function];
+                if(t_subject_group->noun)
                 {
-                    case Word::SUBJECT:
-                        if(!object_group->noun && !verb_group->verb)
-                        {
-                            subject_group->addWord(t_entry);
-                            break;
-                        }
-
-                    case Word::ACCUSATIVE:
-                        object_group->addWord(t_entry);
-                        break;
-
-                    default: t_error=true;
+                    t_group = t_object_group;
                 }
-
+                if(!t_waiting_adverbs.empty())
+                {
+                    t_group->addWord(t_waiting_adverbs.back());
+                    t_waiting_adverbs.clear();
+                }
+                t_group->addWord(t_entry);
                 break;
             }
 
             case Word::UNKNOWN_TYPE:
             {
-                if(!verb_group->verb)
+                if(!t_verb_group->verb)
                 {
                     t_entry->function=Word::SUBJECT;
                 }
                 else
                 {
-                    t_entry->function=Word::ACCUSATIVE;
+                    t_entry->function=Word::OBJECT;
                 }
 
                 t_entry->is_special=true;
@@ -67,36 +68,22 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
             case Word::PRONOUN:
             case Word::NOUN:
             {
-                switch(t_entry->function)
+                t_group = t_groups[t_entry->function];
+                if(t_subject_group->noun)
                 {
-                    case Word::SUBJECT:
-                    {
-                        if(!subject_group->noun)
-                        {
-                            if(t_next_noun_is_defined)
-                            {
-                                subject_group->addWord(t_article);
-                                t_next_noun_is_defined=false;
-                            }
-                            subject_group->addWord(t_entry);
-                            break;
-                        }
-                    }
-                    case Word::ACCUSATIVE:
-                    {
-                        if(!object_group->noun)
-                        {
-                            if(t_next_noun_is_defined)
-                            {
-                                object_group->addWord(t_article);
-                                t_next_noun_is_defined=false;
-                            }
-                            object_group->addWord(t_entry);
-                            break;
-                        }
-                    }
-                    default: t_error=true;
+                    t_group = t_object_group;
                 }
+
+                if(t_group && !t_group->noun) //FIXME compléments d'objets, etc...
+                {
+                    if(t_next_noun_is_defined)
+                    {
+                        t_group->addWord(t_article);
+                        t_next_noun_is_defined=false;
+                    }
+                    t_group->addWord(t_entry);
+                }
+                else t_error = true;
 
                 break;
             }
@@ -106,11 +93,17 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                 if(t_next_noun_is_defined)
                 {
                     t_error=true;
+                    break;
                 }
-                else
+
+                t_adverb_it = t_waiting_adverbs.begin();
+                for(; t_adverb_it != t_waiting_adverbs.end(); ++t_adverb_it)
                 {
-                    verb_group->addWord(t_entry);
+                    t_verb_group->addWord(*t_adverb_it);
                 }
+
+                t_verb_group->addWord(t_entry);
+
                 break;
             }
 
@@ -119,6 +112,11 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                 t_article = t_entry;
                 t_next_noun_is_defined=true;
                 break;
+            }
+
+            case Word::ADVERB: //FIXME adverbes après le verbe associés à l'objet
+            {
+                t_waiting_adverbs.push_back(t_entry);
             }
 
             default: t_error=true /* Work in progress... */;

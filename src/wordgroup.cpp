@@ -33,7 +33,7 @@ std::string WordGroup::str() const
 
     for(; it != m_word_list.end(); ++it)
     {
-        str += (*it)->str;
+        str += (*it)->str_base + " ";
     }
 
     return str;

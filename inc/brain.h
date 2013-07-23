@@ -5,6 +5,7 @@
 #include "node.h"
 #include "word.h"
 #include "linkgraph.h"
+#include "noungroup.h"
 
 class Brain
 {
@@ -19,7 +20,7 @@ class Brain
         void traverseNetwork(NetworkProcess* n_process, Node* n_node=0);
         void traverseLinkGraph(LinkProcess* n_process, LinkNode* n_link_node=0);
         bool pathExists(Node* n_out_node, const Link& n_link, Node* n_in_node);
-        bool connectNodes(Node* n_out_node, LinkNode* n_link_node, Node* n_in_node);
+        Relation* connectNodes(Node* n_out_node, LinkNode* n_link_node, Node* n_in_node);
 
         Node* getEntity(const Word& n_word);
         Node* getEntity(const std::string& n_str);
@@ -34,7 +35,7 @@ class Brain
         Node* createSpecialInstanceOf(Node* n_entity_node);
         Node* getOrCreateSpecialThing(const Word& n_word);
 
-        Node* getOrCreateNode(Word* n_word, bool need_instance=false);
+        Node* getOrCreateNode(const NounGroup& n_word_group, bool need_instance = false);
 
         LinkNode* getLink(const Link& n_link);
         LinkNode* getOrCreateLinkNode(const Link& n_link);

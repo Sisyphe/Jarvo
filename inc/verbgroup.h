@@ -11,6 +11,8 @@ class VerbGroup: public WordGroup
         VerbGroup();
 
         virtual bool addWord(Word* n_word);
+        std::vector<std::string> getAdjectiveStrings() const;
+        std::vector<std::string> getAdverbStrings() const;
 
         Word* verb;
         std::vector<Word*> adverbs;

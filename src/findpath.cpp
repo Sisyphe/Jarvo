@@ -50,7 +50,7 @@ bool FindPath::checkEdge(Relation *n_relation)
         stop=false;
     }
 
-    if(m_is_link_found &&  n_relation->inputVertice() == m_out_node)
+    if(m_is_link_found && (n_relation->inputVertice() == m_out_node || !m_out_node))
     {
         m_is_found=true;
         stop=true;

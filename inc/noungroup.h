@@ -10,12 +10,13 @@ class NounGroup: public WordGroup
         NounGroup();
 
         virtual bool addWord(Word* n_word);
+        virtual std::string str() const;
+        std::vector<std::string> getQualifierStrings() const;
 
         Word* noun;
-        bool is_defined;
-        bool is_entity;
-        std::vector<Word*> adjectives;
-        std::vector<std::pair<Word*,WordGroup*> > complements;
+        bool is_determinate;
+        std::vector<Qualifier> qualifiers;
+        std::vector<std::pair<Word*, WordGroup*> > complements;
 };
 
 #endif // NOUNGROUP_H

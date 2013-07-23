@@ -23,7 +23,7 @@ class LinkGraph : public Graph<Link*,bool>
 
     protected:
 
-        std::map<Link*,LinkNode*> m_link_nodes;
+        std::map<Link*, LinkNode*> m_link_nodes;
         LinkNode* m_esti;
 };
 

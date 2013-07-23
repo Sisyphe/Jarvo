@@ -32,7 +32,7 @@ Dictionnary::Dictionnary()
     t_entry->str="min";
     t_entry->str_base="mi";
     t_entry->type=Word::PRONOUN;
-    t_entry->function=Word::ACCUSATIVE;
+    t_entry->function=Word::OBJECT;
     t_entry->tense=Word::NO_TENSE;
     t_entry->isPlural=false;
     t_entry->node=0;
@@ -56,7 +56,7 @@ Dictionnary::Dictionnary()
     t_entry->str="vin";
     t_entry->str_base="vi";
     t_entry->type=Word::PRONOUN;
-    t_entry->function=Word::ACCUSATIVE;
+    t_entry->function=Word::OBJECT;
     t_entry->tense=Word::NO_TENSE;
     t_entry->isPlural=false;
     t_entry->node=0;
@@ -111,7 +111,7 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
 
     if(t_char=='n') // Accusative case
     {
-        t_entry->function=Word::ACCUSATIVE;
+        t_entry->function=Word::OBJECT;
         t_str.erase(char_pos--);
         t_char=t_str[char_pos];
     }

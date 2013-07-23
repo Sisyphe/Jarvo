@@ -42,23 +42,23 @@ void Jarvo::processStatement(Sentence& n_sentence)
 
     if(n_sentence.subject())
     {
-        need_instance = !n_sentence.subject_group.is_entity
+        need_instance = n_sentence.subject_group.is_determinate
                      && !n_sentence.subject()->is_special;
-        t_subject_node = m_brain.getOrCreateNode(n_sentence.subject(), need_instance);
+        t_subject_node = m_brain.getOrCreateNode(n_sentence.subject_group, need_instance);
     }
 
     if(n_sentence.object())
     {
         need_instance = (n_sentence.verb()->str_base == "esti"
-                     && !n_sentence.subject_group.is_entity
+                     && n_sentence.subject_group.is_determinate
                      && !n_sentence.subject()->is_special
-                     && !n_sentence.object_group.is_entity)
+                     && n_sentence.object_group.is_determinate)
                      || (n_sentence.verb()->str_base != "esti"
-                    && (!n_sentence.subject_group.is_entity
-                     || !n_sentence.object_group.is_entity)
+                    && (n_sentence.subject_group.is_determinate
+                     || n_sentence.object_group.is_determinate)
                      && !n_sentence.object()->is_special);
 
-        t_object_node = m_brain.getOrCreateNode(n_sentence.object(), need_instance);
+        t_object_node = m_brain.getOrCreateNode(n_sentence.object_group, need_instance);
     }
 
     if(n_sentence.verb())
@@ -89,7 +89,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
 
         if(!t_subject_node)
         {
-            m_brain.getOrCreateNode(n_sentence.subject());
+            m_brain.getOrCreateNode(n_sentence.subject_group);
             say("Ne. Mi ne sciis kio estas " + n_sentence.subject()->str_base + ".");
             t_error=true;
         }
@@ -101,7 +101,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
 
         if(!t_object_node)
         {
-            m_brain.getOrCreateNode(n_sentence.object());
+            m_brain.getOrCreateNode(n_sentence.object_group);
             say("Ne. Mi ne sciis kio estas " + n_sentence.object()->str_base + ".");
             t_error=true;
         }

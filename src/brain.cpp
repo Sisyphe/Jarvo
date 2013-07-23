@@ -5,6 +5,7 @@
 #include <fstream>
 #include "openlink.h"
 #include "saylink.h"
+#include <node.h>
 
 Brain::Brain()
 {
@@ -15,10 +16,9 @@ Brain::Brain()
 
 Brain::~Brain(){}
 
-bool Brain::connectNodes(Node* n_out_node, LinkNode* n_link_node, Node* n_in_node)
+Relation* Brain::connectNodes(Node* n_out_node, LinkNode* n_link_node, Node* n_in_node)
 {
-    n_out_node->addOutputEdge(RelationContent(n_link_node),n_in_node);
-    return true;
+    return n_out_node->addOutputEdge(RelationContent(n_link_node),n_in_node);
 }
 
 bool Brain::pathExists(Node* n_out_node, const Link& n_link, Node* n_in_node)
@@ -142,23 +142,48 @@ Node* Brain::createSpecialInstanceOf(Node* n_entity_node)
     return t_thing_node;
 }
 
-Node* Brain::getOrCreateNode(Word* n_word, bool need_instance)
+Node* Brain::getOrCreateNode(const NounGroup& n_word_group, bool need_instance)
 {
-    Node* t_node=n_word->node;
+    Link t_link;
+    LinkNode* t_link_node;
+    Relation* t_relation = 0;
+    std::vector<std::string> t_qualifier_strings;
+    std::vector<std::string>::iterator t_qualifiers_it;
+    Node* t_noun_node = 0;
+    Node* t_node= n_word_group.noun->node;
 
     if(!t_node)
     {
-        if(n_word->is_special)
+        if(n_word_group.noun->is_special)
         {
-            t_node = getOrCreateSpecialThing(*n_word);
+            t_noun_node = getOrCreateSpecialThing(*(n_word_group.noun));
+            t_node = t_noun_node;
         }
         else
         {
-            t_node = getOrCreateEntity(n_word->str_base);
-        }
+            t_noun_node = getOrCreateEntity(n_word_group.noun->str_base);
+            t_node = t_noun_node;
+            if(!n_word_group.qualifiers.empty())
+            {
+                t_node = getOrCreateEntity(n_word_group.str());
+                t_relation = connectNodes(t_node, m_links.esti(), t_noun_node);
+                t_relation->content().setType(RelationContent::SPECIALIZATION);
 
-        n_word->node = t_node;
+                t_qualifier_strings = n_word_group.getQualifierStrings();
+                t_qualifiers_it = t_qualifier_strings.begin();
+                for(; t_qualifiers_it != t_qualifier_strings.end(); ++t_qualifiers_it)
+                {
+                    t_link = Link("esti");
+                    t_link.addQualifier(*t_qualifiers_it);
+                    t_link_node = getOrCreateLinkNode(t_link);
+                    t_relation = connectNodes(t_node, t_link_node, t_node);
+                    t_relation->content().setType(RelationContent::FEATURE);
+                }
+            }
+        }
     }
+
+    n_word_group.noun->node = t_noun_node;
 
     if(need_instance)
     {
