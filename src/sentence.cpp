@@ -8,15 +8,15 @@ Sentence::Sentence():
 
 Word* Sentence::subject() const
 {
-    return subject_group.noun;
+    //return subject_group.noun;
 }
 
 Word* Sentence::verb() const
 {
-    return verb_group.verb;
+    //return verb_group.verb;
 }
 
 Word* Sentence::object() const
 {
-    return object_group.noun;
+    //return object_group.noun;
 }

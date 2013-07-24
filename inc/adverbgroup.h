@@ -1,26 +1,21 @@
-#ifndef VERBGROUP_H
-#define VERBGROUP_H
+#ifndef ADVERBGROUP_H
+#define ADVERBGROUP_H
 
 #include "wordgroup.h"
-#include <vector>
 
-class VerbGroup: public WordGroup
+class AdverbGroup: public WordGroup
 {
     public:
 
-        VerbGroup();
+        AdverbGroup();
 
         virtual std::string str() const;
 
-        using WordGroup::preposition;
-
         using WordGroup::addVerbComplement;
         using WordGroup::addAdverbComplement;
-        using WordGroup::addNounComplement;
 
-        using WordGroup::verbComplements;
         using WordGroup::adverbComplements;
         using WordGroup::nounComplements;
 };
 
-#endif // VERBGROUP_H
+#endif // ADVERBGROUP_H

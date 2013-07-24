@@ -1,18 +1,15 @@
-#ifndef VERBGROUP_H
-#define VERBGROUP_H
+#ifndef ADJECTIVEGROUP_H
+#define ADJECTIVEGROUP_H
 
 #include "wordgroup.h"
-#include <vector>
 
-class VerbGroup: public WordGroup
+class AdjectiveGroup: public WordGroup
 {
     public:
 
-        VerbGroup();
+        AdjectiveGroup();
 
         virtual std::string str() const;
-
-        using WordGroup::preposition;
 
         using WordGroup::addVerbComplement;
         using WordGroup::addAdverbComplement;
@@ -23,4 +20,4 @@ class VerbGroup: public WordGroup
         using WordGroup::nounComplements;
 };
 
-#endif // VERBGROUP_H
+#endif // ADJECTIVEGROUP_H

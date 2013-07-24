@@ -29,7 +29,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
         n_sentence.is_yes_no_question=true;
         ++t_raw_word;
     }
-
+/*
     while(t_raw_word!=t_raw_words.end() && !t_error)
     {
         t_entry=m_dict.getEntry(*t_raw_word);
@@ -119,11 +119,11 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
                 t_waiting_adverbs.push_back(t_entry);
             }
 
-            default: t_error=true /* Work in progress... */;
+            default: t_error=true; // Work in progress...
         }
 
         ++t_raw_word;
-    }
+    }*/
 }
 
 void Parser::extractRawWords

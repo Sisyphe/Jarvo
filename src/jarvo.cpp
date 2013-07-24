@@ -40,7 +40,7 @@ void Jarvo::processStatement(Sentence& n_sentence)
     Node* t_object_node=0;
     LinkNode* t_link_node=0;
 
-    if(n_sentence.subject())
+    /*if(n_sentence.subject())
     {
         need_instance = n_sentence.subject_group.is_determinate
                      && !n_sentence.subject()->is_special;
@@ -72,7 +72,7 @@ void Jarvo::processStatement(Sentence& n_sentence)
         }
 
         t_subject_node->addOutputEdge(RelationContent(t_link_node),t_object_node);
-    }
+    }*/
 }
 
 void Jarvo::processYesNoQuestion(Sentence& n_sentence)

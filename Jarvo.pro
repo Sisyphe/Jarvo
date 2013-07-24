@@ -39,6 +39,8 @@ SOURCES +=  src/main.cpp \
             src/word.cpp \
             src/noungroup.cpp \
             src/verbgroup.cpp \
+            src/adjectivegroup.cpp \
+            src/adverbgroup.cpp \
 
 HEADERS +=  inc/thing.h \
             inc/node.h \
@@ -66,3 +68,5 @@ HEADERS +=  inc/thing.h \
             inc/wordgroup.h \
             inc/noungroup.h \
             inc/verbgroup.h \
+            inc/adjectivegroup.h \
+            inc/adverbgroup.h \

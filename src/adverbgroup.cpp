@@ -1,18 +1,14 @@
-#include "noungroup.h"
 #include "adverbgroup.h"
-#include "adjectivegroup.h"
+#include"noungroup.h"
 
-NounGroup::NounGroup():
-    is_determinate(false){}
+AdverbGroup::AdverbGroup(){}
 
-std::string NounGroup::str() const
+std::string AdverbGroup::str() const
 {
     std::string t_str;
 
     if(m_main_word)
     {
-        if(m_preposition) t_str += m_preposition->str_base + " ";
-        t_str += getStr(m_adjectives);
         t_str += getStr(m_adverbs);
         t_str += m_main_word->str_base + " ";
         t_str += getStr(m_nouns);

@@ -1,54 +1,70 @@
 #include "wordgroup.h"
 
-WordGroup::WordGroup()
-{
+WordGroup::WordGroup():
+    m_main_word(0),
+    m_preposition(0){}
 
+WordGroup::~WordGroup(){}
+
+Word* WordGroup::mainWord() const
+{
+    return m_main_word;
 }
 
-WordGroup::~WordGroup()
+Word* WordGroup::preposition() const
 {
-
+    return m_preposition;
 }
 
-bool WordGroup::addWord(Word* n_word)
+std::vector<VerbGroup*> WordGroup::verbComplements() const
 {
-    if(n_word)
-    {
-        m_word_list.push_back(n_word);
-        return true;
-    }
-
-    return false;
+    return m_verbs;
 }
 
-bool WordGroup::isEmpty() const
+std::vector<AdjectiveGroup*> WordGroup::adjectiveComplements() const
 {
-    return m_word_list.empty();
+    return m_adjectives;
 }
 
-std::string WordGroup::str() const
+std::vector<AdverbGroup*> WordGroup::adverbComplements() const
 {
-    std::vector<Word*>::const_iterator it = m_word_list.begin();
+    return m_adverbs;
+}
+
+std::vector<NounGroup*> WordGroup::nounComplements() const
+{
+    return m_nouns;
+}
+
+void WordGroup::addVerbComplement(VerbGroup* n_verb_group)
+{
+    m_verbs.push_back(n_verb_group);
+}
+
+void WordGroup::addAdjectiveComplement(AdjectiveGroup* n_adj_group)
+{
+    m_adjectives.push_back(n_adj_group);
+}
+
+void WordGroup::addAdverbComplement(AdverbGroup* n_adv_group)
+{
+    m_adverbs.push_back(n_adv_group);
+}
+
+void WordGroup::addNounComplement(NounGroup* n_noun_group)
+{
+    m_nouns.push_back(n_noun_group);
+}
+/*
+std::string WordGroup::getStr(const std::vector<WordGroup*>& n_groups)
+{
     std::string str;
+    std::vector<WordGroup*>::const_iterator it = n_groups.begin();
 
-    for(; it != m_word_list.end(); ++it)
+    for(; it != n_groups.end(); ++it)
     {
-        str += (*it)->str_base + " ";
+        str += (*it)->str() + " ";
     }
 
     return str;
-}
-
-bool WordGroup::operator==(const WordGroup& other)
-{
-    bool is_equal = true;
-    std::vector<Word*>::iterator it1 = m_word_list.begin();
-    std::vector<Word*>::const_iterator it2 = other.m_word_list.begin();
-
-    while(it1 != m_word_list.end() && it2 != other.m_word_list.end() && is_equal)
-    {
-        is_equal = (**it1 == **it2);
-    }
-
-    return is_equal;
-}
+}*/
