@@ -1,78 +1,78 @@
 #include "noungroup.h"
 
 NounGroup::NounGroup():
-    noun(0),
-    is_determinate(false)
-{
-
-}
-
-bool NounGroup::addWord(Word* n_word)
-{
-    if(!WordGroup::addWord(n_word)) return false;
-
-    if(n_word->type == Word::ARTICLE)
-    {
-        is_determinate = true;
-    }
-    else if(n_word->type == Word::NOUN
-         || n_word->type == Word::PRONOUN
-         || n_word->type == Word::UNKNOWN_TYPE)
-    {
-        noun = n_word;
-    }
-    else if(n_word->type == Word::ADJECTIVE)
-    {
-        if(qualifiers.empty() || qualifiers.back().adjective)
-        {
-            qualifiers.push_back(Qualifier(n_word));
-        }
-        else
-        {
-            qualifiers.back().adjective = n_word;
-        }
-    }
-    else
-    {
-        m_word_list.pop_back();
-        return false;
-    }
-
-    return true;
-}
+    m_noun(0),
+    m_preposition(0),
+    m_is_determinate(false){}
 
 std::string NounGroup::str() const
 {
+    std::stringstream stream;
+    std::vector<AdjectiveGroup>::iterator adj_it = m_adjectives.begin();
+    std::vector<AdverbGroup>::iterator adv_it = m_adverbs.begin();
+    std::vector<NounGroup>::iterator noun_it = m_nouns.begin();
 
-    std::string t_string;
-    std::vector<std::string> t_strings = getQualifierStrings();
-    std::vector<std::string>::const_iterator it = t_strings.begin();
-
-    for(; it != t_strings.end(); ++it)
+    if(m_noun)
     {
-        t_string += (*it) + " ";
+        if(m_preposition) stream << m_preposition->str_base;
+
+        for(; adj_it != m_adjectives.end(); ++adj_it)
+        {
+            stream << (*adj_it).str() << " ";
+        }
+
+        for(; adv_it != m_adverbs.end(); ++adv_it)
+        {
+            stream << (*adv_it).str() << " ";
+        }
+
+        stream << m_noun->str_base << " ";
+
+        for(; noun_it != m_noun.end(); ++noun_it)
+        {
+            stream << (*noun_it).str() << " ";
+        }
     }
 
-    t_string += noun->str_base;
-
-    return t_string;
+    return stream.str();
 }
 
-std::vector<std::string> NounGroup::getQualifierStrings() const
+Word* NounGroup::noun() const
 {
-    std::string t_string;
-    std::vector<std::string> t_strings;
-    std::vector<Qualifier>::const_iterator it = qualifiers.begin();
+    return m_noun;
+}
 
-    for(; it != qualifiers.end(); ++it)
-    {
-        if((*it).adverb) t_string = (*it).adverb->str_base + " ";
-        else t_string.clear();
+Word* NounGroup::preposition() const
+{
+    return m_preposition;
+}
 
-        if((*it).adjective) t_string += (*it).adjective->str_base;
+std::vector<AdjectiveGroup> NounGroup::adjectiveComplements() const
+{
+    return m_adjectives;
+}
 
-        t_strings.push_back(t_string);
-    }
+std::vector<AdverbGroup> NounGroup::adverbComplements() const
+{
+    return m_adverbs;
+}
 
-    return t_strings;
+std::vector<NounGroup> NounGroup::nounComplements() const
+{
+    return m_nouns;
+}
+
+void NounGroup::addComplement(const AdjectiveGroup& n_adj_group)
+{
+    m_adjectives.push_back(n_adj_group);
+}
+
+void NounGroup::addComplement(const AdverbGroup& n_adv_group)
+{
+    m_adverbs.push_back(n_adv_group);
+}
+
+void NounGroup::addComplement(const NounGroup& n_noun_group)
+{
+    m_nouns.push_back(n_noun_group);
 }

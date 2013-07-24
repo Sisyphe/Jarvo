@@ -10,17 +10,6 @@ WordGroup::~WordGroup()
 
 }
 
-bool WordGroup::addWord(Word* n_word)
-{
-    if(n_word)
-    {
-        m_word_list.push_back(n_word);
-        return true;
-    }
-
-    return false;
-}
-
 bool WordGroup::isEmpty() const
 {
     return m_word_list.empty();

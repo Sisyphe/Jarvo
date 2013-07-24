@@ -9,14 +9,27 @@ class NounGroup: public WordGroup
 
         NounGroup();
 
-        virtual bool addWord(Word* n_word);
         virtual std::string str() const;
-        std::vector<std::string> getQualifierStrings() const;
 
-        Word* noun;
-        bool is_determinate;
-        std::vector<Qualifier> qualifiers;
-        std::vector<std::pair<Word*, WordGroup*> > complements;
+        Word* noun() const;
+        Word* preposition() const;
+
+        std::vector<AdjectiveGroup> adjectiveComplements() const;
+        std::vector<AdverbGroup> adverbComplements() const;
+        std::vector<NounGroup> nounComplements() const;
+
+        void addComplement(const AdjectiveGroup& n_adj_group);
+        void addComplement(const AdverbGroup& n_adv_group);
+        void addComplement(const NounGroup& n_noun_group);
+
+    protected:
+
+        Word* m_noun;
+        Word* m_preposition;
+        bool m_is_determinate;
+        std::vector<NounGroup> m_nouns;
+        std::vector<AdjectiveGroup> m_adjectives;
+        std::vector<AdverbGroup> m_adverbs;
 };
 
 #endif // NOUNGROUP_H

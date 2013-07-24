@@ -1,17 +1,17 @@
-#ifndef VERBGROUP_H
-#define VERBGROUP_H
+#ifndef ADJECTIVEGROUP_H
+#define ADJECTIVEGROUP_H
 
 #include "wordgroup.h"
-#include <vector>
 
-class VerbGroup: public WordGroup
+class AdjectiveGroup: public WordGroup
 {
     public:
 
-        VerbGroup();
+        AdjectiveGroup();
 
-        Word* verb() const;
-        Word* preposition() const;
+        virtual std::string str();
+
+        Word* adjective() const;
 
         std::vector<VerbGroup> verbComplements() const;
         std::vector<AdverbGroup> adverbComplements() const;
@@ -23,11 +23,10 @@ class VerbGroup: public WordGroup
 
     protected:
 
-        Word* m_verb;
-        Word* m_preposition;
+        Word* m_adjective;
         std::vector<AdverbGroup> m_adverbs;
         std::vector<VerbGroup> m_verbs;
         std::vector<NounGroup> m_nouns;
 };
 
-#endif // VERBGROUP_H
+#endif // ADJECTIVEGROUP_H

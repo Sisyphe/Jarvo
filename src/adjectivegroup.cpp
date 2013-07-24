@@ -1,26 +1,22 @@
-#include "verbgroup.h"
+#include "adjectivegroup.h"
 
-VerbGroup::VerbGroup():
-    m_verb(0),
-    m_preposition(0){}
+AdjectiveGroup::AdjectiveGroup(){}
 
-std::string VerbGroup::str()
+AdjectiveGroup::str()
 {
     std::stringstream stream;
     std::vector<VerbGroup>::iterator verb_it = m_verbs.begin();
     std::vector<AdverbGroup>::iterator adv_it = m_adverbs.begin();
     std::vector<NounGroup>::iterator noun_it = m_nouns.begin();
 
-    if(m_verb)
+    if(m_adjective)
     {
-        if(m_preposition) stream << m_preposition->str_base;
-
         for(; adv_it != m_adverbs.end(); ++adv_it)
         {
             stream << (*adv_it).str() << " ";
         }
 
-        stream << m_verb << " ";
+        stream << m_adjective << " ";
 
         for(; verb_it != m_verbs.end(); ++verb_it)
         {
@@ -34,42 +30,37 @@ std::string VerbGroup::str()
     }
 }
 
-Word* VerbGroup::verb() const
+Word* AdjectiveGroup::adjective() const
 {
-    return m_verb;
+    return m_adjective;
 }
 
-Word* VerbGroup::preposition() const
-{
-    return m_preposition;
-}
-
-std::vector<VerbGroup> VerbGroup::verbComplements() const
+std::vector<VerbGroup> AdjectiveGroup::verbComplements() const
 {
     return m_verbs;
 }
 
-std::vector<AdverbGroup> VerbGroup::adverbComplements() const
+std::vector<AdverbGroup> AdjectiveGroup::adverbComplements() const
 {
     return m_adverbs;
 }
 
-std::vector<NounGroup> VerbGroup::nounComplements() const
+std::vector<NounGroup> AdjectiveGroup::nounComplements() const
 {
     return m_nouns;
 }
 
-void VerbGroup::addComplement(const VerbGroup& n_verb_group)
+void AdjectiveGroup::addComplement(const VerbGroup& n_verb_group)
 {
     m_verbs.push_back(n_verb_group);
 }
 
-void VerbGroup::addComplement(const AdverbGroup& n_adv_group)
+void AdjectiveGroup::addComplement(const AdverbGroup& n_adv_group)
 {
     m_adverbs.push_back(n_adv_group);
 }
 
-void VerbGroup::addComplement(const NounGroup& n_noun_group)
+void AdjectiveGroup::addComplement(const NounGroup& n_noun_group)
 {
     m_nouns.push_back(n_noun_group);
 }

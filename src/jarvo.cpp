@@ -42,7 +42,7 @@ void Jarvo::processStatement(Sentence& n_sentence)
 
     if(n_sentence.subject())
     {
-        need_instance = n_sentence.subject_group.is_determinate
+        need_instance = n_sentence.subject_group.m_is_determinate
                      && !n_sentence.subject()->is_special;
         t_subject_node = m_brain.getOrCreateNode(n_sentence.subject_group, need_instance);
     }
@@ -50,12 +50,12 @@ void Jarvo::processStatement(Sentence& n_sentence)
     if(n_sentence.object())
     {
         need_instance = (n_sentence.verb()->str_base == "esti"
-                     && n_sentence.subject_group.is_determinate
+                     && n_sentence.subject_group.m_is_determinate
                      && !n_sentence.subject()->is_special
-                     && n_sentence.object_group.is_determinate)
+                     && n_sentence.object_group.m_is_determinate)
                      || (n_sentence.verb()->str_base != "esti"
-                    && (n_sentence.subject_group.is_determinate
-                     || n_sentence.object_group.is_determinate)
+                    && (n_sentence.subject_group.m_is_determinate
+                     || n_sentence.object_group.m_is_determinate)
                      && !n_sentence.object()->is_special);
 
         t_object_node = m_brain.getOrCreateNode(n_sentence.object_group, need_instance);
