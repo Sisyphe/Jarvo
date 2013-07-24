@@ -11,10 +11,11 @@ class CommandLink: public Link
 
         CommandLink(Brain& n_brain);
         virtual void searchNewHandlers();
-        virtual Handler* getHandler(Node* n_node) const;
         virtual bool tryToHandle(Node* n_node);
 
     protected:
+
+        virtual Handler* getHandler(Node* n_node) const;
 
         std::map<Node*,Handler*> m_handable_things;
         std::list<Handler*> m_handlers;

@@ -8,15 +8,40 @@ Sentence::Sentence():
 
 Word* Sentence::subject() const
 {
-    //return subject_group.noun;
+    return subject_group.mainWord();
 }
 
 Word* Sentence::verb() const
 {
-    //return verb_group.verb;
+    return verb_group.mainWord();
 }
 
-Word* Sentence::object() const
+NounGroup Sentence::subjectGroup() const
 {
-    //return object_group.noun;
+    return subject_group;
+}
+
+void Sentence::setSubjectGroup(const NounGroup& n_subject)
+{
+    subject_group = n_subject;
+}
+
+VerbGroup Sentence::verbGroup() const
+{
+    return verb_group;
+}
+
+void Sentence::setVerbGroup(const VerbGroup& n_verb)
+{
+    verb_group = n_verb;
+}
+
+bool Sentence::isInterrogative() const
+{
+    return is_interrogative;
+}
+
+void Sentence::setIsInterrogative(bool n_true)
+{
+    is_interrogative = n_true;
 }

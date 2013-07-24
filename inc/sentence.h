@@ -12,11 +12,20 @@ class Sentence
 
         Word* subject() const;
         Word* verb() const;
-        Word* object() const;
+
+        NounGroup subjectGroup() const;
+        void setSubjectGroup(const NounGroup& n_subject);
+
+        VerbGroup verbGroup() const;
+        void setVerbGroup(const VerbGroup& n_verb);
+
+        bool isInterrogative() const;
+        void setIsInterrogative(bool n_true);
+
+    protected:
 
         NounGroup subject_group;
         VerbGroup verb_group;
-        NounGroup object_group;
         bool is_interrogative;
         bool is_yes_no_question;
 };

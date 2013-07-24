@@ -16,9 +16,9 @@ void Jarvo::feed(const std::string& n_input)
 
     m_parser.parse(t_sentence,n_input);
 
-    if(t_sentence.is_interrogative)
+    if(t_sentence.isInterrogative())
     {
-        if(t_sentence.is_yes_no_question)
+        //if(t_sentence.is_yes_no_question)
         {
             processYesNoQuestion(t_sentence);
         }
@@ -89,13 +89,13 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
 
         if(!t_subject_node)
         {
-            m_brain.getOrCreateNode(n_sentence.subject_group);
+            m_brain.getOrCreateNode(n_sentence.subjectGroup());
             say("Ne. Mi ne sciis kio estas " + n_sentence.subject()->str_base + ".");
             t_error=true;
         }
     }
 
-    if(n_sentence.object())
+    /*if(n_sentence.object())
     {
         t_object_node=n_sentence.object()->node;
 
@@ -105,7 +105,7 @@ void Jarvo::processYesNoQuestion(Sentence& n_sentence)
             say("Ne. Mi ne sciis kio estas " + n_sentence.object()->str_base + ".");
             t_error=true;
         }
-    }
+    }*/
 
     if(n_sentence.verb())
     {
@@ -143,7 +143,7 @@ void Jarvo::processCommand(Sentence& n_sentence)
     LinkNode* t_link_node=0;
     bool t_error=false;
 
-    if(n_sentence.object())
+    /*if(n_sentence.object())
     {
         t_object_node=n_sentence.object()->node;
 
@@ -152,7 +152,7 @@ void Jarvo::processCommand(Sentence& n_sentence)
             t_object_node=m_brain.getOrCreateEntity(*n_sentence.object());
             n_sentence.object()->node=t_object_node;
         }
-    }
+    }*/
 
     if(n_sentence.verb())
     {

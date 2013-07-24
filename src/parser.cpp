@@ -4,7 +4,7 @@
 
 void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 {
-    std::vector<Word*> t_waiting_adverbs;
+    /*std::vector<Word*> t_waiting_adverbs;
     std::vector<Word*>::iterator t_adverb_it;
     bool t_next_noun_is_defined=false;
     Word* t_entry = 0;
@@ -25,10 +25,10 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 
     if(*t_raw_word == "cxu")
     {
-        n_sentence.is_interrogative=true;
-        n_sentence.is_yes_no_question=true;
+        n_sentence.setIsInterrogative(true);
+        //n_sentence.is_yes_no_question=true;
         ++t_raw_word;
-    }
+    }*/
 /*
     while(t_raw_word!=t_raw_words.end() && !t_error)
     {
