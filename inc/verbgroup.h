@@ -13,6 +13,7 @@ class VerbGroup: public WordGroup
         virtual std::string str() const;
 
         using WordGroup::preposition;
+        using WordGroup::setPreposition;
 
         using WordGroup::addVerbComplement;
         using WordGroup::addAdverbComplement;

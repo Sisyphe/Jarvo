@@ -10,9 +10,11 @@ class NounGroup: public WordGroup
         NounGroup();
 
         virtual std::string str() const;
-        std::vector<std::string> getQualifierStrings() const;
+        bool isDeterminate() const;
+        void setDeterminate(bool n_is_determinate);
 
         using WordGroup::preposition;
+        using WordGroup::setPreposition;
 
         using WordGroup::addNounComplement;
         using WordGroup::addAdverbComplement;
@@ -24,7 +26,7 @@ class NounGroup: public WordGroup
 
     protected:
 
-        bool is_determinate;
+        bool m_is_determinate;
 };
 
 #endif // NOUNGROUP_H

@@ -3,7 +3,18 @@
 #include "adjectivegroup.h"
 
 NounGroup::NounGroup():
-    is_determinate(false){}
+    m_is_determinate(false){}
+
+
+bool NounGroup::isDeterminate() const
+{
+    return m_is_determinate;
+}
+
+void NounGroup::setDeterminate(bool n_is_determinate)
+{
+    m_is_determinate = n_is_determinate;
+}
 
 std::string NounGroup::str() const
 {

@@ -15,23 +15,26 @@ class WordGroup
     public:
 
         Word* mainWord() const;
+        void setMainWord(Word* n_main_word);
         virtual std::string str() const = 0;
 
     protected:
 
         WordGroup();
         virtual ~WordGroup();
+
         Word* preposition() const;
+        void setPreposition(Word* n_preposition);
 
-        std::vector<VerbGroup*> verbComplements() const;
-        std::vector<AdjectiveGroup*> adjectiveComplements() const;
-        std::vector<AdverbGroup*> adverbComplements() const;
-        std::vector<NounGroup*> nounComplements() const;
+        const std::vector<VerbGroup*>& verbComplements() const;
+        const std::vector<AdjectiveGroup*>& adjectiveComplements() const;
+        const std::vector<AdverbGroup*>& adverbComplements() const;
+        const std::vector<NounGroup*>& nounComplements() const;
 
-        void addVerbComplement(VerbGroup* n_verb_group);
-        void addAdjectiveComplement(AdjectiveGroup* n_adj_group);
-        void addAdverbComplement(AdverbGroup* n_adv_group);
-        void addNounComplement(NounGroup* n_noun_group);
+        void addVerbComplement(const VerbGroup& n_verb_group);
+        void addAdjectiveComplement(const AdjectiveGroup& n_adj_group);
+        void addAdverbComplement(const AdverbGroup& n_adv_group);
+        void addNounComplement(const NounGroup& n_noun_group);
 
         template<class T>
         std::string getStr(const std::vector<T*>& n_groups) const

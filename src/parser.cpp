@@ -1,129 +1,179 @@
 #include "parser.h"
 #include <vector>
 #include "sentence.h"
+#include "adverbgroup.h"
+#include "adjectivegroup.h"
+#include "verbgroup.h"
+#include "noungroup.h"
 
 void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 {
-    /*std::vector<Word*> t_waiting_adverbs;
-    std::vector<Word*>::iterator t_adverb_it;
-    bool t_next_noun_is_defined=false;
-    Word* t_entry = 0;
-    Word* t_article = 0;
-    bool t_error=false;
+    NounGroup t_subject_group;
+    VerbGroup t_verb_group;
     std::vector<std::string> t_raw_words;
-    std::vector<std::string>::iterator t_raw_word;
-    NounGroup* t_subject_group = &n_sentence.subject_group;
-    NounGroup* t_object_group = &n_sentence.object_group;
-    VerbGroup* t_verb_group = &n_sentence.verb_group;
-    NounGroup* t_group = 0;
-    std::map<Word::Case, NounGroup*> t_groups;
-    t_groups[Word::SUBJECT] = &n_sentence.subject_group;
-    t_groups[Word::OBJECT] = &n_sentence.object_group;
+    std::vector<Word*> t_words;
+    std::vector<Word*>::const_iterator t_word, t_active_verb, t_subject;
+    std::vector<Word*>::const_iterator t_words_begin, t_words_end;
 
-    extractRawWords(n_str,t_raw_words);
-    t_raw_word=t_raw_words.begin();
+    m_success = true;
 
-    if(*t_raw_word == "cxu")
+    extractRawWords(n_str, t_raw_words);
+    if(m_success) getEntries(t_raw_words, t_words);
+
+    t_words_begin = t_words.begin();
+    t_words_end = t_words.end();
+
+    t_active_verb = getActiveVerb(t_words);
+
+    t_subject = getSubject((t_words_begin), t_active_verb);
+    if(t_subject == t_active_verb) // Si le sujet n'est pas avant le verbe, il est sans doute après...
     {
-        n_sentence.setIsInterrogative(true);
-        //n_sentence.is_yes_no_question=true;
-        ++t_raw_word;
-    }*/
-/*
-    while(t_raw_word!=t_raw_words.end() && !t_error)
-    {
-        t_entry=m_dict.getEntry(*t_raw_word);
+        t_subject = getSubject(t_active_verb, t_words_end);
+    }
 
-        switch(t_entry->type)
+    if(t_subject != t_words.end())
+    {
+        t_subject_group = getSubjectGroup(t_words_begin, t_words_end, t_subject);
+        n_sentence.setSubjectGroup(t_subject_group);
+    }
+}
+
+NounGroup Parser::getSubjectGroup
+(
+    std::vector<Word*>::const_iterator n_words_begin,
+    std::vector<Word*>::const_iterator n_words_end,
+    std::vector<Word*>::const_iterator n_subject
+)
+{
+    bool t_is_plural = (*n_subject)->isPlural;
+    NounGroup t_group;
+    bool t_article_found = false;
+    std::vector<Word*>::const_iterator t_word = n_subject + 1;
+    std::vector<AdverbGroup> t_adverbs;
+    std::vector<AdjectiveGroup> t_adjectives;
+    std::vector<VerbGroup> t_verbs;
+    std::vector<NounGroup> t_nouns;
+    AdverbGroup t_adverb;
+    AdjectiveGroup t_adjective;
+    VerbGroup t_verb;
+    NounGroup t_noun;
+    Word* t_last_word = 0;
+
+    t_group.setMainWord(*n_subject);
+
+    for(; t_word != n_words_end; ++t_word)
+    {
+        switch((*t_word)->type)
         {
-            case Word::ADJECTIVE:
+            case Word::ARTICLE:
             {
-                t_group = t_groups[t_entry->function];
-                if(t_subject_group->noun)
-                {
-                    t_group = t_object_group;
-                }
-                if(!t_waiting_adverbs.empty())
-                {
-                    t_group->addWord(t_waiting_adverbs.back());
-                    t_waiting_adverbs.clear();
-                }
-                t_group->addWord(t_entry);
+                t_article_found = true;
                 break;
             }
 
-            case Word::UNKNOWN_TYPE:
+            case Word::ADJECTIVE:
             {
-                if(!t_verb_group->verb)
+                t_adjective = AdjectiveGroup();
+                t_adjective.setMainWord(*t_word);
+
+                if(t_last_word)
                 {
-                    t_entry->function=Word::SUBJECT;
+
                 }
                 else
                 {
-                    t_entry->function=Word::OBJECT;
+                    t_adjectives.push_back(t_adjective);
                 }
 
-                t_entry->is_special=true;
+                t_last_word = *t_word;
             }
+
+            default: break;
+        }
+    }
+
+    return NounGroup();
+}
+
+void getGroups()
+{
+
+}
+
+std::vector<Word*>::const_iterator Parser::getActiveVerb(const std::vector<Word*>& n_words) const
+{
+    bool t_found = false;
+    std::vector<Word*>::const_iterator t_word = n_words.begin();
+
+    while(t_word != n_words.end() && !t_found)
+    {
+        if((*t_word)->tense != Word::INFINITIVE && (*t_word)->tense != Word::NO_TENSE)
+        {
+            t_found = true;
+        }
+        else ++t_word;
+    }
+
+    return t_word;
+}
+
+void Parser::getEntries
+(
+    const std::vector<std::string>& n_raw_words,
+    std::vector<Word*>& n_words
+)
+{
+    Word* t_word = 0;
+    std::vector<std::string>::const_iterator t_raw_word = n_raw_words.begin();
+
+    n_words.clear();
+
+    while(t_raw_word != n_raw_words.end() && m_success)
+    {
+        t_word = m_dict.getEntry(*t_raw_word);
+
+        if(t_word)
+        {
+            n_words.push_back(t_word);
+            ++t_raw_word;
+        }
+        else m_success = false;
+    }
+}
+
+std::vector<Word*>::const_iterator Parser::getSubject
+(
+    std::vector<Word*>::const_iterator& n_words_begin,
+    std::vector<Word*>::const_iterator& n_words_end
+) const
+{
+    bool t_found = false;
+    bool t_preposition_found = false;
+    std::vector<Word*>::const_iterator t_noun = n_words_begin;
+
+    while(t_noun != n_words_end && !t_found)
+    {
+        switch((*t_noun)->type)
+        {
+            case Word::PREPOSITION:
+            {
+                t_preposition_found = true;
+                ++t_noun;
+                break;
+            }
+
             case Word::PRONOUN:
             case Word::NOUN:
             {
-                t_group = t_groups[t_entry->function];
-                if(t_subject_group->noun)
-                {
-                    t_group = t_object_group;
-                }
-
-                if(t_group && !t_group->noun) //FIXME compléments d'objets, etc...
-                {
-                    if(t_next_noun_is_defined)
-                    {
-                        t_group->addWord(t_article);
-                        t_next_noun_is_defined=false;
-                    }
-                    t_group->addWord(t_entry);
-                }
-                else t_error = true;
-
+                t_found = !t_preposition_found && (*t_noun)->function == Word::SUBJECT;
                 break;
             }
 
-            case Word::VERB:
-            {
-                if(t_next_noun_is_defined)
-                {
-                    t_error=true;
-                    break;
-                }
-
-                t_adverb_it = t_waiting_adverbs.begin();
-                for(; t_adverb_it != t_waiting_adverbs.end(); ++t_adverb_it)
-                {
-                    t_verb_group->addWord(*t_adverb_it);
-                }
-
-                t_verb_group->addWord(t_entry);
-
-                break;
-            }
-
-            case Word::ARTICLE:
-            {
-                t_article = t_entry;
-                t_next_noun_is_defined=true;
-                break;
-            }
-
-            case Word::ADVERB: //FIXME adverbes après le verbe associés à l'objet
-            {
-                t_waiting_adverbs.push_back(t_entry);
-            }
-
-            default: t_error=true; // Work in progress...
+            default: ++t_noun;
         }
+    }
 
-        ++t_raw_word;
-    }*/
+    return t_noun;
 }
 
 void Parser::extractRawWords
@@ -135,6 +185,8 @@ void Parser::extractRawWords
     bool t_is_expecting_quote=false;
     std::string t_raw_word;
     char t_char;
+
+    n_raw_words.clear();
 
     for(unsigned int i=0; i < n_str.size(); ++i)
     {
