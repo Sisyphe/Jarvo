@@ -2,7 +2,13 @@
 #include "noungroup.h"
 #include "adverbgroup.h"
 
-VerbGroup::VerbGroup(){}
+VerbGroup::VerbGroup()
+{
+    m_adverb_post_grouping_priority = 1;
+    m_verb_post_grouping_priority = 1;
+    m_noun_post_grouping_priority = 0;
+    m_adjective_post_grouping_priority = 0;
+}
 
 std::string VerbGroup::str() const
 {

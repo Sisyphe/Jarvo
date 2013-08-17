@@ -3,7 +3,17 @@
 #include "adjectivegroup.h"
 
 NounGroup::NounGroup():
-    m_is_determinate(false){}
+    m_is_determinate(false)
+{
+    m_adverb_pre_grouping_priority = 0;
+    m_verb_pre_grouping_priority = 0;
+    m_noun_pre_grouping_priority = 0;
+    m_adjective_pre_grouping_priority = 2;
+    m_adverb_post_grouping_priority = 0;
+    m_verb_post_grouping_priority = 0;
+    m_noun_post_grouping_priority = 1;
+    m_adjective_post_grouping_priority = 1;
+}
 
 
 bool NounGroup::isDeterminate() const

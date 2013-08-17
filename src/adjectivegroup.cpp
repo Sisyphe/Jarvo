@@ -3,7 +3,17 @@
 #include "noungroup.h"
 #include "verbgroup.h"
 
-AdjectiveGroup::AdjectiveGroup(){}
+AdjectiveGroup::AdjectiveGroup()
+{
+    m_adverb_pre_grouping_priority = 2;
+    m_verb_pre_grouping_priority = 0;
+    m_noun_pre_grouping_priority = 0;
+    m_adjective_pre_grouping_priority = 0;
+    m_adverb_post_grouping_priority = 1;
+    m_verb_post_grouping_priority = 1;
+    m_noun_post_grouping_priority = 0;
+    m_adjective_post_grouping_priority = 0;
+}
 
 std::string AdjectiveGroup::str() const
 {

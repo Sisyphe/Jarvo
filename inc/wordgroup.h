@@ -17,6 +17,14 @@ class WordGroup
         Word* mainWord() const;
         void setMainWord(Word* n_main_word);
         virtual std::string str() const = 0;
+        virtual int preGroupingPriority(const VerbGroup& n_verb_group) const;
+        virtual int preGroupingPriority(const AdjectiveGroup& n_adj_group) const;
+        virtual int preGroupingPriority(const AdverbGroup& n_adv_group) const;
+        virtual int preGroupingPriority(const NounGroup& n_noun_group) const;
+        virtual int postGroupingPriority(const VerbGroup& n_verb_group) const;
+        virtual int postGroupingPriority(const AdjectiveGroup& n_adj_group) const;
+        virtual int postGroupingPriority(const AdverbGroup& n_adv_group) const;
+        virtual int postGroupingPriority(const NounGroup& n_noun_group) const;
 
     protected:
 
@@ -58,6 +66,16 @@ class WordGroup
         std::vector<NounGroup*> m_nouns;
         std::vector<AdjectiveGroup*> m_adjectives;
         std::vector<AdverbGroup*> m_adverbs;
+
+        int m_adverb_pre_grouping_priority;
+        int m_verb_pre_grouping_priority;
+        int m_noun_pre_grouping_priority;
+        int m_adjective_pre_grouping_priority;
+
+        int m_adverb_post_grouping_priority;
+        int m_verb_post_grouping_priority;
+        int m_noun_post_grouping_priority;
+        int m_adjective_post_grouping_priority;
 
 
 };
