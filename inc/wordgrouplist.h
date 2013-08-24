@@ -9,28 +9,20 @@
 
 class WordGroupList
 {
-
-    enum WordGroupType
+    enum Grouping
     {
-        NOUN,
-        VERB,
-        ADVERB,
-        ADJECTIVE
+        NO_GROUPING,
+        PRE_GROUPING,
+        POST_GROUPING
     };
 
     public:
 
-        WordGroupList(const std::vector< Word* >& n_words);
+        WordGroupList(const std::vector<Word*>& n_words);
         void regroupWords();
 
     protected:
-
-        std::list<WordGroupType> m_groups;
-        std::list<std::pair<int, NounGroup> > m_nouns;
-        std::list<std::pair<int, AdjectiveGroup> > m_adjectives;
-        std::list<std::pair<int, AdverbGroup> > m_adverbs;
-        std::list<std::pair<int, VerbGroup> > m_verbs;
-
+        std::list<WordGroup*> m_groups;
 };
 
 #endif // WORDGROUPLIST_H

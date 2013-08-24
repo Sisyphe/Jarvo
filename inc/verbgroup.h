@@ -15,6 +15,7 @@ class VerbGroup: public WordGroup
         using WordGroup::preposition;
         using WordGroup::setPreposition;
 
+        virtual void addAsComplementTo(WordGroup& n_group);
         using WordGroup::addVerbComplement;
         using WordGroup::addAdverbComplement;
         using WordGroup::addNounComplement;

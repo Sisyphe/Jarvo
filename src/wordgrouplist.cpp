@@ -4,10 +4,10 @@ WordGroupList::WordGroupList(const std::vector<Word*>& n_words)
 {
     int i = 0;
     std::vector<Word*>::const_iterator t_word = n_words.begin();
-    NounGroup t_noun;
-    AdjectiveGroup t_adjective;
-    AdverbGroup t_adverb;
-    VerbGroup t_verb;
+    NounGroup* t_noun = 0;
+    AdjectiveGroup* t_adjective = 0;
+    AdverbGroup* t_adverb = 0;
+    VerbGroup* t_verb  = 0;
     bool t_is_determinate = false;
     Word* t_preposition = 0;
 
@@ -30,43 +30,39 @@ WordGroupList::WordGroupList(const std::vector<Word*>& n_words)
             case Word::PRONOUN: t_is_determinate = true;
             case Word::NOUN:
             {
-                t_noun = NounGroup();
-                t_noun.setMainWord(*t_word);
-                t_noun.setDeterminate(t_is_determinate);
+                t_noun = new NounGroup();
+                t_noun->setMainWord(*t_word);
+                t_noun->setDeterminate(t_is_determinate);
                 t_is_determinate = false;
-                t_noun.setPreposition(t_preposition);
+                t_noun->setPreposition(t_preposition);
                 t_preposition = 0;
-                m_nouns.push_back(std::pair<int, NounGroup>(i++, t_noun));
-                m_groups.push_back(WordGroupList::NOUN);
+                m_groups.push_back(t_noun);
                 break;
             }
 
             case Word::ADJECTIVE:
             {
-                t_adjective = AdjectiveGroup();
-                t_adjective.setMainWord(*t_word);
-                m_adjectives.push_back(std::pair<int, AdjectiveGroup>(i++, t_adjective));
-                m_groups.push_back(WordGroupList::ADJECTIVE);
+                t_adjective = new AdjectiveGroup();
+                t_adjective->setMainWord(*t_word);
+                m_groups.push_back(t_adjective);
                 break;
             }
 
             case Word::ADVERB:
             {
-                t_adverb = AdverbGroup();
-                t_adverb.setMainWord(*t_word);
-                m_adverbs.push_back(std::pair<int, AdverbGroup>(i++, t_adverb));
-                m_groups.push_back(WordGroupList::ADVERB);
+                t_adverb = new AdverbGroup();
+                t_adverb->setMainWord(*t_word);
+                m_groups.push_back(t_adverb);
                 break;
             }
 
             case Word::VERB:
             {
-                t_verb = VerbGroup();
-                t_verb.setMainWord(*t_word);
-                t_verb.setPreposition(t_preposition);
+                t_verb = new VerbGroup();
+                t_verb->setMainWord(*t_word);
+                t_verb->setPreposition(t_preposition);
                 t_preposition = 0;
-                m_verbs.push_back(std::pair<int, VerbGroup>(i++, t_verb));
-                m_groups.push_back(WordGroupList::VERB);
+                m_groups.push_back(t_verb);
                 break;
             }
 
@@ -78,22 +74,42 @@ WordGroupList::WordGroupList(const std::vector<Word*>& n_words)
 void WordGroupList::regroupWords()
 {
     bool t_change_made = true;
-
-    std::list<WordGroupType>::iterator t_group_type;
+    int max_priority = -1;
+    std::pair<Grouping,std::list<WordGroup*>::iterator> prioritary_group(NO_GROUPING, m_groups.end());
+    std::list<WordGroup*>::iterator t_group, t_prev_group;
 
     while(t_change_made)
     {
-        t_group_type = m_groups.begin();
+        t_prev_group = m_groups.begin();
+        t_group = ++m_groups.begin();
 
-        for(; t_group_type != m_groups.end(); ++t_group_type)
+        for(; t_group != m_groups.end(); t_prev_group = t_group++)
         {
-            switch(*t_group_type)
+            if(max_priority < (*t_group)->preGroupingPriority(*t_prev_group))
             {
-                case WordGroupList::NOUN:
-                {
+                prioritary_group.first = PRE_GROUPING;
+                prioritary_group.second = t_group;
+                max_priority = (*t_group)->preGroupingPriority(*t_prev_group);
+            }
 
-                    break;
-                }
+            if(max_priority < (*t_prev_group)->postGroupingPriority(*t_group))
+            {
+                prioritary_group.first = POST_GROUPING;
+                prioritary_group.second = t_group;
+                max_priority = (*t_prev_group)->postGroupingPriority(*t_group);
+            }
+        }
+
+        switch(prioritary_group.first)
+        {
+            case PRE_GROUPING:
+            {
+                break;
+            }
+
+            case POST_GROUPING:
+            {
+                break;
             }
         }
     }

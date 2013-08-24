@@ -5,6 +5,7 @@
 
 AdjectiveGroup::AdjectiveGroup()
 {
+    m_type = WordGroup::ADJECTIVE;
     m_adverb_pre_grouping_priority = 2;
     m_verb_pre_grouping_priority = 0;
     m_noun_pre_grouping_priority = 0;
@@ -29,4 +30,9 @@ std::string AdjectiveGroup::str() const
     }
 
     return t_str;
+}
+
+void AdjectiveGroup::addAsComplementTo(WordGroup& n_group)
+{
+    n_group.addAdjectiveComplement(*this);
 }

@@ -15,6 +15,7 @@ class AdjectiveGroup: public WordGroup
         using WordGroup::addAdverbComplement;
         using WordGroup::addNounComplement;
 
+        virtual void addAsComplementTo(WordGroup& n_group);
         using WordGroup::verbComplements;
         using WordGroup::adverbComplements;
         using WordGroup::nounComplements;

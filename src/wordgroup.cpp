@@ -7,6 +7,7 @@
 WordGroup::WordGroup():
     m_main_word(0),
     m_preposition(0),
+    m_type(WordGroup::NO_GROUP_TYPE),
     m_adverb_pre_grouping_priority(0),
     m_verb_pre_grouping_priority(0),
     m_noun_pre_grouping_priority(0),
@@ -29,42 +30,47 @@ void WordGroup::setMainWord(Word* n_main_word)
     m_main_word = n_main_word;
 }
 
-int WordGroup::preGroupingPriority(const VerbGroup& n_verb_group) const
+WordGroup::WordGroupType WordGroup::type() const
+{
+    return m_type;
+}
+
+int WordGroup::preGroupingPriority(VerbGroup* n_verb_group) const
 {
     return m_verb_pre_grouping_priority;
 }
 
-int WordGroup::preGroupingPriority(const AdjectiveGroup& n_adj_group) const
+int WordGroup::preGroupingPriority(AdjectiveGroup* n_adj_group) const
 {
     return m_adjective_pre_grouping_priority;
 }
 
-int WordGroup::preGroupingPriority(const AdverbGroup& n_adv_group) const
+int WordGroup::preGroupingPriority(AdverbGroup* n_adv_group) const
 {
     return m_adverb_pre_grouping_priority;
 }
 
-int WordGroup::preGroupingPriority(const NounGroup& n_noun_group) const
+int WordGroup::preGroupingPriority(NounGroup* n_noun_group) const
 {
     return m_noun_pre_grouping_priority;
 }
 
-int WordGroup::postGroupingPriority(const VerbGroup& n_verb_group) const
+int WordGroup::postGroupingPriority(VerbGroup* n_verb_group) const
 {
     return m_verb_post_grouping_priority;
 }
 
-int WordGroup::postGroupingPriority(const AdjectiveGroup& n_adj_group) const
+int WordGroup::postGroupingPriority(AdjectiveGroup* n_adj_group) const
 {
     return m_adjective_post_grouping_priority;
 }
 
-int WordGroup::postGroupingPriority(const AdverbGroup& n_adv_group) const
+int WordGroup::postGroupingPriority(AdverbGroup* n_adv_group) const
 {
     return m_adverb_post_grouping_priority;
 }
 
-int WordGroup::postGroupingPriority(const NounGroup& n_noun_group) const
+int WordGroup::postGroupingPriority(NounGroup* n_noun_group) const
 {
     return m_noun_post_grouping_priority;
 }

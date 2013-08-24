@@ -5,6 +5,7 @@
 NounGroup::NounGroup():
     m_is_determinate(false)
 {
+    m_type = WordGroup::NOUN;
     m_adverb_pre_grouping_priority = 0;
     m_verb_pre_grouping_priority = 0;
     m_noun_pre_grouping_priority = 0;
@@ -41,4 +42,9 @@ std::string NounGroup::str() const
     }
 
     return t_str;
+}
+
+void NounGroup::addAsComplementTo(WordGroup& n_group)
+{
+    n_group.addNounComplement(*this);
 }

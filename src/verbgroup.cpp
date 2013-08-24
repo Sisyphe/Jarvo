@@ -4,6 +4,7 @@
 
 VerbGroup::VerbGroup()
 {
+    m_type = WordGroup::VERB;
     m_adverb_post_grouping_priority = 1;
     m_verb_post_grouping_priority = 1;
     m_noun_post_grouping_priority = 0;
@@ -26,3 +27,7 @@ std::string VerbGroup::str() const
     return t_str;
 }
 
+void VerbGroup::addAsComplementTo(WordGroup& n_group)
+{
+    n_group.addVerbComplement(*this);
+}

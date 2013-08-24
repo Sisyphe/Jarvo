@@ -16,6 +16,7 @@ class NounGroup: public WordGroup
         using WordGroup::preposition;
         using WordGroup::setPreposition;
 
+        virtual void addAsComplementTo(WordGroup& n_group);
         using WordGroup::addNounComplement;
         using WordGroup::addAdverbComplement;
         using WordGroup::addAdjectiveComplement;

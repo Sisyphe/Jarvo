@@ -3,6 +3,7 @@
 
 AdverbGroup::AdverbGroup()
 {
+    m_type = WordGroup::ADVERB;
     m_adverb_pre_grouping_priority = 1;
     m_verb_pre_grouping_priority = 0;
     m_noun_pre_grouping_priority = 0;
@@ -26,4 +27,9 @@ std::string AdverbGroup::str() const
     }
 
     return t_str;
+}
+
+void AdverbGroup::addAsComplementTo(WordGroup& n_group)
+{
+    n_group.addAdverbComplement(*this);
 }
