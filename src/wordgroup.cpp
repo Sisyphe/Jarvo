@@ -1,22 +1,26 @@
 #include "wordgroup.h"
-#include "adverbgroup.h"
-#include "adjectivegroup.h"
-#include "verbgroup.h"
-#include "noungroup.h"
 
-WordGroup::WordGroup():
+WordGroup::WordGroup(Word* n_main_word):
     m_main_word(0),
     m_preposition(0),
-    m_type(WordGroup::NO_GROUP_TYPE),
-    m_adverb_pre_grouping_priority(0),
-    m_verb_pre_grouping_priority(0),
-    m_noun_pre_grouping_priority(0),
-    m_adjective_pre_grouping_priority(0),
-    m_adverb_post_grouping_priority(0),
-    m_verb_post_grouping_priority(0),
-    m_noun_post_grouping_priority(0),
-    m_adjective_post_grouping_priority(0)
-{}
+    m_type(WordGroup::NO_GROUP_TYPE)
+{
+    setMainWord(n_main_word);
+
+    m_pre_grouping_priority[WordGroup::ADJECTIVE][WordGroup::ADVERB] = 2;
+    m_post_grouping_priority[WordGroup::ADJECTIVE][WordGroup::ADVERB] = 1;
+    m_post_grouping_priority[WordGroup::ADJECTIVE][WordGroup::VERB] = 1;
+
+    m_pre_grouping_priority[WordGroup::ADVERB][WordGroup::ADVERB] = 1;
+    m_post_grouping_priority[WordGroup::ADVERB][WordGroup::NOUN] = 1;
+
+    m_pre_grouping_priority[WordGroup::NOUN][WordGroup::ADJECTIVE] = 2;
+    m_post_grouping_priority[WordGroup::NOUN][WordGroup::ADJECTIVE] = 1;
+    m_post_grouping_priority[WordGroup::NOUN][WordGroup::NOUN] = 1;
+
+    m_post_grouping_priority[WordGroup::VERB][WordGroup::ADVERB] = 1;
+    m_post_grouping_priority[WordGroup::VERB][WordGroup::VERB] = 1;
+}
 
 WordGroup::~WordGroup(){}
 
@@ -35,46 +39,6 @@ WordGroup::WordGroupType WordGroup::type() const
     return m_type;
 }
 
-int WordGroup::preGroupingPriority(VerbGroup* n_verb_group) const
-{
-    return m_verb_pre_grouping_priority;
-}
-
-int WordGroup::preGroupingPriority(AdjectiveGroup* n_adj_group) const
-{
-    return m_adjective_pre_grouping_priority;
-}
-
-int WordGroup::preGroupingPriority(AdverbGroup* n_adv_group) const
-{
-    return m_adverb_pre_grouping_priority;
-}
-
-int WordGroup::preGroupingPriority(NounGroup* n_noun_group) const
-{
-    return m_noun_pre_grouping_priority;
-}
-
-int WordGroup::postGroupingPriority(VerbGroup* n_verb_group) const
-{
-    return m_verb_post_grouping_priority;
-}
-
-int WordGroup::postGroupingPriority(AdjectiveGroup* n_adj_group) const
-{
-    return m_adjective_post_grouping_priority;
-}
-
-int WordGroup::postGroupingPriority(AdverbGroup* n_adv_group) const
-{
-    return m_adverb_post_grouping_priority;
-}
-
-int WordGroup::postGroupingPriority(NounGroup* n_noun_group) const
-{
-    return m_noun_post_grouping_priority;
-}
-
 Word* WordGroup::preposition() const
 {
     return m_preposition;
@@ -85,55 +49,60 @@ void WordGroup::setPreposition(Word* n_preposition)
     m_preposition = n_preposition;
 }
 
-const std::vector<VerbGroup*>& WordGroup::verbComplements() const
+std::string WordGroup::str() const
 {
-    return m_verbs;
+    return std::string();
 }
 
-const std::vector<AdjectiveGroup*>& WordGroup::adjectiveComplements() const
+int WordGroup::groupingPriority(Grouping n_grouping, WordGroupType n_type) const
 {
-    return m_adjectives;
-}
-
-const std::vector<AdverbGroup*>& WordGroup::adverbComplements() const
-{
-    return m_adverbs;
-}
-
-const std::vector<NounGroup*>& WordGroup::nounComplements() const
-{
-    return m_nouns;
-}
-
-void WordGroup::addVerbComplement(const VerbGroup& n_verb_group)
-{
-    m_verbs.push_back(new VerbGroup(n_verb_group));
-}
-
-void WordGroup::addAdjectiveComplement(const AdjectiveGroup& n_adj_group)
-{
-    m_adjectives.push_back(new AdjectiveGroup(n_adj_group));
-}
-
-void WordGroup::addAdverbComplement(const AdverbGroup& n_adv_group)
-{
-    m_adverbs.push_back(new AdverbGroup(n_adv_group));
-}
-
-void WordGroup::addNounComplement(const NounGroup& n_noun_group)
-{
-    m_nouns.push_back(new NounGroup(n_noun_group));
-}
-/*
-std::string WordGroup::getStr(const std::vector<WordGroup*>& n_groups)
-{
-    std::string str;
-    std::vector<WordGroup*>::const_iterator it = n_groups.begin();
-
-    for(; it != n_groups.end(); ++it)
+    switch(n_grouping)
     {
-        str += (*it)->str() + " ";
+        case WordGroup::PRE_GROUPING:
+            return m_pre_grouping_priority[m_type][n_type];
+            break;
+
+        case WordGroup::POST_GROUPING:
+            return m_post_grouping_priority[m_type][n_type];
+            break;
+
+        default: return -1;
+    }
+}
+
+// int WordGroup::groupingPriority(Grouping n_grouping, WordGroupType n_completed_type, WordGroupType n_completement_type)
+// {
+//     switch(n_grouping)
+//     {
+//         case WordGroup::PRE_GROUPING:
+//             return m_pre_grouping_priority[n_completed_type][n_completement_type];
+//             break;
+//
+//         case WordGroup::POST_GROUPING:
+//             return m_post_grouping_priority[n_completed_type][n_completement_type];
+//             break;
+//
+//         default: return -1;
+//     }
+// }
+
+const std::vector<WordGroup> WordGroup::getComplements(WordGroupType n_type) const
+{
+    std::vector<WordGroup> t_groups;
+    std::vector<WordGroup>::const_iterator t_complement = m_complements.begin();
+
+    for(; t_complement != m_complements.end(); ++t_complement)
+    {
+        if(t_complement->type() == n_type)
+        {
+            t_groups.push_back(*t_complement);
+        }
     }
 
-    return str;
-}*/
+    return t_groups;
+}
+
+void WordGroup::addComplement(WordGroup n_group)
+{
+    m_complements.push_back(n_group);
+}

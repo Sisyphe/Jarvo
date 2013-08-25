@@ -37,10 +37,6 @@ SOURCES +=  src/main.cpp \
             src/commandlink.cpp \
             src/wordgroup.cpp \
             src/word.cpp \
-            src/noungroup.cpp \
-            src/verbgroup.cpp \
-            src/adjectivegroup.cpp \
-            src/adverbgroup.cpp \
             src/wordgrouplist.cpp
 
 HEADERS +=  inc/thing.h \
@@ -67,8 +63,4 @@ HEADERS +=  inc/thing.h \
             inc/saylink.h \
             inc/openprogramaction.h \
             inc/wordgroup.h \
-            inc/noungroup.h \
-            inc/verbgroup.h \
-            inc/adjectivegroup.h \
-            inc/adverbgroup.h \
             inc/wordgrouplist.h

@@ -142,7 +142,7 @@ Node* Brain::createSpecialInstanceOf(Node* n_entity_node)
     return t_thing_node;
 }
 
-Node* Brain::getOrCreateNode(const NounGroup& n_word_group, bool need_instance)
+Node* Brain::getOrCreateNode(const WordGroup& n_word_group, bool need_instance)
 {
     Link t_link;
     LinkNode* t_link_node;

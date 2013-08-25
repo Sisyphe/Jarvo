@@ -1,15 +1,13 @@
 #include "parser.h"
 #include <vector>
 #include "sentence.h"
-#include "adverbgroup.h"
-#include "adjectivegroup.h"
-#include "verbgroup.h"
-#include "noungroup.h"
+#include "wordgroup.h"
+#include "wordgrouplist.h"
 
 void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 {
-    NounGroup t_subject_group;
-    VerbGroup t_verb_group;
+    WordGroup t_subject_group;
+    WordGroup t_verb_group;
     std::vector<std::string> t_raw_words;
     std::vector<Word*> t_words;
     std::vector<Word*>::const_iterator t_word, t_active_verb, t_subject;
@@ -20,8 +18,8 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
     extractRawWords(n_str, t_raw_words);
     if(m_success) getEntries(t_raw_words, t_words);
 
-    t_words_begin = t_words.begin();
-    t_words_end = t_words.end();
+    WordGroupList t_group_list(t_words);
+    t_group_list.regroupWords();
 }
 
 // void makeGroups(std::list<WordGroup*>& n_groups, const std::vector<Word*>& n_words)

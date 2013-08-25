@@ -4,8 +4,8 @@
 #include <graph.h>
 #include "node.h"
 #include "word.h"
+#include "wordgroup.h"
 #include "linkgraph.h"
-#include "noungroup.h"
 
 class Brain
 {
@@ -35,7 +35,7 @@ class Brain
         Node* createSpecialInstanceOf(Node* n_entity_node);
         Node* getOrCreateSpecialThing(const Word& n_word);
 
-        Node* getOrCreateNode(const NounGroup& n_word_group, bool need_instance = false);
+        Node* getOrCreateNode(const WordGroup& n_word_group, bool need_instance = false);
 
         LinkNode* getLink(const Link& n_link);
         LinkNode* getOrCreateLinkNode(const Link& n_link);

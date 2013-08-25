@@ -16,22 +16,22 @@ Word* Sentence::verb() const
     return verb_group.mainWord();
 }
 
-NounGroup Sentence::subjectGroup() const
+WordGroup Sentence::subjectGroup() const
 {
     return subject_group;
 }
 
-void Sentence::setSubjectGroup(const NounGroup& n_subject)
+void Sentence::setSubjectGroup(const WordGroup& n_subject)
 {
     subject_group = n_subject;
 }
 
-VerbGroup Sentence::verbGroup() const
+WordGroup Sentence::verbGroup() const
 {
     return verb_group;
 }
 
-void Sentence::setVerbGroup(const VerbGroup& n_verb)
+void Sentence::setVerbGroup(const WordGroup& n_verb)
 {
     verb_group = n_verb;
 }

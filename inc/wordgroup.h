@@ -5,56 +5,44 @@
 #include <vector>
 #include <string>
 
-class VerbGroup;
-class NounGroup;
-class AdjectiveGroup;
-class AdverbGroup;
-
 class WordGroup
 {
     public:
 
         enum WordGroupType
         {
-            NO_GROUP_TYPE,
             NOUN,
             VERB,
             ADVERB,
-            ADJECTIVE
+            ADJECTIVE,
+            NO_GROUP_TYPE
         };
 
+        enum Grouping
+        {
+            PRE_GROUPING,
+            POST_GROUPING
+        };
+
+
+        WordGroup(Word* n_main_word = 0);
+        ~WordGroup();
         Word* mainWord() const;
         void setMainWord(Word* n_main_word);
         WordGroupType type() const;
+        std::string str() const;
 
-        virtual Word* preposition() const;
-        virtual void setPreposition(Word* n_preposition);
+        Word* preposition() const;
+        void setPreposition(Word* n_preposition);
 
-        virtual std::string str() const = 0;
-        virtual int preGroupingPriority(VerbGroup* n_verb_group) const;
-        virtual int preGroupingPriority(AdjectiveGroup* n_adj_group) const;
-        virtual int preGroupingPriority(AdverbGroup* n_adv_group) const;
-        virtual int preGroupingPriority(NounGroup* n_noun_group) const;
-        virtual int postGroupingPriority(VerbGroup* n_verb_group) const;
-        virtual int postGroupingPriority(AdjectiveGroup* n_adj_group) const;
-        virtual int postGroupingPriority(AdverbGroup* n_adv_group) const;
-        virtual int postGroupingPriority(NounGroup* n_noun_group) const;
+        int groupingPriority(Grouping n_grouping, WordGroupType n_type) const;
+        //static int groupingPriority(WordGroup::Grouping n_grouping, WordGroup::WordGroupType n_completed_type, WordGroup::WordGroupType n_completement_type);
 
-        virtual const std::vector<VerbGroup*>& verbComplements() const;
-        virtual const std::vector<AdjectiveGroup*>& adjectiveComplements() const;
-        virtual const std::vector<AdverbGroup*>& adverbComplements() const;
-        virtual const std::vector<NounGroup*>& nounComplements() const;
+        const std::vector<WordGroup> getComplements(WordGroupType n_type) const;
 
-        virtual void addAsComplementTo(WordGroup& n_group) = 0;
-        virtual void addVerbComplement(const VerbGroup& n_verb_group);
-        virtual void addAdjectiveComplement(const AdjectiveGroup& n_adj_group);
-        virtual void addAdverbComplement(const AdverbGroup& n_adv_group);
-        virtual void addNounComplement(const NounGroup& n_noun_group);
+        void addComplement(WordGroup n_group);
 
     protected:
-
-        WordGroup();
-        virtual ~WordGroup();
 
         template<class T>
         std::string getStr(const std::vector<T*>& n_groups) const
@@ -76,22 +64,10 @@ class WordGroup
         Word* m_preposition;
         WordGroupType m_type;
 
-        std::vector<VerbGroup*> m_verbs;
-        std::vector<NounGroup*> m_nouns;
-        std::vector<AdjectiveGroup*> m_adjectives;
-        std::vector<AdverbGroup*> m_adverbs;
+        std::vector<WordGroup> m_complements;
 
-        int m_adverb_pre_grouping_priority;
-        int m_verb_pre_grouping_priority;
-        int m_noun_pre_grouping_priority;
-        int m_adjective_pre_grouping_priority;
-
-        int m_adverb_post_grouping_priority;
-        int m_verb_post_grouping_priority;
-        int m_noun_post_grouping_priority;
-        int m_adjective_post_grouping_priority;
-
-
+        int m_pre_grouping_priority[4][4];
+        int m_post_grouping_priority[4][4];
 };
 
 #endif // WORDGROUP_H
