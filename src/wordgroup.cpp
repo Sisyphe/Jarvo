@@ -7,6 +7,15 @@ WordGroup::WordGroup(Word* n_main_word):
 {
     setMainWord(n_main_word);
 
+    for(int i = 0; i < 4; ++i)
+    {
+        for(int j = 0; j < 4; ++j)
+        {
+            m_pre_grouping_priority[i][j] = 0;
+            m_post_grouping_priority[i][j] = 0;
+        }
+    }
+
     m_pre_grouping_priority[WordGroup::ADJECTIVE][WordGroup::ADVERB] = 2;
     m_post_grouping_priority[WordGroup::ADJECTIVE][WordGroup::ADVERB] = 1;
     m_post_grouping_priority[WordGroup::ADJECTIVE][WordGroup::VERB] = 1;
@@ -31,7 +40,27 @@ Word* WordGroup::mainWord() const
 
 void WordGroup::setMainWord(Word* n_main_word)
 {
-    m_main_word = n_main_word;
+    if(n_main_word)
+    {
+        switch(n_main_word->type)
+        {
+            case Word::NOUN:
+                m_type = WordGroup::NOUN;
+                break;
+            case Word::VERB:
+                m_type = WordGroup::VERB;
+                break;
+            case Word::ADVERB:
+                m_type = WordGroup::ADVERB;
+                break;
+            case Word::ADJECTIVE:
+                m_type = WordGroup::ADJECTIVE;
+                break;
+            default: m_type = WordGroup::NO_GROUP_TYPE;
+        }
+
+        m_main_word = n_main_word;
+    }
 }
 
 WordGroup::WordGroupType WordGroup::type() const

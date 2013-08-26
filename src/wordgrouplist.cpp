@@ -50,14 +50,15 @@ WordGroupList::WordGroupList(const std::vector<Word*>& n_words)
 
 void WordGroupList::regroupWords()
 {
-    int t_priority = -1;
+    int t_priority = 0;
     bool t_change_made = true;
-    int max_priority = -1;
+    int max_priority = 0;
     std::pair<WordGroup::Grouping,std::list<WordGroup>::iterator> prioritary_group(WordGroup::PRE_GROUPING, m_groups.end());
     std::list<WordGroup>::iterator t_group, t_prev_group;
 
     while(t_change_made)
     {
+        max_priority = 0;
         t_change_made = false;
         t_prev_group = m_groups.begin();
         t_group = ++m_groups.begin();
@@ -76,17 +77,18 @@ void WordGroupList::regroupWords()
             if(max_priority < t_priority)
             {
                 prioritary_group.first = WordGroup::POST_GROUPING;
-                prioritary_group.second = t_group;
+                prioritary_group.second = t_prev_group;
                 max_priority = t_priority;
             }
         }
 
         if(max_priority > 0)
         {
+            t_group = prioritary_group.second;
+            WordGroup completed = *t_group;
+
             switch(prioritary_group.first)
             {
-                t_group = prioritary_group.second;
-
                 case WordGroup::PRE_GROUPING:
                 {
                     --t_group;
@@ -100,6 +102,7 @@ void WordGroupList::regroupWords()
                 }
             }
 
+            WordGroup complement = *t_group;
             prioritary_group.second->addComplement(*t_group);
             m_groups.erase(t_group);
             t_change_made = true;

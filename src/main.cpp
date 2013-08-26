@@ -5,6 +5,7 @@ int main()
 {
     Jarvo jarvo;
 
+    jarvo.feed("La tre bela papago mangxas tre tre granda birdo bela.");
     jarvo.feed("Papago estas bela birdo.");
     jarvo.feed("Birdo estas granda.");
 //     jarvo.feed("La birdoj estas bestoj.");
