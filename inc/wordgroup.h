@@ -38,6 +38,9 @@ class WordGroup
         Word* preposition() const;
         void setPreposition(Word* n_preposition);
 
+        bool isDeterminate() const;
+        void setDeterminate(bool n_on);
+
         int groupingPriority(Grouping n_grouping, WordGroupType n_type) const;
 
         const std::vector<WordGroup> getComplements(WordGroupType n_type) const;
@@ -62,6 +65,7 @@ class WordGroup
         Word* m_main_word;
         Word* m_preposition;
         WordGroupType m_type;
+        bool m_is_determinate;
 
         std::vector<WordGroup> m_complements;
 

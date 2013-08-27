@@ -3,7 +3,8 @@
 WordGroup::WordGroup(Word* n_main_word):
     m_main_word(0),
     m_preposition(0),
-    m_type(WordGroup::NO_GROUP_TYPE)
+    m_type(WordGroup::NO_GROUP_TYPE),
+    m_is_determinate(false)
 {
     setMainWord(n_main_word);
 
@@ -86,6 +87,16 @@ Word* WordGroup::preposition() const
 void WordGroup::setPreposition(Word* n_preposition)
 {
     m_preposition = n_preposition;
+}
+
+bool WordGroup::isDeterminate() const
+{
+    return m_is_determinate;
+}
+
+void WordGroup::setDeterminate(bool n_on)
+{
+    m_is_determinate = n_on;
 }
 
 std::string WordGroup::str() const

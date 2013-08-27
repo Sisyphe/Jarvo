@@ -1,8 +1,4 @@
 #include "wordgrouplist.h"
-#include "noungroup.h"
-#include "adjectivegroup.h"
-#include "adverbgroup.h"
-#include "verbgroup.h"
 
 WordGroupList::WordGroupList(const std::vector<Word*>& n_words)
 {
@@ -32,6 +28,8 @@ WordGroupList::WordGroupList(const std::vector<Word*>& n_words)
 
             case Word::PRONOUN: t_is_determinate = true;
             case Word::NOUN:
+                t_group.setDeterminate(t_is_determinate);
+                t_is_determinate = false;
             case Word::VERB:
             {
                 t_group.setPreposition(t_preposition);
@@ -89,7 +87,6 @@ void WordGroupList::regroupWords()
         if(max_priority > 0)
         {
             t_group = prioritary_group.second;
-            WordGroup completed = *t_group;
 
             switch(prioritary_group.first)
             {
@@ -106,7 +103,6 @@ void WordGroupList::regroupWords()
                 }
             }
 
-            WordGroup complement = *t_group;
             prioritary_group.second->addComplement(*t_group);
             m_groups.erase(t_group);
             t_change_made = true;
