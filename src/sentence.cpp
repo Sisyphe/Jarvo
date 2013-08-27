@@ -36,6 +36,16 @@ void Sentence::setVerbGroup(const WordGroup& n_verb)
     verb_group = n_verb;
 }
 
+WordGroup Sentence::objectGroup() const
+{
+    return object_group;
+}
+
+void Sentence::setObjectGroup(const WordGroup& n_object)
+{
+    object_group = n_object;
+}
+
 bool Sentence::isInterrogative() const
 {
     return is_interrogative;

@@ -68,6 +68,16 @@ WordGroup::WordGroupType WordGroup::type() const
     return m_type;
 }
 
+bool WordGroup::isEmpty() const
+{
+    return m_main_word == 0;
+}
+
+bool WordGroup::hasComplements() const
+{
+    return !m_complements.empty();
+}
+
 Word* WordGroup::preposition() const
 {
     return m_preposition;
@@ -80,7 +90,42 @@ void WordGroup::setPreposition(Word* n_preposition)
 
 std::string WordGroup::str() const
 {
-    return std::string();
+    std::string t_str;
+    std::vector<WordGroup> t_adjectives, t_adverbs, t_nouns, t_verbs;
+    std::vector<WordGroup>::const_iterator t_group = m_complements.begin();
+
+    if(m_main_word)
+    {
+        for(; t_group != m_complements.end(); ++t_group)
+        {
+            switch(t_group->type())
+            {
+                case WordGroup::ADJECTIVE:
+                    t_adjectives.push_back(*t_group);
+                    break;
+                case WordGroup::NOUN:
+                    t_nouns.push_back(*t_group);
+                    break;
+                case WordGroup::ADVERB:
+                    t_adverbs.push_back(*t_group);
+                    break;
+                case WordGroup::VERB:
+                    t_verbs.push_back(*t_group);
+                    break;
+                default: break;
+            }
+        }
+
+        if(m_preposition) t_str += m_preposition->str_base + " ";
+        t_str += getStr(t_verbs);
+        t_str += getStr(t_adverbs);
+        t_str += getStr(t_adjectives);
+        t_str += m_main_word->str_base + " ";
+        t_str += getStr(t_nouns);
+        t_str.erase(t_str.end()-1);
+    }
+
+    return t_str;
 }
 
 int WordGroup::groupingPriority(Grouping n_grouping, WordGroupType n_type) const
@@ -98,22 +143,6 @@ int WordGroup::groupingPriority(Grouping n_grouping, WordGroupType n_type) const
         default: return -1;
     }
 }
-
-// int WordGroup::groupingPriority(Grouping n_grouping, WordGroupType n_completed_type, WordGroupType n_completement_type)
-// {
-//     switch(n_grouping)
-//     {
-//         case WordGroup::PRE_GROUPING:
-//             return m_pre_grouping_priority[n_completed_type][n_completement_type];
-//             break;
-//
-//         case WordGroup::POST_GROUPING:
-//             return m_post_grouping_priority[n_completed_type][n_completement_type];
-//             break;
-//
-//         default: return -1;
-//     }
-// }
 
 const std::vector<WordGroup> WordGroup::getComplements(WordGroupType n_type) const
 {

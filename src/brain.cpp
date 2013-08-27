@@ -150,46 +150,60 @@ Node* Brain::getOrCreateNode(const WordGroup& n_word_group, bool need_instance)
     std::vector<std::string> t_qualifier_strings;
     std::vector<std::string>::iterator t_qualifiers_it;
     Node* t_noun_node = 0;
-    Node* t_node= 0;/*n_word_group.noun->node;
+    Node* t_node = n_word_group.mainWord()->node;
+    Word* t_noun = n_word_group.mainWord();
+    std::vector<WordGroup> t_complements;
+    std::vector<WordGroup>::iterator t_complement;
+    std::vector<WordGroup> t_adverbs;
+    std::vector<WordGroup>::iterator t_adverb;
 
     if(!t_node)
     {
-        if(n_word_group.noun->is_special)
+        if(t_noun->is_special)
         {
-            t_noun_node = getOrCreateSpecialThing(*(n_word_group.noun));
-            t_node = t_noun_node;
+            t_node = getOrCreateSpecialThing(*(t_noun));
+            t_noun_node = t_node;
         }
         else
         {
-            t_noun_node = getOrCreateEntity(n_word_group.noun->str_base);
-            t_node = t_noun_node;
-            if(!n_word_group.qualifiers.empty())
+            t_node = getOrCreateEntity(n_word_group.str());
+            t_noun_node = t_node;
+
+            if(n_word_group.hasComplements())
             {
-                t_node = getOrCreateEntity(n_word_group.str());
+                t_noun_node = getOrCreateEntity(t_noun->str_base);
                 t_relation = connectNodes(t_node, m_links.esti(), t_noun_node);
                 t_relation->content().setType(RelationContent::SPECIALIZATION);
-
-                t_qualifier_strings = n_word_group.getQualifierStrings();
-                t_qualifiers_it = t_qualifier_strings.begin();
-                for(; t_qualifiers_it != t_qualifier_strings.end(); ++t_qualifiers_it)
-                {
-                    t_link = Link("esti");
-                    t_link.addQualifier(*t_qualifiers_it);
-                    t_link_node = getOrCreateLinkNode(t_link);
-                    t_relation = connectNodes(t_node, t_link_node, t_node);
-                    t_relation->content().setType(RelationContent::FEATURE);
-                }
             }
+        }
+
+        t_complements = n_word_group.getComplements(WordGroup::ADJECTIVE);
+        t_complement = t_complements.begin();
+        for(; t_complement != t_complements.end(); ++t_complement)
+        {
+            t_link = Link("esti");
+            t_link.addQualifier(t_complement->mainWord()->str_base);
+
+            t_adverbs = t_complement->getComplements(WordGroup::ADVERB);
+            t_adverb = t_adverbs.begin();
+            for(; t_adverb != t_adverbs.end(); ++t_adverb)
+            {
+                t_link.addAdverb(t_adverb->mainWord()->str_base);
+            }
+
+            t_link_node = getOrCreateLinkNode(t_link);
+            t_relation = connectNodes(t_node, t_link_node, t_node);
+            t_relation->content().setType(RelationContent::FEATURE);
         }
     }
 
-    n_word_group.noun->node = t_noun_node;
+    n_word_group.mainWord()->node = t_noun_node;
 
     if(need_instance)
     {
         t_node = createInstanceOf(t_node);
     }
-*/
+
     return t_node;
 }
 

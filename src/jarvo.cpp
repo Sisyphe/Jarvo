@@ -35,44 +35,33 @@ void Jarvo::feed(const std::string& n_input)
 
 void Jarvo::processStatement(Sentence& n_sentence)
 {
-    bool need_instance = false;
+    bool need_instance = true;
     Node* t_subject_node=0;
     Node* t_object_node=0;
     LinkNode* t_link_node=0;
 
-    /*if(n_sentence.subject())
+    if(!n_sentence.subjectGroup().isEmpty())
     {
-        need_instance = n_sentence.subject_group.is_determinate
-                     && !n_sentence.subject()->is_special;
-        t_subject_node = m_brain.getOrCreateNode(n_sentence.subject_group, need_instance);
+        t_subject_node = m_brain.getOrCreateNode(n_sentence.subjectGroup(), need_instance);
     }
 
-    if(n_sentence.object())
+    if(!n_sentence.objectGroup().isEmpty())
     {
-        need_instance = (n_sentence.verb()->str_base == "esti"
-                     && n_sentence.subject_group.is_determinate
-                     && !n_sentence.subject()->is_special
-                     && n_sentence.object_group.is_determinate)
-                     || (n_sentence.verb()->str_base != "esti"
-                    && (n_sentence.subject_group.is_determinate
-                     || n_sentence.object_group.is_determinate)
-                     && !n_sentence.object()->is_special);
-
-        t_object_node = m_brain.getOrCreateNode(n_sentence.object_group, need_instance);
+        t_object_node = m_brain.getOrCreateNode(n_sentence.objectGroup(), need_instance);
     }
 
-    if(n_sentence.verb())
+    if(!n_sentence.verbGroup().isEmpty())
     {
-        t_link_node=n_sentence.verb()->link_node;
+        t_link_node = n_sentence.verb()->link_node;
 
         if(!t_link_node)
         {
-            t_link_node=m_brain.getOrCreateLinkNode(Link(n_sentence.verb()->str_base));
-            n_sentence.verb()->link_node=t_link_node;
+            t_link_node = m_brain.getOrCreateLinkNode(Link(n_sentence.verb()->str_base));
+            n_sentence.verb()->link_node = t_link_node;
         }
 
         t_subject_node->addOutputEdge(RelationContent(t_link_node),t_object_node);
-    }*/
+    }
 }
 
 void Jarvo::processYesNoQuestion(Sentence& n_sentence)

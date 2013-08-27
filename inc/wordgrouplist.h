@@ -10,6 +10,7 @@ class WordGroupList
 
         WordGroupList(const std::vector<Word*>& n_words);
         void regroupWords();
+        std::list<WordGroup> groups() const;
 
     protected:
         std::list<WordGroup> m_groups;

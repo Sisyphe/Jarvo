@@ -10,27 +10,40 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
     WordGroup t_verb_group;
     std::vector<std::string> t_raw_words;
     std::vector<Word*> t_words;
-    std::vector<Word*>::const_iterator t_word, t_active_verb, t_subject;
-    std::vector<Word*>::const_iterator t_words_begin, t_words_end;
-
-    m_success = true;
+    std::list<WordGroup> t_groups;
+    std::list<WordGroup>::iterator t_group;
+    bool done = false;
+    Word* t_word = 0;
+    bool subject_set = false;
 
     extractRawWords(n_str, t_raw_words);
-    if(m_success) getEntries(t_raw_words, t_words);
+    getEntries(t_raw_words, t_words);
 
     WordGroupList t_group_list(t_words);
     t_group_list.regroupWords();
-}
+    t_groups = t_group_list.groups();
 
-// void makeGroups(std::list<WordGroup*>& n_groups, const std::vector<Word*>& n_words)
-// {
-//
-// }
-//
-// void regroupWords(std::list<WordGroup*>& n_groups)
-// {
-//
-// }
+    t_group = t_groups.begin();
+
+    for(; t_group != t_groups.end(); ++t_group)
+    {
+        t_word = t_group->mainWord();
+
+        if(t_word->type == Word::NOUN)
+        {
+            if(t_word->function == Word::SUBJECT && !subject_set)
+            {
+                n_sentence.setSubjectGroup(*t_group);
+                subject_set = true;
+            }
+            else n_sentence.setObjectGroup(*t_group);
+        }
+        else if(t_word->type == Word::VERB)
+        {
+            n_sentence.setVerbGroup(*t_group);
+        }
+    }
+}
 
 void Parser::getEntries
 (

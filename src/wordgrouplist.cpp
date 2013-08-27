@@ -1,4 +1,8 @@
 #include "wordgrouplist.h"
+#include "noungroup.h"
+#include "adjectivegroup.h"
+#include "adverbgroup.h"
+#include "verbgroup.h"
 
 WordGroupList::WordGroupList(const std::vector<Word*>& n_words)
 {
@@ -108,4 +112,9 @@ void WordGroupList::regroupWords()
             t_change_made = true;
         }
     }
+}
+
+std::list<WordGroup> WordGroupList::groups() const
+{
+    return m_groups;
 }

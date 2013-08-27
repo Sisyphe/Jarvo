@@ -147,7 +147,7 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
         case 'e': // Adverb
         {
             t_entry->type=Word::ADVERB;
-            t_entry->function==Word::NO_CASE;
+            t_entry->function=Word::NO_CASE;
             break;
         }
         case 'i': // Infinitive verb

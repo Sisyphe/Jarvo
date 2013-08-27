@@ -13,7 +13,7 @@ INCLUDEPATH += ./inc ../Graf/inc ../Graf/src /usr/include/espeak
 
 LIBS += -L ../Graf/lib -lGraf -lportaudio -lespeak
 
-QMAKE_CXXFLAGS += -Wno-unused-parameter
+QMAKE_CXXFLAGS += -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable
 
 SOURCES +=  src/main.cpp \
             src/thing.cpp \
@@ -37,7 +37,11 @@ SOURCES +=  src/main.cpp \
             src/commandlink.cpp \
             src/wordgroup.cpp \
             src/word.cpp \
-            src/wordgrouplist.cpp
+            src/wordgrouplist.cpp \
+            src/verbgroup.cpp \
+            src/adjectivegroup.cpp \
+            src/adverbgroup.cpp \
+            src/noungroup.cpp \
 
 HEADERS +=  inc/thing.h \
             inc/node.h \
@@ -63,4 +67,8 @@ HEADERS +=  inc/thing.h \
             inc/saylink.h \
             inc/openprogramaction.h \
             inc/wordgroup.h \
-            inc/wordgrouplist.h
+            inc/wordgrouplist.h \
+            inc/verbgroup.h \
+            inc/adjectivegroup.h \
+            inc/adverbgroup.h \
+            inc/noungroup.h \

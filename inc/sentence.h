@@ -18,6 +18,9 @@ class Sentence
         WordGroup verbGroup() const;
         void setVerbGroup(const WordGroup& n_verb);
 
+        WordGroup objectGroup() const;
+        void setObjectGroup(const WordGroup& n_object);
+
         bool isInterrogative() const;
         void setIsInterrogative(bool n_true);
 
@@ -25,6 +28,7 @@ class Sentence
 
         WordGroup subject_group;
         WordGroup verb_group;
+        WordGroup object_group;
         bool is_interrogative;
         bool is_yes_no_question;
 };

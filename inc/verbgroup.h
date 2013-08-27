@@ -9,20 +9,7 @@ class VerbGroup: public WordGroup
     public:
 
         VerbGroup();
-
         virtual std::string str() const;
-
-        using WordGroup::preposition;
-        using WordGroup::setPreposition;
-
-        virtual void addAsComplementTo(WordGroup& n_group);
-        using WordGroup::addVerbComplement;
-        using WordGroup::addAdverbComplement;
-        using WordGroup::addNounComplement;
-
-        using WordGroup::verbComplements;
-        using WordGroup::adverbComplements;
-        using WordGroup::nounComplements;
 };
 
 #endif // VERBGROUP_H
