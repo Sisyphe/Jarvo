@@ -27,12 +27,12 @@ class WordGroup
 
         WordGroup(Word* n_main_word = 0);
         ~WordGroup();
+
         Word* mainWord() const;
         void setMainWord(Word* n_main_word);
-        WordGroupType type() const;
         bool isEmpty() const;
-        bool hasComplements() const;
 
+        WordGroupType type() const;
         virtual std::string str() const;
 
         Word* preposition() const;
@@ -41,10 +41,13 @@ class WordGroup
         bool isDeterminate() const;
         void setDeterminate(bool n_on);
 
+        bool isGeneral() const;
+        void setGeneral(bool n_on);
+
         int groupingPriority(Grouping n_grouping, WordGroupType n_type) const;
 
+        bool hasComplements() const;
         const std::vector<WordGroup> getComplements(WordGroupType n_type) const;
-
         void addComplement(WordGroup n_group);
 
     protected:
@@ -66,6 +69,7 @@ class WordGroup
         Word* m_preposition;
         WordGroupType m_type;
         bool m_is_determinate;
+        bool m_is_general;
 
         std::vector<WordGroup> m_complements;
 

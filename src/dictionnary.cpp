@@ -63,6 +63,18 @@ Dictionnary::Dictionnary()
     t_entry->link_node=0;
     t_entry->is_special=true;
     m_known_words.insert(t_entry);
+
+    t_entry=new Word;
+    t_entry->str="cxiu";
+    t_entry->str_base="cxiu";
+    t_entry->type=Word::ADJECTIVE;
+    t_entry->function=Word::NO_CASE;
+    t_entry->tense=Word::NO_TENSE;
+    t_entry->isPlural=false;
+    t_entry->node=0;
+    t_entry->link_node=0;
+    t_entry->is_special=false;
+    m_known_words.insert(t_entry);
 }
 
 Dictionnary::~Dictionnary()
@@ -208,12 +220,13 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
             t_str.erase(t_str.size()-1,1);
         }
         else t_str=n_str;
-        t_entry->type=Word::UNKNOWN_TYPE;
+        t_entry->type=Word::NOUN;
         t_entry->str=n_str;
         t_entry->str_base=t_str;
         t_entry->isPlural=false;
-        t_entry->function=Word::NO_CASE;
+        t_entry->function=Word::BOTH_CASE;
         t_entry->tense=Word::NO_TENSE;
+        t_entry->is_special = true;
     }
 
     std::set<Word*>::iterator t_found;

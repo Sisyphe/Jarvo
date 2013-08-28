@@ -4,7 +4,8 @@ WordGroup::WordGroup(Word* n_main_word):
     m_main_word(0),
     m_preposition(0),
     m_type(WordGroup::NO_GROUP_TYPE),
-    m_is_determinate(false)
+    m_is_determinate(false),
+    m_is_general(false)
 {
     setMainWord(n_main_word);
 
@@ -97,6 +98,16 @@ bool WordGroup::isDeterminate() const
 void WordGroup::setDeterminate(bool n_on)
 {
     m_is_determinate = n_on;
+}
+
+bool WordGroup::isGeneral() const
+{
+    return m_is_general;
+}
+
+void WordGroup::setGeneral(bool n_on)
+{
+    m_is_general = n_on;
 }
 
 std::string WordGroup::str() const

@@ -6,11 +6,18 @@ WordGroupList::WordGroupList(const std::vector<Word*>& n_words)
     std::vector<Word*>::const_iterator t_word = n_words.begin();
     WordGroup t_group;
     bool t_is_determinate = false;
+    bool t_is_general = false;
     Word* t_preposition = 0;
 
     for(; t_word != n_words.end(); ++t_word)
     {
         t_group = WordGroup(*t_word);
+
+        if((*t_word)->str_base == "cxiu")
+        {
+            t_is_general = true;
+            continue;
+        }
 
         switch((*t_word)->type)
         {
@@ -29,7 +36,9 @@ WordGroupList::WordGroupList(const std::vector<Word*>& n_words)
             case Word::PRONOUN: t_is_determinate = true;
             case Word::NOUN:
                 t_group.setDeterminate(t_is_determinate);
+                t_group.setGeneral(t_is_general);
                 t_is_determinate = false;
+                t_is_general = false;
             case Word::VERB:
             {
                 t_group.setPreposition(t_preposition);

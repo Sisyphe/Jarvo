@@ -142,40 +142,40 @@ Node* Brain::createSpecialInstanceOf(Node* n_entity_node)
     return t_thing_node;
 }
 
-Node* Brain::getOrCreateNode(const WordGroup& n_word_group, bool need_instance)
+Node* Brain::getOrCreateNode(const WordGroup& n_word_group)
 {
     Link t_link;
     LinkNode* t_link_node;
     Relation* t_relation = 0;
-    std::vector<std::string> t_qualifier_strings;
-    std::vector<std::string>::iterator t_qualifiers_it;
-    Node* t_noun_node = 0;
-    Node* t_node = n_word_group.mainWord()->node;
+    Node* t_noun_node = n_word_group.mainWord()->node;
+    Node* t_node = 0;
     Word* t_noun = n_word_group.mainWord();
     std::vector<WordGroup> t_complements;
     std::vector<WordGroup>::iterator t_complement;
     std::vector<WordGroup> t_adverbs;
     std::vector<WordGroup>::iterator t_adverb;
 
-    if(!t_node)
+    if(!t_noun_node)
     {
         if(t_noun->is_special)
         {
-            t_node = getOrCreateSpecialThing(*(t_noun));
-            t_noun_node = t_node;
+            t_noun_node = getOrCreateSpecialThing(*(t_noun));
         }
         else
         {
-            t_node = getOrCreateEntity(n_word_group.str());
-            t_noun_node = t_node;
-
-            if(n_word_group.hasComplements())
-            {
-                t_noun_node = getOrCreateEntity(t_noun->str_base);
-                t_relation = connectNodes(t_node, m_links.esti(), t_noun_node);
-                t_relation->content().setType(RelationContent::SPECIALIZATION);
-            }
+            t_noun_node = getOrCreateEntity(t_noun->str_base);
         }
+
+        n_word_group.mainWord()->node = t_noun_node;
+    }
+
+    t_node = t_noun_node;
+
+    if(n_word_group.hasComplements())
+    {
+        t_node = getOrCreateEntity(n_word_group.str());
+        t_relation = connectNodes(t_node, m_links.esti(), t_noun_node);
+        t_relation->content().setType(RelationContent::SPECIALIZATION);
 
         t_complements = n_word_group.getComplements(WordGroup::ADJECTIVE);
         t_complement = t_complements.begin();
@@ -197,17 +197,10 @@ Node* Brain::getOrCreateNode(const WordGroup& n_word_group, bool need_instance)
         }
     }
 
-    n_word_group.mainWord()->node = t_noun_node;
-
-    if(need_instance)
-    {
-        t_node = createInstanceOf(t_node);
-    }
-
     return t_node;
 }
 
-LinkNode* Brain::getLink(const Link& n_link)
+LinkNode* Brain::getLinkNode(const Link& n_link)
 {
     FindLink t_process(n_link);
 
@@ -220,7 +213,7 @@ LinkNode* Brain::getOrCreateLinkNode(const Link& n_link)
 {
     LinkNode* t_node=0;
 
-    t_node=getLink(n_link);
+    t_node=getLinkNode(n_link);
 
     if(!t_node)
     {

@@ -31,7 +31,7 @@ void Parser::parse(Sentence &n_sentence, const std::string& n_str)
 
         if(t_word->type == Word::NOUN)
         {
-            if(t_word->function == Word::SUBJECT && !subject_set)
+            if(t_word->function & Word::SUBJECT && !subject_set)
             {
                 n_sentence.setSubjectGroup(*t_group);
                 subject_set = true;

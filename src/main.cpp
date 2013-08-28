@@ -5,9 +5,10 @@ int main()
 {
     Jarvo jarvo;
 
-    jarvo.feed("La tre bela papago mangxas tre tre granda birdo bela.");
-    jarvo.feed("Papago estas bela birdo.");
-    jarvo.feed("Birdo estas granda.");
+    jarvo.feed("\"Kiki\" estas testulo.");
+    jarvo.feed("La papago estas granda birdo.");
+    jarvo.feed("La papago mangxas belan birdon.");
+    //jarvo.feed("Cxiu papago estas bela birdo.");
 //     jarvo.feed("La birdoj estas bestoj.");
 //     jarvo.feed("La Katoj estas bestoj.");
 //     jarvo.feed("Kato mangxas birdon.");
