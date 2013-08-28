@@ -8,6 +8,6 @@ OpenFolderAction::OpenFolderAction()
 
 void OpenFolderAction::handle(Node* n_node)
 {
-    std::string t_command="dolphin " + n_node->content().str();
+    std::string t_command = "dolphin " + n_node->content().str();
     system(t_command.c_str());
 }

@@ -6,9 +6,7 @@
 class OpenLink: public CommandLink
 {
     public:
-
         OpenLink(Brain& n_brain);
-        virtual ~OpenLink(){}
 };
 
 #endif // OPENLINK_H

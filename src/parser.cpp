@@ -4,24 +4,19 @@
 #include "wordgroup.h"
 #include "wordgrouplist.h"
 
-void Parser::parse(Sentence &n_sentence, const std::string& n_str)
+void Parser::parse(Sentence& n_sentence, const std::string& n_str)
 {
-    WordGroup t_subject_group;
-    WordGroup t_verb_group;
     std::vector<std::string> t_raw_words;
     std::vector<Word*> t_words;
     std::list<WordGroup> t_groups;
     std::list<WordGroup>::iterator t_group;
-    bool done = false;
     Word* t_word = 0;
     bool subject_set = false;
 
     extractRawWords(n_str, t_raw_words);
     getEntries(t_raw_words, t_words);
 
-    WordGroupList t_group_list(t_words);
-    t_group_list.regroupWords();
-    t_groups = t_group_list.groups();
+    WordGroupList::regroupWords(t_words, t_groups);
 
     t_group = t_groups.begin();
 
@@ -75,15 +70,15 @@ void Parser::extractRawWords
     std::vector<std::string>& n_raw_words
 ) const
 {
-    bool t_is_expecting_quote=false;
+    bool t_is_expecting_quote = false;
     std::string t_raw_word;
     char t_char;
 
     n_raw_words.clear();
 
-    for(unsigned int i=0; i < n_str.size(); ++i)
+    for(unsigned int i = 0; i < n_str.size(); ++i)
     {
-        t_char=n_str[i];
+        t_char = n_str[i];
 
         switch(t_char)
         {
@@ -101,6 +96,7 @@ void Parser::extractRawWords
                 {
                     t_raw_word.push_back(t_char);
                 }
+
                 break;
             }
 
@@ -109,15 +105,16 @@ void Parser::extractRawWords
                 if(!t_is_expecting_quote)
                 {
                     t_raw_word.push_back(tolower(t_char));
-                    t_is_expecting_quote=true;
+                    t_is_expecting_quote = true;
                 }
                 else
                 {
                     t_raw_word.push_back(t_char);
                     n_raw_words.push_back(t_raw_word);
                     t_raw_word.erase();
-                    t_is_expecting_quote=false;
+                    t_is_expecting_quote = false;
                 }
+
                 break;
             }
 
@@ -129,10 +126,11 @@ void Parser::extractRawWords
                 {
                     t_raw_word.push_back(t_char);
                 }
-                else if((i+1)!=n_str.size())
+                else if((i + 1) != n_str.size())
                 {
                     t_raw_word.push_back(tolower(t_char));
                 }
+
                 break;
             }
 
@@ -146,6 +144,7 @@ void Parser::extractRawWords
                 {
                     t_raw_word.push_back(tolower(t_char));
                 }
+
                 break;
             }
         }

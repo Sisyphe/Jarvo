@@ -1,57 +1,67 @@
 #include "sentence.h"
 
 Sentence::Sentence():
-    is_interrogative(false),
-    is_yes_no_question(false)
+    m_is_interrogative(false),
+    m_is_polar_question(false)
 {
 }
 
 Word* Sentence::subject() const
 {
-    return subject_group.mainWord();
+    return m_subject_group.mainWord();
 }
 
 Word* Sentence::verb() const
 {
-    return verb_group.mainWord();
+    return m_verb_group.mainWord();
 }
 
 WordGroup Sentence::subjectGroup() const
 {
-    return subject_group;
+    return m_subject_group;
 }
 
 void Sentence::setSubjectGroup(const WordGroup& n_subject)
 {
-    subject_group = n_subject;
+    m_subject_group = n_subject;
 }
 
 WordGroup Sentence::verbGroup() const
 {
-    return verb_group;
+    return m_verb_group;
 }
 
 void Sentence::setVerbGroup(const WordGroup& n_verb)
 {
-    verb_group = n_verb;
+    m_verb_group = n_verb;
 }
 
 WordGroup Sentence::objectGroup() const
 {
-    return object_group;
+    return m_object_group;
 }
 
 void Sentence::setObjectGroup(const WordGroup& n_object)
 {
-    object_group = n_object;
+    m_object_group = n_object;
 }
 
 bool Sentence::isInterrogative() const
 {
-    return is_interrogative;
+    return m_is_interrogative;
 }
 
 void Sentence::setIsInterrogative(bool n_true)
 {
-    is_interrogative = n_true;
+    m_is_interrogative = n_true;
+}
+
+bool Sentence::isPolarQuestion() const
+{
+    return m_is_polar_question;
+}
+
+void Sentence::setIsPolarQuestion(bool n_true)
+{
+    m_is_polar_question = n_true;
 }

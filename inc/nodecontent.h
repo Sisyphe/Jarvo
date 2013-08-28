@@ -15,12 +15,11 @@ class NodeContent
             LINK
         };
 
-        NodeContent(){}
+        NodeContent();
 
         enum Type type() const;
 
     protected:
-
         enum Type m_type;
 };
 

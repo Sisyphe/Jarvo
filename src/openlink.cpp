@@ -3,10 +3,10 @@
 #include "openfolderaction.h"
 #include "openprogramaction.h"
 
-OpenLink::OpenLink(Brain& n_brain)
-    :CommandLink(n_brain)
+OpenLink::OpenLink(Brain& n_brain):
+    CommandLink(n_brain)
 {
-    m_verb="aperti";
+    m_verb = "aperti";
 
     m_handlers.push_back(new OpenFileAction());
     m_handlers.push_back(new OpenFolderAction());

@@ -9,7 +9,6 @@ class OpenFolderAction: public Handler
 
         OpenFolderAction();
         virtual void handle(Node* n_node);
-
 };
 
 #endif // OPENFOLDERACTION_H

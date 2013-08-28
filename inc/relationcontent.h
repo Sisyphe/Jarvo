@@ -31,7 +31,7 @@ class RelationContent
 
         typedef std::vector<std::pair<Time, State> > StateHistory;
 
-        RelationContent(Vertice<Link*, bool> *n_link_node=0);
+        RelationContent(Vertice<Link*, bool>* n_link_node = 0);
 
         State state() const;
         void enable();
@@ -41,13 +41,13 @@ class RelationContent
         Type type() const;
         void setType(Type n_type);
 
-        bool operator== (const RelationContent& n_relation_content) const;
+        bool operator==(const RelationContent& n_relation_content) const;
         friend std::ostream& operator<<(std::ostream& n_out, const RelationContent& n_content);
 
     protected:
 
         StateHistory m_history;
-        Vertice<Link*,bool> const* m_link_node;
+        Vertice<Link*, bool> const* m_link_node;
         Type m_type;
 };
 

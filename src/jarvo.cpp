@@ -18,7 +18,7 @@ void Jarvo::feed(const std::string& n_input)
 
     if(t_sentence.isInterrogative())
     {
-        //if(t_sentence.is_yes_no_question)
+        if(t_sentence.isPolarQuestion())
         {
             processYesNoQuestion(t_sentence);
         }

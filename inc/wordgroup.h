@@ -52,18 +52,7 @@ class WordGroup
 
     protected:
 
-        std::string getStr(const std::vector<WordGroup>& n_groups) const
-        {
-            std::string str;
-            typename std::vector<WordGroup>::const_iterator it = n_groups.begin();
-
-            for(; it != n_groups.end(); ++it)
-            {
-                str += it->str() + " ";
-            }
-
-            return str;
-        }
+        std::string getStr(const std::vector<WordGroup>& n_groups) const;
 
         Word* m_main_word;
         Word* m_preposition;

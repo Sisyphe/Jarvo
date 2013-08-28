@@ -16,17 +16,8 @@ class Parser
 
     protected:
 
-        void getEntries
-        (
-            const std::vector<std::string>& n_raw_words,
-            std::vector<Word*>& n_words
-        );
-
-        void extractRawWords
-        (
-            const std::string& n_str,
-            std::vector< std::string >& n_raw_words
-        ) const;
+        void getEntries(const std::vector<std::string>& n_raw_words, std::vector<Word*>& n_words);
+        void extractRawWords(const std::string& n_str, std::vector< std::string >& n_raw_words) const;
 
         Dictionnary m_dict;
         bool m_success;

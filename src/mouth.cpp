@@ -10,7 +10,7 @@
 Mouth::Mouth()
 {
 #ifdef ESPEAK
-    espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 0, NULL,0);
+    espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 0, NULL, 0);
     espeak_SetVoiceByName("eo");
 #endif
 }

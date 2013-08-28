@@ -17,10 +17,9 @@ class CommandLink: public Link
 
         virtual Handler* getHandler(Node* n_node) const;
 
-        std::map<Node*,Handler*> m_handable_things;
+        std::map<Node*, Handler*> m_handable_things;
         std::list<Handler*> m_handlers;
         Brain& m_brain;
-
 };
 
 #endif // COMMANDLINK_H

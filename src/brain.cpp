@@ -79,7 +79,7 @@ Node* Brain::createEntity(const Word& n_word)
 Node* Brain::createEntity(const std::string& n_str)
 {
     Node* t_entity_node=m_network.addVertice(Thing(n_str,NodeContent::ENTITY));
-    connectNodes(t_entity_node,m_links.esti(),m_io);
+    connectNodes(t_entity_node,m_links.isLinkNode(),m_io);
     return t_entity_node;
 }
 
@@ -92,7 +92,7 @@ Node* Brain::getOrCreateThing(const Word& n_word)
 
     t_thing_node=m_network.addVertice(Thing(n_word.str_base));
 
-    LinkNode* t_link_node=m_links.esti();
+    LinkNode* t_link_node=m_links.isLinkNode();
     connectNodes(t_thing_node,t_link_node,t_entity_node);
 
     return t_thing_node;
@@ -104,7 +104,7 @@ Node* Brain::createInstanceOf(Node* n_entity_node)
 
     t_thing_node=m_network.addVertice(Thing(n_entity_node->content().str()));
 
-    LinkNode* t_link_node=m_links.esti();
+    LinkNode* t_link_node=m_links.isLinkNode();
     connectNodes(t_thing_node,t_link_node,n_entity_node);
 
     return t_thing_node;
@@ -124,7 +124,7 @@ Node* Brain::getOrCreateSpecialThing(const Word& n_word)
     else
     {
         t_thing_node=m_network.addVertice(Thing(n_word.str_base, NodeContent::SPECIAL_THING));
-        connectNodes(t_thing_node,m_links.esti(),m_io);
+        connectNodes(t_thing_node,m_links.isLinkNode(),m_io);
     }
 
     return t_thing_node;
@@ -136,7 +136,7 @@ Node* Brain::createSpecialInstanceOf(Node* n_entity_node)
 
     t_thing_node=m_network.addVertice(Thing(n_entity_node->content().str(),NodeContent::SPECIAL_THING));
 
-    LinkNode* t_link_node=m_links.esti();
+    LinkNode* t_link_node=m_links.isLinkNode();
     connectNodes(t_thing_node,t_link_node,n_entity_node);
 
     return t_thing_node;
@@ -174,7 +174,7 @@ Node* Brain::getOrCreateNode(const WordGroup& n_word_group)
     if(n_word_group.hasComplements())
     {
         t_node = getOrCreateEntity(n_word_group.str());
-        t_relation = connectNodes(t_node, m_links.esti(), t_noun_node);
+        t_relation = connectNodes(t_node, m_links.isLinkNode(), t_noun_node);
         t_relation->content().setType(RelationContent::SPECIALIZATION);
 
         t_complements = n_word_group.getComplements(WordGroup::ADJECTIVE);

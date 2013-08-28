@@ -9,6 +9,6 @@ OpenFileAction::OpenFileAction()
 
 void OpenFileAction::handle(Node* n_node)
 {
-    std::string t_command=std::string("xdg-open ") + n_node->content().str();
+    std::string t_command = std::string("xdg-open ") + n_node->content().str();
     system(t_command.c_str());
 }

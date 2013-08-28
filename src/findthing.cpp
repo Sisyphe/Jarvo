@@ -1,6 +1,6 @@
 #include "findthing.h"
 
-FindThing::FindThing(const Word &n_word, NodeContent::Type n_type):
+FindThing::FindThing(const Word& n_word, NodeContent::Type n_type):
     m_str(n_word.str_base),
     m_node(0),
     m_type(n_type)
@@ -29,7 +29,7 @@ FindThing::FindThing
 
 bool FindThing::isThingFound() const
 {
-    return m_node!=0;
+    return m_node != 0;
 }
 
 Node* FindThing::thingNode() const
@@ -46,20 +46,23 @@ bool FindThing::process(Node* n_node)
 
     if
     (
-       n_node->content().type() == m_type &&
-       n_node->content().str() == m_str
+        n_node->content().type() == m_type &&
+        n_node->content().str() == m_str
     )
     {
         it = m_links.begin();
+
         while(t_is_found && it != m_links.end())
         {
             t_is_found = false;
             jt = n_node->outputEdgesBegin();
+
             while(!t_is_found && jt != n_node->outputEdgesEnd())
             {
                 t_is_found = ((*jt)->inputVertice() == n_node) && ((*it) == (*((*jt)->content().link())));
                 ++jt;
             }
+
             ++it;
         }
 

@@ -5,11 +5,11 @@
 #include "graph.h"
 #include <set>
 
-typedef Vertice<Link*,bool> LinkNode;
-typedef Edge<Link*,bool> LinkRelation;
-typedef VerticeProcess<Link*,bool> LinkProcess;
+typedef Vertice<Link*, bool> LinkNode;
+typedef Edge<Link*, bool> LinkRelation;
+typedef VerticeProcess<Link*, bool> LinkProcess;
 
-class LinkGraph : public Graph<Link*,bool>
+class LinkGraph: public Graph<Link*, bool>
 {
     public:
 
@@ -19,12 +19,12 @@ class LinkGraph : public Graph<Link*,bool>
         LinkNode* findLinkNode(const std::string& n_link_str);
         LinkNode* addLinkNode(const Link& n_link);
 
-        LinkNode* esti() const;
+        LinkNode* isLinkNode() const;
 
     protected:
 
         std::map<Link*, LinkNode*> m_link_nodes;
-        LinkNode* m_esti;
+        LinkNode* m_is_link_node;
 };
 
 #endif // LINKGRAPH_H

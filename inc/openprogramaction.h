@@ -6,17 +6,17 @@
 
 class OpenProgramAction: public Handler
 {
-public:
+    public:
 
-    OpenProgramAction()
-    {
-        m_handables.push_back("programo");
-    }
+        OpenProgramAction()
+        {
+            m_handables.push_back("programo");
+        }
 
-    virtual void handle(Node* n_node)
-    {
-        system(n_node->content().str().c_str());
-    }
+        virtual void handle(Node* n_node)
+        {
+            system(n_node->content().str().c_str());
+        }
 };
 
 #endif

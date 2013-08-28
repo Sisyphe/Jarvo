@@ -10,19 +10,22 @@ struct FindEntry
     FindEntry
     (
         const std::string& n_str_to_find,
-        bool n_search_base=false
-    ) : m_str_to_find(n_str_to_find),
-        m_search_base(n_search_base){}
+        bool n_search_base = false
+    ):
+        m_str_to_find(n_str_to_find),
+        m_search_base(n_search_base)
+    {
+    }
 
     bool operator()(Word* n_entry)
     {
         if(m_search_base)
         {
-            return n_entry->str_base==m_str_to_find;
+            return n_entry->str_base == m_str_to_find;
         }
         else
         {
-            return n_entry->str==m_str_to_find;
+            return n_entry->str == m_str_to_find;
         }
     }
 

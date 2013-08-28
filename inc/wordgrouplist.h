@@ -8,12 +8,8 @@ class WordGroupList
 {
     public:
 
-        WordGroupList(const std::vector<Word*>& n_words);
-        void regroupWords();
-        std::list<WordGroup> groups() const;
-
-    protected:
-        std::list<WordGroup> m_groups;
+        static void makeGroups(const std::vector<Word*>& n_words, std::list<WordGroup>& n_groups);
+        static void regroupWords(const std::vector<Word*>& n_words, std::list<WordGroup>& n_groups);
 };
 
 #endif // WORDGROUPLIST_H

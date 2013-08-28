@@ -24,13 +24,16 @@ class Sentence
         bool isInterrogative() const;
         void setIsInterrogative(bool n_true);
 
+        bool isPolarQuestion() const;
+        void setIsPolarQuestion(bool n_true);
+
     protected:
 
-        WordGroup subject_group;
-        WordGroup verb_group;
-        WordGroup object_group;
-        bool is_interrogative;
-        bool is_yes_no_question;
+        WordGroup m_subject_group;
+        WordGroup m_verb_group;
+        WordGroup m_object_group;
+        bool m_is_interrogative;
+        bool m_is_polar_question;
 };
 
 #endif // SENTENCE_H

@@ -24,10 +24,10 @@ class SayLink: public CommandLink
 {
     public:
 
-        SayLink(Brain& n_brain)
-            :CommandLink(n_brain)
+        SayLink(Brain& n_brain):
+            CommandLink(n_brain)
         {
-            m_verb="diri";
+            m_verb = "diri";
             m_handlers.push_back(new SayThingHandler());
             searchNewHandlers();
         }
