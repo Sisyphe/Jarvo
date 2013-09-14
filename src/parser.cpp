@@ -12,6 +12,7 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
     std::list<WordGroup>::iterator t_group;
     Word* t_word = 0;
     bool subject_set = false;
+    bool t_verb_is_esti = false;
 
     extractRawWords(n_str, t_raw_words);
     getEntries(t_raw_words, t_words);
@@ -24,7 +25,7 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
     {
         t_word = t_group->mainWord();
 
-        if(t_word->type == Word::NOUN)
+        if(t_word->type == Word::NOUN || t_word->type == Word::PRONOUN)
         {
             if(t_word->function & Word::SUBJECT && !subject_set)
             {
@@ -35,7 +36,20 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
         }
         else if(t_word->type == Word::VERB)
         {
+            if(t_word->str_base == "esti")
+            {
+                t_verb_is_esti = true;
+            }
             n_sentence.setVerbGroup(*t_group);
+        }
+        else if(t_word->type == Word::ADJECTIVE)
+        {
+            if(t_verb_is_esti && subject_set)
+            {
+                WordGroup t_subject = n_sentence.subjectGroup();
+                t_subject.addComplement(*t_group);
+                n_sentence.setSubjectGroup(t_subject);
+            }
         }
     }
 }

@@ -173,22 +173,25 @@ Node* Brain::getOrCreateNode(const WordGroup& n_word_group)
 
     if(n_word_group.hasComplements())
     {
-        t_node = getOrCreateEntity(n_word_group.str());
-        t_relation = connectNodes(t_node, m_links.isLinkNode(), t_noun_node);
-        t_relation->content().setType(RelationContent::SPECIALIZATION);
+        if(!t_noun->is_special)
+        {
+            t_node = getOrCreateEntity(n_word_group.str());
+            t_relation = connectNodes(t_node, m_links.isLinkNode(), t_noun_node);
+            t_relation->content().setType(RelationContent::SPECIALIZATION);
+        }
 
         t_complements = n_word_group.getComplements(WordGroup::ADJECTIVE);
         t_complement = t_complements.begin();
         for(; t_complement != t_complements.end(); ++t_complement)
         {
             t_link = Link("esti");
-            t_link.addQualifier(t_complement->mainWord()->str_base);
+            t_link.addQualifier(t_complement->str());
 
             t_adverbs = t_complement->getComplements(WordGroup::ADVERB);
             t_adverb = t_adverbs.begin();
             for(; t_adverb != t_adverbs.end(); ++t_adverb)
             {
-                t_link.addAdverb(t_adverb->mainWord()->str_base);
+                t_link.addAdverb(t_adverb->str());
             }
 
             t_link_node = getOrCreateLinkNode(t_link);

@@ -13,7 +13,7 @@ class Word
         {
             UNKNOWN_TYPE,
             NOUN,
-            VERB,
+	    VERB,
             ADJECTIVE,
             CONJUNCTION,
             PREPOSITION,

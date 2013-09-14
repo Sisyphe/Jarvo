@@ -1,5 +1,7 @@
 #include "wordgroup.h"
 
+int WordGroup::s_group_count(6);
+
 WordGroup::WordGroup(Word* n_main_word):
     m_main_word(0),
     m_preposition(0),
@@ -9,9 +11,14 @@ WordGroup::WordGroup(Word* n_main_word):
 {
     setMainWord(n_main_word);
 
-    for(int i = 0; i < 4; ++i)
+    m_pre_grouping_priority = std::vector<std::vector<int> >(s_group_count);
+    m_post_grouping_priority = std::vector<std::vector<int> >(s_group_count);
+
+    for(int i = 0; i < s_group_count; ++i)
     {
-        for(int j = 0; j < 4; ++j)
+        m_pre_grouping_priority[i] = std::vector<int>(s_group_count);
+        m_post_grouping_priority[i] = std::vector<int>(s_group_count);
+        for(int j = 0; j < s_group_count; ++j)
         {
             m_pre_grouping_priority[i][j] = 0;
             m_post_grouping_priority[i][j] = 0;
@@ -20,7 +27,7 @@ WordGroup::WordGroup(Word* n_main_word):
 
     m_pre_grouping_priority[WordGroup::ADJECTIVE][WordGroup::ADVERB] = 2;
     m_post_grouping_priority[WordGroup::ADJECTIVE][WordGroup::ADVERB] = 1;
-    m_post_grouping_priority[WordGroup::ADJECTIVE][WordGroup::VERB] = 1;
+    m_post_grouping_priority[WordGroup::ADJECTIVE][WordGroup::INFINITIVE_VERB] = 1;
 
     m_pre_grouping_priority[WordGroup::ADVERB][WordGroup::ADVERB] = 1;
     m_post_grouping_priority[WordGroup::ADVERB][WordGroup::NOUN] = 1;
@@ -29,8 +36,9 @@ WordGroup::WordGroup(Word* n_main_word):
     m_post_grouping_priority[WordGroup::NOUN][WordGroup::ADJECTIVE] = 1;
     m_post_grouping_priority[WordGroup::NOUN][WordGroup::NOUN] = 1;
 
-    m_post_grouping_priority[WordGroup::VERB][WordGroup::ADVERB] = 1;
-    m_post_grouping_priority[WordGroup::VERB][WordGroup::VERB] = 1;
+    m_post_grouping_priority[WordGroup::INFINITIVE_VERB][WordGroup::ADVERB] = 1;
+    m_post_grouping_priority[WordGroup::INFINITIVE_VERB][WordGroup::VERB] = 1;
+    m_post_grouping_priority[WordGroup::INFINITIVE_VERB][WordGroup::NOUN] = 2;
 }
 
 WordGroup::~WordGroup() {}
@@ -51,7 +59,10 @@ void WordGroup::setMainWord(Word* n_main_word)
                 break;
 
             case Word::VERB:
-                m_type = WordGroup::VERB;
+                if(n_main_word->tense == Word::INFINITIVE)
+                    m_type = WordGroup::INFINITIVE_VERB;
+                else
+                    m_type = WordGroup::VERB;
                 break;
 
             case Word::ADVERB:
@@ -139,6 +150,7 @@ std::string WordGroup::str() const
                     t_adverbs.push_back(*t_group);
                     break;
 
+                case WordGroup::INFINITIVE_VERB:
                 case WordGroup::VERB:
                     t_verbs.push_back(*t_group);
                     break;

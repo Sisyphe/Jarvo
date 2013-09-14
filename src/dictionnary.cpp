@@ -75,6 +75,18 @@ Dictionnary::Dictionnary()
     t_entry->link_node = 0;
     t_entry->is_special = false;
     m_known_words.insert(t_entry);
+
+    t_entry = new Word;
+    t_entry->str = "por";
+    t_entry->str_base = "por";
+    t_entry->type = Word::PREPOSITION;
+    t_entry->function = Word::NO_CASE;
+    t_entry->tense = Word::NO_TENSE;
+    t_entry->isPlural = false;
+    t_entry->node = 0;
+    t_entry->link_node = 0;
+    t_entry->is_special = false;
+    m_known_words.insert(t_entry);
 }
 
 Dictionnary::~Dictionnary()

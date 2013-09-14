@@ -15,6 +15,7 @@ class WordGroup
             VERB,
             ADVERB,
             ADJECTIVE,
+            INFINITIVE_VERB,
             NO_GROUP_TYPE
         };
 
@@ -54,6 +55,8 @@ class WordGroup
 
         std::string getStr(const std::vector<WordGroup>& n_groups) const;
 
+        static int s_group_count;
+
         Word* m_main_word;
         Word* m_preposition;
         WordGroupType m_type;
@@ -62,8 +65,8 @@ class WordGroup
 
         std::vector<WordGroup> m_complements;
 
-        int m_pre_grouping_priority[4][4];
-        int m_post_grouping_priority[4][4];
+        std::vector<std::vector<int> > m_pre_grouping_priority;
+        std::vector<std::vector<int> > m_post_grouping_priority;
 };
 
 #endif // WORDGROUP_H
