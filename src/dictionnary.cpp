@@ -1,92 +1,20 @@
 #include "dictionnary.h"
 #include <algorithm>
+#include "dictionaryparser.h"
 
 Dictionnary::Dictionnary()
 {
-    Word* t_entry = 0;
+    std::vector<Word> t_entries;
+    std::vector<Word>::iterator t_entry;
 
-    t_entry = new Word;
-    t_entry->str = "la";
-    t_entry->str_base = "la";
-    t_entry->type = Word::ARTICLE;
-    t_entry->function = Word::NO_CASE;
-    t_entry->tense = Word::NO_TENSE;
-    t_entry->isPlural = false;
-    t_entry->node = 0;
-    t_entry->link_node = 0;
-    m_known_words.insert(t_entry);
+    DictionaryParser t_dict_parser;
+    t_dict_parser.parseFile("dictionary", t_entries);
 
-    t_entry = new Word;
-    t_entry->str = "mi";
-    t_entry->str_base = "mi";
-    t_entry->type = Word::PRONOUN;
-    t_entry->function = Word::SUBJECT;
-    t_entry->tense = Word::NO_TENSE;
-    t_entry->isPlural = false;
-    t_entry->node = 0;
-    t_entry->link_node = 0;
-    t_entry->is_special = true;
-    m_known_words.insert(t_entry);
-
-    t_entry = new Word;
-    t_entry->str = "min";
-    t_entry->str_base = "mi";
-    t_entry->type = Word::PRONOUN;
-    t_entry->function = Word::OBJECT;
-    t_entry->tense = Word::NO_TENSE;
-    t_entry->isPlural = false;
-    t_entry->node = 0;
-    t_entry->link_node = 0;
-    t_entry->is_special = true;
-    m_known_words.insert(t_entry);
-
-    t_entry = new Word;
-    t_entry->str = "vi";
-    t_entry->str_base = "vi";
-    t_entry->type = Word::PRONOUN;
-    t_entry->function = Word::SUBJECT;
-    t_entry->tense = Word::NO_TENSE;
-    t_entry->isPlural = false;
-    t_entry->node = 0;
-    t_entry->link_node = 0;
-    t_entry->is_special = true;
-    m_known_words.insert(t_entry);
-
-    t_entry = new Word;
-    t_entry->str = "vin";
-    t_entry->str_base = "vi";
-    t_entry->type = Word::PRONOUN;
-    t_entry->function = Word::OBJECT;
-    t_entry->tense = Word::NO_TENSE;
-    t_entry->isPlural = false;
-    t_entry->node = 0;
-    t_entry->link_node = 0;
-    t_entry->is_special = true;
-    m_known_words.insert(t_entry);
-
-    t_entry = new Word;
-    t_entry->str = "cxiu";
-    t_entry->str_base = "cxiu";
-    t_entry->type = Word::ADJECTIVE;
-    t_entry->function = Word::NO_CASE;
-    t_entry->tense = Word::NO_TENSE;
-    t_entry->isPlural = false;
-    t_entry->node = 0;
-    t_entry->link_node = 0;
-    t_entry->is_special = false;
-    m_known_words.insert(t_entry);
-
-    t_entry = new Word;
-    t_entry->str = "por";
-    t_entry->str_base = "por";
-    t_entry->type = Word::PREPOSITION;
-    t_entry->function = Word::NO_CASE;
-    t_entry->tense = Word::NO_TENSE;
-    t_entry->isPlural = false;
-    t_entry->node = 0;
-    t_entry->link_node = 0;
-    t_entry->is_special = false;
-    m_known_words.insert(t_entry);
+    for(t_entry = t_entries.begin(); t_entry != t_entries.end(); ++t_entry)
+    {
+        Word t_word = *t_entry;
+        m_known_words.insert(new Word(t_word));
+    }
 }
 
 Dictionnary::~Dictionnary()
@@ -240,6 +168,20 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
 
     t_entry->str_base = t_str;
 
+    std::set<Word*>::iterator t_found;
+    t_found = std::find_if(m_known_words.begin(), m_known_words.end(), FindEntry(t_str, true));
+
+    if(t_found != m_known_words.end())
+    {
+        t_entry->node = (*t_found)->node;
+
+        if(t_is_unknown)
+        {
+            t_entry->type = (*t_found)->type;
+            t_is_unknown = false;
+        }
+    }
+
     if(t_is_unknown) // Unknown => Special noun
     {
         if(t_str[0] == '\"')
@@ -256,14 +198,6 @@ Word* Dictionnary::createNewEntry(const std::string& n_str)
         t_entry->function = Word::BOTH_CASE;
         t_entry->tense = Word::NO_TENSE;
         t_entry->is_special = true;
-    }
-
-    std::set<Word*>::iterator t_found;
-    t_found = std::find_if(m_known_words.begin(), m_known_words.end(), FindEntry(t_str, true));
-
-    if(t_found != m_known_words.end())
-    {
-        t_entry->node = (*t_found)->node;
     }
 
     m_known_words.insert(t_entry);

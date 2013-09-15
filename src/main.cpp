@@ -5,7 +5,7 @@ int main()
 {
     Jarvo jarvo;
 
-    jarvo.feed("Mi estas felicxa por mangxi pasto");
+    jarvo.feed("Papago estas granda birdo.");
 //    jarvo.feed("\"Kiki\" estas testulo.");
 //    jarvo.feed("La papago estas granda birdo.");
 //    jarvo.feed("La papago mangxas belan birdon.");

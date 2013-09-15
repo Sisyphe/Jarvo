@@ -38,6 +38,7 @@ SOURCES +=  src/main.cpp \
             src/wordgroup.cpp \
             src/word.cpp \
             src/wordgrouplist.cpp \
+            src/dictionaryparser.cpp \
 
 HEADERS +=  inc/thing.h \
             inc/node.h \
@@ -64,3 +65,4 @@ HEADERS +=  inc/thing.h \
             inc/openprogramaction.h \
             inc/wordgroup.h \
             inc/wordgrouplist.h \
+            inc/dictionaryparser.h \

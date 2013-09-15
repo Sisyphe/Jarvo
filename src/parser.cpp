@@ -46,9 +46,9 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
         {
             if(t_verb_is_esti && subject_set)
             {
-                WordGroup t_subject = n_sentence.subjectGroup();
-                t_subject.addComplement(*t_group);
-                n_sentence.setSubjectGroup(t_subject);
+                WordGroup t_object(n_sentence.subjectGroup());
+                t_object.addComplement(*t_group);
+                n_sentence.setObjectGroup(t_object);
             }
         }
     }
