@@ -18,7 +18,9 @@ Brain::~Brain(){}
 
 Relation* Brain::connectNodes(Node* n_out_node, LinkNode* n_link_node, Node* n_in_node)
 {
-    return n_out_node->addOutputEdge(RelationContent(n_link_node),n_in_node);
+    Relation* t_relation = 0;
+    t_relation = n_out_node->addOutputEdge(RelationContent(n_link_node),n_in_node, true);
+    return t_relation;
 }
 
 bool Brain::pathExists(Node* n_out_node, const Link& n_link, Node* n_in_node)

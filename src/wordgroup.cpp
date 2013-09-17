@@ -126,6 +126,16 @@ void WordGroup::setGeneral(bool n_on)
     m_is_general = n_on;
 }
 
+bool WordGroup::isInterrogative() const
+{
+    return m_is_general;
+}
+
+void WordGroup::setInterrogative(bool n_on)
+{
+    m_is_general = n_on;
+}
+
 std::string WordGroup::str() const
 {
     std::string t_str;
@@ -208,6 +218,7 @@ const std::vector<WordGroup> WordGroup::getComplements(WordGroupType n_type) con
 
 void WordGroup::addComplement(WordGroup n_group)
 {
+    //setInterrogative(isInterrogative() | n_group.isInterrogative());
     m_complements.push_back(n_group);
 }
 

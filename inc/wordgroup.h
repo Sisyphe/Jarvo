@@ -45,6 +45,9 @@ class WordGroup
         bool isGeneral() const;
         void setGeneral(bool n_on);
 
+        bool isInterrogative() const;
+        void setInterrogative(bool n_on);
+
         int groupingPriority(Grouping n_grouping, WordGroupType n_type) const;
 
         bool hasComplements() const;

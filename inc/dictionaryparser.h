@@ -67,6 +67,7 @@ class DictionaryParser
         void fillFunctionMap();
         std::deque<std::string> splitLine(const std::string& n_line);
 
+        void parseInterrogativePronoun(const std::deque<std::string>& n_line, Word& n_word);
         void parsePronoun(const std::deque<std::string>& n_line, Word& n_word);
         void parseNoun(const std::deque<std::string>& n_line, Word& n_word);
         void parseVerb(const std::deque<std::string>& n_line, Word& n_word);

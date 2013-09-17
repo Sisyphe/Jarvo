@@ -13,7 +13,7 @@ class Word
         {
             UNKNOWN_TYPE,
             NOUN,
-	    VERB,
+            VERB,
             ADJECTIVE,
             CONJUNCTION,
             PREPOSITION,
@@ -53,6 +53,7 @@ class Word
         Node* node;
         LinkNode* link_node;
         bool is_special;
+        bool is_interrogative;
 };
 
 #endif // WORD_H

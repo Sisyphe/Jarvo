@@ -22,6 +22,8 @@ void WordGroupList::makeGroups(const std::vector<Word*>& n_words, std::list<Word
 
         switch((*t_word)->type)
         {
+            t_group.setInterrogative(*t_word->is_interrogative);
+
             case Word::ARTICLE:
             {
                 t_is_determinate = true;

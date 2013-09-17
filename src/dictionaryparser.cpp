@@ -64,6 +64,7 @@ void DictionaryParser::parseFile(const std::string& n_file_name, std::vector<Wor
 void DictionaryParser::fillFunctionMap()
 {
     s_function_map["pronomo"] = &DictionaryParser::parsePronoun;
+    s_function_map["interrogativa_pronomo"] = &DictionaryParser::parsePronoun;
     s_function_map["nomo"] = &DictionaryParser::parseNoun;
     s_function_map["verbo"] = &DictionaryParser::parseVerb;
     s_function_map["adjektivo"] = &DictionaryParser::parseAdjective;
@@ -84,6 +85,14 @@ std::deque<std::string> DictionaryParser::splitLine(const std::string& n_line)
     }
 
     return t_strings;
+}
+
+void DictionaryParser::parseInterrogativePronoun(const std::deque<std::string>& n_line, Word& n_word)
+{
+    parsePronoun(n_line, n_word);
+    n_word.type = Word::PRONOUN;
+    n_word.is_special = true;
+    n_word.is_interrogative = true;
 }
 
 void DictionaryParser::parsePronoun(const std::deque<std::string>& n_line, Word& n_word)
