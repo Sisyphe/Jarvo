@@ -14,6 +14,32 @@ FindThing::FindThing(const std::string& n_str, NodeContent::Type n_type):
 {
 }
 
+FindThing::FindThing(const WordGroup& n_group):
+    m_node(0),
+    m_type(NodeContent::THING)
+{
+    std::vector<WordGroup> t_complements = n_group.getComplements(WordGroup::ADJECTIVE);
+    std::vector<WordGroup>::const_iterator t_complement = t_complements.begin();
+
+    for(; t_complement != t_complements.end(); ++t_complement)
+    {
+        Link t_link("esti");
+        t_link.addQualifier(t_complement->str());
+
+        std::vector<WordGroup> t_adverbs(t_complement->getComplements(WordGroup::ADVERB));
+        std::vector<WordGroup>::iterator t_adverb(t_adverbs.begin());
+
+        for(; t_adverb != t_adverbs.end(); ++t_adverb)
+        {
+            t_link.addAdverb(t_adverb->str());
+        }
+
+        m_links.push_back(t_link);
+    }
+
+    m_str = n_group.mainWord()->str_base;
+}
+
 FindThing::FindThing
 (
     const std::string& n_str,

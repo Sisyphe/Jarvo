@@ -20,7 +20,7 @@ void Jarvo::feed(const std::string& n_input)
     {
         if(t_sentence.isPolarQuestion())
         {
-            processYesNoQuestion(t_sentence);
+            processPolarQuestion(t_sentence);
         }
     }
     else if(t_sentence.verb() && t_sentence.verb()->tense == Word::JUSSIVE)
@@ -46,36 +46,6 @@ void Jarvo::processStatement(Sentence& n_sentence)
     if(!n_sentence.subjectGroup().isEmpty())
     {
         t_subject_node = m_brain.getOrCreateNode(n_sentence.subjectGroup());
-
-        if(t_subject_node->content().type() != NodeContent::SPECIAL_THING && !n_sentence.subjectGroup().isGeneral())
-        {
-            if(n_sentence.subjectGroup().isDeterminate())
-            {
-                t_relation = t_subject_node->outputEdgesBegin();
-                for(; t_relation != t_subject_node->outputEdgesEnd(); ++t_relation)
-                {
-                    if((*t_relation)->content().type() == RelationContent::FEATURE)
-                        t_features.push_back((*((*t_relation)->content().link())));
-                }
-
-                t_finder = FindThing
-                (
-                    n_sentence.subjectGroup().mainWord()->str_base,
-                    t_features,
-                    NodeContent::THING
-                );
-                m_brain.traverseNetwork(&t_finder, t_subject_node);
-            }
-
-            if(t_finder.isThingFound())
-            {
-                t_subject_node = t_finder.thingNode();
-            }
-            else
-            {
-                t_subject_node = m_brain.createInstanceOf(t_subject_node);
-            }
-        }
     }
 
     if(!n_sentence.objectGroup().isEmpty())
@@ -97,7 +67,7 @@ void Jarvo::processStatement(Sentence& n_sentence)
     }
 }
 
-void Jarvo::processYesNoQuestion(Sentence& n_sentence)
+void Jarvo::processPolarQuestion(Sentence& n_sentence)
 {
     Node* t_subject_node=0;
     Node* t_object_node=0;

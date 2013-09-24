@@ -22,24 +22,23 @@ class Brain
         bool pathExists(Node* n_out_node, const Link& n_link, Node* n_in_node);
         Relation* connectNodes(Node* n_out_node, LinkNode* n_link_node, Node* n_in_node);
 
-        Node* getEntity(const Word& n_word);
         Node* getEntity(const std::string& n_str);
-        Node* getOrCreateEntity(const Word& n_word);
+        Node* getOrCreateEntity(const WordGroup& n_group);
         Node* getOrCreateEntity(const std::string& n_str);
-        Node* createEntity(const Word& n_word);
         Node* createEntity(const std::string& n_str);
 
         Node* createInstanceOf(Node* n_entity);
-        Node* getOrCreateThing(const Word& n_word);
+        Node* getOrCreateThing(const WordGroup& n_group);
 
-        Node* createSpecialInstanceOf(Node* n_entity_node);
-        Node* getOrCreateSpecialThing(const Word& n_word);
+        Node* getOrCreateSpecialThing(const WordGroup& n_word_group);
 
         Node* getOrCreateNode(const WordGroup& n_word_group);
 
         LinkNode* getLinkNode(const Link& n_link);
         LinkNode* getOrCreateLinkNode(const Link& n_link);
         LinkNode* createLinkNode(const Link& n_link);
+
+        void addComplementsToNode(Node* n_node, const std::vector<WordGroup>& n_complements);
 
         void dump() const;
 

@@ -5,6 +5,7 @@
 #include "node.h"
 #include "thing.h"
 #include "word.h"
+#include "wordgroup.h"
 
 class FindThing: public VerticeProcess<Thing, RelationContent>
 {
@@ -12,6 +13,7 @@ class FindThing: public VerticeProcess<Thing, RelationContent>
 
         FindThing(const Word& n_word, NodeContent::Type n_type = NodeContent::THING);
         FindThing(const std::string& n_str, NodeContent::Type n_type = NodeContent::THING);
+        FindThing(const WordGroup& n_group);
         FindThing(const std::string& n_str, const std::vector<Link>& n_links, NodeContent::Type n_type = NodeContent::THING);
 
         bool isThingFound() const;
