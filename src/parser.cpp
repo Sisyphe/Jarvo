@@ -48,6 +48,9 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
             {
                 WordGroup t_object(n_sentence.subjectGroup());
                 t_object.addComplement(*t_group);
+                t_object.setDeterminate(false);
+                t_object.setGeneral(false);
+                t_object.setInterrogative(false);
                 n_sentence.setObjectGroup(t_object);
             }
         }

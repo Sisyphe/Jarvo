@@ -7,7 +7,8 @@ WordGroup::WordGroup(Word* n_main_word):
     m_preposition(0),
     m_type(WordGroup::NO_GROUP_TYPE),
     m_is_determinate(false),
-    m_is_general(false)
+    m_is_general(false),
+    m_is_interrogative(false)
 {
     setMainWord(n_main_word);
 
@@ -128,12 +129,12 @@ void WordGroup::setGeneral(bool n_on)
 
 bool WordGroup::isInterrogative() const
 {
-    return m_is_general;
+    return m_is_interrogative;
 }
 
 void WordGroup::setInterrogative(bool n_on)
 {
-    m_is_general = n_on;
+    m_is_interrogative = n_on;
 }
 
 std::string WordGroup::str() const

@@ -65,6 +65,7 @@ class WordGroup
         WordGroupType m_type;
         bool m_is_determinate;
         bool m_is_general;
+        bool m_is_interrogative;
 
         std::vector<WordGroup> m_complements;
 

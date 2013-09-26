@@ -3,20 +3,23 @@
 FindThing::FindThing(const Word& n_word, NodeContent::Type n_type):
     m_str(n_word.str_base),
     m_node(0),
-    m_type(n_type)
+    m_type(n_type),
+    m_filter_type(true)
 {
 }
 
 FindThing::FindThing(const std::string& n_str, NodeContent::Type n_type):
     m_str(n_str),
     m_node(0),
-    m_type(n_type)
+    m_type(n_type),
+    m_filter_type(true)
 {
 }
 
 FindThing::FindThing(const WordGroup& n_group):
     m_node(0),
-    m_type(NodeContent::THING)
+    m_type(NodeContent::THING),
+    m_filter_type(true)
 {
     std::vector<WordGroup> t_complements = n_group.getComplements(WordGroup::ADJECTIVE);
     std::vector<WordGroup>::const_iterator t_complement = t_complements.begin();
@@ -49,7 +52,8 @@ FindThing::FindThing
     m_str(n_str),
     m_node(0),
     m_type(n_type),
-    m_links(n_links)
+    m_links(n_links),
+    m_filter_type(true)
 {
 }
 
@@ -70,11 +74,8 @@ bool FindThing::process(Node* n_node)
     std::vector<Link>::iterator it;
     Relation::It jt;
 
-    if
-    (
-        n_node->content().type() == m_type &&
-        n_node->content().str() == m_str
-    )
+    if((!m_filter_type || n_node->content().type() == m_type) &&
+       n_node->content().str() == m_str)
     {
         it = m_links.begin();
 

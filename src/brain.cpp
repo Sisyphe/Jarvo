@@ -52,10 +52,23 @@ Node* Brain::getEntity(const std::string& n_str)
 Node* Brain::getOrCreateEntity(const WordGroup& n_word_group)
 {
     Node* t_noun_node = 0;
+    Node* t_specialized_node = 0;
 
     t_noun_node = getOrCreateEntity(n_word_group.mainWord()->str_base);
 
     n_word_group.mainWord()->node = t_noun_node;
+
+    if(n_word_group.hasComplements())
+    {
+        t_specialized_node = getOrCreateEntity(n_word_group.str());
+
+        Relation* t_relation = connectNodes(t_specialized_node, m_links.isLinkNode(), t_noun_node);
+        t_relation->content().setType(RelationContent::SPECIALIZATION);
+
+        addComplementsToNode(t_specialized_node, n_word_group.getComplements(WordGroup::ADJECTIVE));
+
+        t_noun_node = t_specialized_node;
+    }
 
     return t_noun_node;
 }
@@ -85,17 +98,7 @@ Node* Brain::getOrCreateThing(const WordGroup& n_word_group)
     Node* t_thing_node = 0;
 
     t_entity_node = getOrCreateEntity(n_word_group);
-
-    if(n_word_group.hasComplements())
-    {
-        t_thing_node = m_network.addVertice(Thing(n_word_group.str()));
-
-        Relation* t_relation = connectNodes(t_thing_node, m_links.isLinkNode(), t_entity_node);
-        t_relation->content().setType(RelationContent::SPECIALIZATION);
-
-        addComplementsToNode(t_thing_node, n_word_group.getComplements(WordGroup::ADJECTIVE));
-    }
-    else t_thing_node = createInstanceOf(t_entity_node);
+    t_thing_node = createInstanceOf(t_entity_node);
 
     return t_thing_node;
 }
@@ -139,27 +142,34 @@ Node* Brain::getOrCreateNode(const WordGroup& n_word_group)
 {
     Node* t_noun_node = n_word_group.mainWord()->node;
 
-    if(!t_noun_node)
+    if(n_word_group.mainWord()->is_special)
     {
-        if(n_word_group.mainWord()->is_special)
+        t_noun_node = getOrCreateSpecialThing(n_word_group);
+    }
+    else
+    {
+        t_noun_node = getOrCreateEntity(n_word_group);
+    }
+
+    if(!n_word_group.mainWord()->node) n_word_group.mainWord()->node = t_noun_node;
+
+    if(n_word_group.isDeterminate())
+    {
+        FindThing t_finder(n_word_group);
+        traverseNetwork(&t_finder, t_noun_node);
+
+        if(t_finder.isThingFound())
         {
-            t_noun_node = getOrCreateSpecialThing(n_word_group);
-        }
-        else if(n_word_group.isGeneral())
-        {
-            t_noun_node = getOrCreateEntity(n_word_group);
+            t_noun_node = t_finder.thingNode();
         }
         else
         {
-            if(n_word_group.isDeterminate())
-            {
-                FindThing t_finder(n_word_group);
-                traverseNetwork(&t_finder, t_noun_node);
-                t_noun_node = t_finder.thingNode();
-            }
-
-            if(!t_noun_node) t_noun_node = getOrCreateThing(n_word_group);
+            t_noun_node = createInstanceOf(t_noun_node);
         }
+    }
+    else if(!n_word_group.isGeneral() && !n_word_group.mainWord()->is_special)
+    {
+        t_noun_node = createInstanceOf(t_noun_node);
     }
 
     return t_noun_node;

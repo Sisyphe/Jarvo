@@ -35,23 +35,10 @@ void Jarvo::feed(const std::string& n_input)
 
 void Jarvo::processStatement(Sentence& n_sentence)
 {
-    bool need_instance = true;
     Node* t_subject_node=0;
     Node* t_object_node=0;
     LinkNode* t_link_node=0;
-    std::vector<Link> t_features;
-    Relation::It t_relation;
-    FindThing t_finder("");
-
-    if(!n_sentence.subjectGroup().isEmpty())
-    {
-        t_subject_node = m_brain.getOrCreateNode(n_sentence.subjectGroup());
-    }
-
-    if(!n_sentence.objectGroup().isEmpty())
-    {
-        t_object_node = m_brain.getOrCreateNode(n_sentence.objectGroup());
-    }
+    WordGroup t_object_group = n_sentence.objectGroup();
 
     if(!n_sentence.verbGroup().isEmpty())
     {
@@ -61,6 +48,21 @@ void Jarvo::processStatement(Sentence& n_sentence)
         {
             t_link_node = m_brain.getOrCreateLinkNode(Link(n_sentence.verb()->str_base));
             n_sentence.verb()->link_node = t_link_node;
+        }
+
+        if(!n_sentence.subjectGroup().isEmpty())
+        {
+            t_subject_node = m_brain.getOrCreateNode(n_sentence.subjectGroup());
+        }
+
+        if(!t_object_group.isEmpty())
+        {
+            if(!t_object_group.isDeterminate() && *t_link_node->content() == Link::isLink)
+            {
+                t_object_group.setGeneral(true);
+            }
+
+            t_object_node = m_brain.getOrCreateNode(t_object_group);
         }
 
         t_subject_node->addOutputEdge(RelationContent(t_link_node),t_object_node);
