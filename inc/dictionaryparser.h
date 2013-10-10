@@ -75,6 +75,7 @@ class DictionaryParser
         void parseAdverb(const std::deque<std::string>& n_line, Word& n_word);
         void parseArticle(const std::deque<std::string>& n_line, Word& n_word);
         void parsePreposition(const std::deque<std::string>& n_line, Word& n_word);
+        void parseConjunction(const std::deque<std::string>& n_line, Word& n_word);
 
         std::string m_file_name;
         std::ifstream m_file;

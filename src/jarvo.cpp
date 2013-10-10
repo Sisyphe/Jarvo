@@ -76,50 +76,58 @@ void Jarvo::processPolarQuestion(Sentence& n_sentence)
     LinkNode* t_link_node=0;
     bool t_error=false;
     bool t_is_relation_found=false;
+    WordGroup t_object_group = n_sentence.objectGroup();
 
-    if(n_sentence.subject())
+    if(!n_sentence.verbGroup().isEmpty())
     {
-        t_subject_node=n_sentence.subject()->node;
-
-        if(!t_subject_node)
-        {
-            m_brain.getOrCreateNode(n_sentence.subjectGroup());
-            say("Ne. Mi ne sciis kio estas " + n_sentence.subject()->str_base + ".");
-            t_error=true;
-        }
-    }
-
-    /*if(n_sentence.object())
-    {
-        t_object_node=n_sentence.object()->node;
-
-        if(!t_object_node)
-        {
-            m_brain.getOrCreateNode(n_sentence.object_group);
-            say("Ne. Mi ne sciis kio estas " + n_sentence.object()->str_base + ".");
-            t_error=true;
-        }
-    }*/
-
-    if(n_sentence.verb())
-    {
-        t_link_node=n_sentence.verb()->link_node;
+        t_link_node = n_sentence.verb()->link_node;
 
         if(!t_link_node)
         {
-            Link t_link(n_sentence.verb()->str_base);
-
-            t_link_node=m_brain.getOrCreateLinkNode(t_link);
-            n_sentence.verb()->link_node=t_link_node;
+            t_link_node = m_brain.getOrCreateLinkNode(Link(n_sentence.verb()->str_base));
+            n_sentence.verb()->link_node = t_link_node;
+            say("Ne. Mi ne sciis kio estas " + n_sentence.verb()->str_base + ".");
             t_error=true;
         }
+    }
+    else t_error=true;
+
+    if(!n_sentence.subjectGroup().isEmpty())
+    {
+        if(!n_sentence.subject()->node)
+        {
+            say("Ne. Mi ne sciis kio estas " + n_sentence.subject()->str_base + ".");
+            t_error=true;
+        }
+        t_subject_node = m_brain.getOrCreateNode(n_sentence.subjectGroup());
+    }
+    else t_error=true;
+
+    if(!t_object_group.isEmpty())
+    {
+        if(!t_object_group.mainWord()->node)
+        {
+            say("Ne. Mi ne sciis kio estas " + t_object_group.mainWord()->str_base + ".");
+            t_error=true;
+        }
+
+        if(!t_object_group.isDeterminate() && *t_link_node->content() == Link::isLink)
+        {
+            t_object_group.setGeneral(true);
+        }
+
+        t_object_node = m_brain.getOrCreateNode(t_object_group);
     }
 
     if(!t_error)
     {
-        t_is_relation_found=m_brain.pathExists(t_subject_node,
-                                                 *t_link_node->content(),
-                                                 t_object_node);
+        t_is_relation_found = m_brain.pathExists
+        (
+            t_subject_node,
+            *t_link_node->content(),
+            t_object_node
+        );
+
         if(t_is_relation_found)
         {
             say("Je.");

@@ -71,6 +71,8 @@ void DictionaryParser::fillFunctionMap()
     s_function_map["adverbo"] = &DictionaryParser::parseAdverb;
     s_function_map["artikolo"] = &DictionaryParser::parseArticle;
     s_function_map["prepozicio"] = &DictionaryParser::parsePreposition;
+    s_function_map["prepozicio"] = &DictionaryParser::parsePreposition;
+    s_function_map["konjunkcio"] = &DictionaryParser::parseConjunction;
 }
 
 std::deque<std::string> DictionaryParser::splitLine(const std::string& n_line)
@@ -202,5 +204,11 @@ void DictionaryParser::parsePreposition(const std::deque<std::string>& n_line, W
 void DictionaryParser::parseArticle(const std::deque<std::string>& n_line, Word& n_word)
 {
     n_word.type = Word::ARTICLE;
+    if(n_line.size() > 0) throw SyntaxError(m_file_name, "Too many arguments");
+}
+
+void DictionaryParser::parseConjunction(const std::deque<std::string>& n_line, Word& n_word)
+{
+    n_word.type = Word::CONJUNCTION;
     if(n_line.size() > 0) throw SyntaxError(m_file_name, "Too many arguments");
 }

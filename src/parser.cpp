@@ -21,6 +21,11 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
 
     t_group = t_groups.begin();
 
+    if(t_words.front()->str_base == "cxu")
+    {
+        n_sentence.setIsPolarQuestion(true);
+    }
+
     for(; t_group != t_groups.end(); ++t_group)
     {
         t_word = t_group->mainWord();

@@ -1,12 +1,23 @@
 #include "findpath.h"
 
-FindPath::FindPath(Node* n_out_node, const Link& n_link):
+FindPath::FindPath(Node* n_out_node, const Link& n_link, Node::LinkDirection n_direction):
     m_out_node(n_out_node),
     m_link(n_link),
     m_link_found_node(0),
-    m_is_link_found(false)
+    m_is_found(false),
+    m_is_link_found(false),
+    m_direction(n_direction)
 {
-    m_is_found = false;
+}
+
+FindPath::FindPath(const Link& n_link, Node::LinkDirection n_direction):
+    m_out_node(0),
+    m_link(n_link),
+    m_link_found_node(0),
+    m_is_found(false),
+    m_is_link_found(false),
+    m_direction(n_direction)
+{
 }
 
 std::list<Relation*> FindPath::foundPath() const
@@ -49,7 +60,7 @@ bool FindPath::checkEdge(Relation* n_relation)
         stop = false;
     }
 
-    if(m_is_link_found && (n_relation->inputVertice() == m_out_node || !m_out_node))
+    if(m_is_link_found && ((n_relation->inputVertice() == m_out_node || !m_out_node)))
     {
         m_is_found = true;
         stop = true;
@@ -60,7 +71,7 @@ bool FindPath::checkEdge(Relation* n_relation)
 
 typename Node::LinkDirection FindPath::direction() const
 {
-    return Node::OUTPUT;
+    return m_direction;
 }
 
 FindPath::TraversalMode FindPath::traversalMode() const

@@ -10,7 +10,8 @@ class FindPath: public VerticeProcess<Thing, RelationContent>
 {
     public:
 
-        FindPath(Node* n_out_node, const Link& n_link);
+        FindPath(Node* n_out_node, const Link& n_link, Node::LinkDirection n_direction = Node::OUTPUT);
+        FindPath(const Link& n_link, Node::LinkDirection n_direction = Node::OUTPUT);
 
         bool isPathFound() const;
         std::list<Relation*> foundPath() const;
@@ -28,6 +29,7 @@ class FindPath: public VerticeProcess<Thing, RelationContent>
         bool m_is_found;
         bool m_is_link_found;
         std::list<Relation*> m_relation_list;
+        Node::LinkDirection m_direction;
 };
 
 #endif

@@ -74,7 +74,7 @@ bool FindThing::process(Node* n_node)
     std::vector<Link>::iterator it;
     Relation::It jt;
 
-    if(n_node->content().type() != NodeContent::ENTITY &&
+    if((n_node->content().type() != NodeContent::ENTITY || m_type == NodeContent::ENTITY) &&
        n_node->content().str() == m_str)
     {
         it = m_links.begin();
