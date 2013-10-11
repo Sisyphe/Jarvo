@@ -30,6 +30,11 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
     {
         t_word = t_group->mainWord();
 
+        if(t_group->isInterrogative())
+        {
+            n_sentence.setIsInterrogative(true);
+        }
+
         if(t_word->type == Word::NOUN || t_word->type == Word::PRONOUN)
         {
             if(t_word->function & Word::SUBJECT && !subject_set)

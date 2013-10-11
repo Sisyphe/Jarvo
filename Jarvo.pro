@@ -11,7 +11,7 @@ DESTDIR = ./bin
 
 INCLUDEPATH += ./inc ../Graf/inc ../Graf/src /usr/include/espeak
 
-LIBS += -L ../Graf/lib -lGraf -lportaudio -lespeak
+LIBS += -L ../Graf/lib -lGraflib -lportaudio -lespeak
 
 QMAKE_CXXFLAGS += -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable
 

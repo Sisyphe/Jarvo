@@ -40,7 +40,7 @@ void WordGroupList::makeGroups(const std::vector<Word*>& n_words, std::list<Word
                 t_is_determinate = true;
 
             case Word::NOUN:
-                t_group.setDeterminate(t_is_determinate);
+                if(t_is_determinate) t_group.setDeterminate(t_is_determinate);
                 t_group.setGeneral(t_is_general);
                 t_is_determinate = false;
                 t_is_general = false;

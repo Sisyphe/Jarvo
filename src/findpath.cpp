@@ -25,6 +25,18 @@ std::list<Relation*> FindPath::foundPath() const
     return m_relation_list;
 }
 
+Node* FindPath::foundNode() const
+{
+    if(m_is_found)
+    {
+        return m_link_found_node;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 bool FindPath::isPathFound() const
 {
     return m_is_found;
@@ -49,7 +61,14 @@ bool FindPath::checkEdge(Relation* n_relation)
     if(*t_link == m_link)
     {
         m_is_link_found = true;
-        m_link_found_node = n_relation->inputVertice();
+        if(m_direction == Node::OUTPUT)
+        {
+            m_link_found_node = n_relation->inputVertice();
+        }
+        else
+        {
+            m_link_found_node = n_relation->outputVertice();
+        }
         m_relation_list.push_back(n_relation);
         m_found_relation_it = --m_relation_list.end();
         stop = false;
@@ -60,7 +79,7 @@ bool FindPath::checkEdge(Relation* n_relation)
         stop = false;
     }
 
-    if(m_is_link_found && ((n_relation->inputVertice() == m_out_node || !m_out_node)))
+    if(m_is_link_found && ((m_link_found_node == m_out_node || !m_out_node)))
     {
         m_is_found = true;
         stop = true;

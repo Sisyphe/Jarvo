@@ -53,10 +53,17 @@ void WordGroup::setMainWord(Word* n_main_word)
 {
     if(n_main_word)
     {
+        if(n_main_word->is_interrogative)
+        {
+            setInterrogative(true);
+        }
+
         switch(n_main_word->type)
         {
+            case Word::PRONOUN:
             case Word::NOUN:
                 m_type = WordGroup::NOUN;
+                if(n_main_word->is_special) setDeterminate(true);
                 break;
 
             case Word::VERB:
@@ -220,6 +227,7 @@ const std::vector<WordGroup> WordGroup::getComplements(WordGroupType n_type) con
 void WordGroup::addComplement(WordGroup n_group)
 {
     //setInterrogative(isInterrogative() | n_group.isInterrogative());
+    if(n_group.isDeterminate()) setDeterminate(true);
     m_complements.push_back(n_group);
 }
 

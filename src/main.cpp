@@ -6,8 +6,11 @@ int main()
     Jarvo jarvo;
 
     //     jarvo.feed("Cxiu birdo estas bela.");
-    jarvo.feed("brain.dot estas dosiero.");
-    jarvo.feed("Cxu brain.dot estas dosiero ?");
+//     jarvo.feed("Kiki mangxas testulon.");
+//     jarvo.feed("Kio mangxas la testulon ?");
+        jarvo.feed("\"françois\" estas la \"prezidento de ISIBOT\"");
+//     jarvo.feed("brain.dot estas dosiero.");
+//     jarvo.feed("Kio estas dosiero ?");
 //     jarvo.feed("Kato mangxas birdon.");
 //     jarvo.feed("La birdo estas verda.");
 //     jarvo.feed("Kiki estas malgranda testulo.");

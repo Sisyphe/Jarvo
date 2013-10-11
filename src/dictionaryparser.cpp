@@ -64,7 +64,7 @@ void DictionaryParser::parseFile(const std::string& n_file_name, std::vector<Wor
 void DictionaryParser::fillFunctionMap()
 {
     s_function_map["pronomo"] = &DictionaryParser::parsePronoun;
-    s_function_map["interrogativa_pronomo"] = &DictionaryParser::parsePronoun;
+    s_function_map["interrogativa_pronomo"] = &DictionaryParser::parseInterrogativePronoun;
     s_function_map["nomo"] = &DictionaryParser::parseNoun;
     s_function_map["verbo"] = &DictionaryParser::parseVerb;
     s_function_map["adjektivo"] = &DictionaryParser::parseAdjective;

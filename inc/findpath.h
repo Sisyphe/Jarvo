@@ -15,6 +15,7 @@ class FindPath: public VerticeProcess<Thing, RelationContent>
 
         bool isPathFound() const;
         std::list<Relation*> foundPath() const;
+        Node* foundNode() const;
         virtual bool process(Node* n_node);
         virtual bool checkEdge(Relation* n_relation);
         virtual Node::LinkDirection direction() const;
