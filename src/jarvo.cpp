@@ -174,20 +174,20 @@ void Jarvo::processQuestion(Sentence& n_sentence)
     }
     else t_error=true;
 
-    if(!n_sentence.subjectGroup().isEmpty())
+    if(!n_sentence.subjectGroup().isEmpty() && !n_sentence.subjectGroup().isInterrogative())
     {
-        if(!n_sentence.subject()->node && !n_sentence.subjectGroup().isInterrogative())
+        if(!n_sentence.subject()->node)
         {
             say("Nenio, mi ne scias kio estas " + n_sentence.subject()->str_base + ".");
             t_error=true;
         }
+
         t_subject_node = m_brain.getOrCreateNode(n_sentence.subjectGroup());
     }
-    else t_error=true;
 
-    if(!t_object_group.isEmpty())
+    if(!t_object_group.isEmpty() && !n_sentence.objectGroup().isInterrogative())
     {
-        if(!t_object_group.mainWord()->node && !n_sentence.objectGroup().isInterrogative())
+        if(!t_object_group.mainWord()->node)
         {
             say("Nenio, mi ne scias kio estas " + t_object_group.mainWord()->str_base + ".");
             t_error=true;
@@ -249,20 +249,20 @@ void Jarvo::processQuestion(Sentence& n_sentence)
 
 void Jarvo::processCommand(Sentence& n_sentence)
 {
-    Node* t_object_node=0;
-    LinkNode* t_link_node=0;
-    bool t_error=false;
+    Node* t_object_node = 0;
+    LinkNode* t_link_node = 0;
+    bool t_error = false;
 
-    /*if(n_sentence.object())
+    if(n_sentence.objectGroup().mainWord())
     {
-        t_object_node=n_sentence.object()->node;
+        t_object_node = n_sentence.objectGroup().mainWord()->node;
 
         if(!t_object_node)
         {
-            t_object_node=m_brain.getOrCreateEntity(*n_sentence.object());
-            n_sentence.object()->node=t_object_node;
+            t_object_node = m_brain.getOrCreateNode(n_sentence.objectGroup());
+            n_sentence.objectGroup().mainWord()->node = t_object_node;
         }
-    }*/
+    }
 
     if(n_sentence.verb())
     {

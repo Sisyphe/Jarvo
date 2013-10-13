@@ -13,6 +13,7 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
     Word* t_word = 0;
     bool subject_set = false;
     bool t_verb_is_esti = false;
+    bool t_is_jussive = false;
 
     extractRawWords(n_str, t_raw_words);
     getEntries(t_raw_words, t_words);
@@ -37,7 +38,7 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
 
         if(t_word->type == Word::NOUN || t_word->type == Word::PRONOUN)
         {
-            if(t_word->function & Word::SUBJECT && !subject_set)
+            if(t_word->function & Word::SUBJECT && !subject_set && !t_is_jussive)
             {
                 n_sentence.setSubjectGroup(*t_group);
                 subject_set = true;
@@ -46,10 +47,8 @@ void Parser::parse(Sentence& n_sentence, const std::string& n_str)
         }
         else if(t_word->type == Word::VERB)
         {
-            if(t_word->str_base == "esti")
-            {
-                t_verb_is_esti = true;
-            }
+            t_verb_is_esti = (t_word->str_base == "esti");
+            t_is_jussive = (t_word->tense == Word::JUSSIVE);
             n_sentence.setVerbGroup(*t_group);
         }
         else if(t_word->type == Word::ADJECTIVE)

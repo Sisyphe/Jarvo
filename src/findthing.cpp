@@ -40,7 +40,7 @@ FindThing::FindThing(const WordGroup& n_group):
         m_links.push_back(t_link);
     }
 
-    m_str = n_group.mainWord()->str_base;
+    m_str = n_group.str();
 }
 
 FindThing::FindThing
@@ -115,5 +115,5 @@ typename Node::LinkDirection FindThing::direction() const
 
 FindThing::TraversalMode FindThing::traversalMode() const
 {
-    return FindThing::PREFIXED;
+    return FindThing::POSTFIXED;
 }

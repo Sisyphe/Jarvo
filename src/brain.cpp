@@ -229,7 +229,7 @@ void Brain::addComplementsToNode(Node* n_node, const std::vector<WordGroup>& n_c
 void Brain::dump() const
 {
     std::string t_out;
-    t_out=m_network.toDot();
+    t_out = m_network.toDot();
     std::cout << t_out << std::endl;
 
     std::ofstream t_file;

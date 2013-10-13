@@ -5,17 +5,20 @@ int main()
 {
     Jarvo jarvo;
 
-    //     jarvo.feed("Cxiu birdo estas bela.");
+//     jarvo.feed("Cxiu birdo estas bela.");
 //     jarvo.feed("Kiki mangxas testulon.");
 //     jarvo.feed("Kio mangxas la testulon ?");
-        jarvo.feed("\"françois\" estas la \"prezidento de ISIBOT\"");
+//     jarvo.feed("\"françois\" estas la \"prezidento de ISIBOT\"");
 //     jarvo.feed("brain.dot estas dosiero.");
 //     jarvo.feed("Kio estas dosiero ?");
 //     jarvo.feed("Kato mangxas birdon.");
 //     jarvo.feed("La birdo estas verda.");
 //     jarvo.feed("Kiki estas malgranda testulo.");
-//     jarvo.feed("Cxiu testulo estas verda.");
-//     jarvo.feed("Granda testulo mangxas birdon.");
+    //     jarvo.feed("Cxiu testulo estas verda.");
+//     jarvo.feed("Testulo mangxas birdon.");
+//     jarvo.feed("La testulo estas verda.");
+    jarvo.feed("Granda testulo mangxas birdon.");
+    jarvo.feed("La granda testulo estas verda.");
 //     jarvo.feed("La malgranda testulo estas bela.");
 //     jarvo.feed("Kiki estas testulo.");
 //     jarvo.feed("La papago estas granda birdo.");
@@ -29,12 +32,12 @@ int main()
 //     jarvo.feed("Cxu papago mangxas katon ?");
 //     jarvo.feed("Cxu kato mangxas beston ?");
 //     jarvo.feed("Cxu la katoj mangxas la bestojn ?");
-
+//
 //     jarvo.feed("Mi havas vin.");
-//    jarvo.feed("Vi estas komputilo.");
-//    jarvo.feed("La Komputiloj estas masxinoj.");
-//    jarvo.feed("Cxu mi havas masxino ?");
-//    jarvo.feed("Cxu Noël havas komputilon ?");
+//     jarvo.feed("Vi estas komputilo.");
+// //     jarvo.feed("La Komputiloj estas masxinoj.");
+//     jarvo.feed("Cxu mi havas masxino ?");
+//     jarvo.feed("Cxu Noël havas komputilon ?");
 //
 //     jarvo.feed("brain.png estas dosiero.");
 //     jarvo.feed("Apertu brain.png !");
