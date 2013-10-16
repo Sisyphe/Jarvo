@@ -82,13 +82,9 @@ bool FindThing::process(Node* n_node)
         while(t_is_found && it != m_links.end())
         {
             t_is_found = false;
-            jt = n_node->outputEdgesBegin();
 
-            while(!t_is_found && jt != n_node->outputEdgesEnd())
-            {
-                t_is_found = ((*jt)->inputVertice() == n_node) && ((*it) == (*((*jt)->content().link())));
-                ++jt;
-            }
+            FindPath t_finder(*it);
+
 
             ++it;
         }
