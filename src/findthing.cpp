@@ -1,4 +1,5 @@
 #include "findthing.h"
+#include "findpath.h"
 
 FindThing::FindThing(const Word& n_word, NodeContent::Type n_type):
     m_str(n_word.str_base),
@@ -81,11 +82,9 @@ bool FindThing::process(Node* n_node)
 
         while(t_is_found && it != m_links.end())
         {
-            t_is_found = false;
-
             FindPath t_finder(*it);
-
-
+            t_finder.applyFrom(n_node);
+            t_is_found = t_finder.isPathFound();
             ++it;
         }
 

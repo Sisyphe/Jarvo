@@ -15,11 +15,13 @@ class Link: public NodeContent
         void setVerb(const std::string& n_verb);
 
         static Link isLink;
+        static bool isIsLink(const Link& n_link);
 
         friend std::ostream& operator<<(std::ostream& n_out, const Link& n_link);
         bool operator==(const Link& n_link) const;
 
         void addQualifier(const std::string& n_qualifier);
+        std::vector<std::string> qualifiers() const;
         void addAdverb(const std::string& n_adverb);
 
         virtual bool tryToHandle(Node* n_node);

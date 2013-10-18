@@ -1,22 +1,22 @@
 #include "findpath.h"
 
 FindPath::FindPath(Node* n_out_node, const Link& n_link, Node::LinkDirection n_direction):
+    VerticeProcess<Thing, RelationContent>(FindPath::POSTFIXED, n_direction),
     m_out_node(n_out_node),
     m_link(n_link),
     m_link_found_node(0),
     m_is_found(false),
-    m_is_link_found(false),
-    m_direction(n_direction)
+    m_is_link_found(false)
 {
 }
 
 FindPath::FindPath(const Link& n_link, Node::LinkDirection n_direction):
+    VerticeProcess<Thing, RelationContent>(FindPath::POSTFIXED, n_direction),
     m_out_node(0),
     m_link(n_link),
     m_link_found_node(0),
     m_is_found(false),
-    m_is_link_found(false),
-    m_direction(n_direction)
+    m_is_link_found(false)
 {
 }
 
@@ -86,14 +86,4 @@ bool FindPath::checkEdge(Relation* n_relation)
     }
 
     return !stop;
-}
-
-typename Node::LinkDirection FindPath::direction() const
-{
-    return m_direction;
-}
-
-FindPath::TraversalMode FindPath::traversalMode() const
-{
-    return FindPath::POSTFIXED;
 }

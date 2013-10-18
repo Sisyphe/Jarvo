@@ -32,12 +32,12 @@ bool Brain::pathExists(Node* n_out_node, const Link& n_link, Node* n_in_node)
 
 void Brain::traverseNetwork(NetworkProcess* n_process, Node* n_node)
 {
-    m_network.applyOn(n_node,n_process);
+    m_network.applyFrom(n_node,n_process);
 }
 
 void Brain::traverseLinkGraph(LinkProcess* n_process, LinkNode* n_link_node)
 {
-    m_links.applyOn(n_link_node,n_process);
+    m_links.applyFrom(n_link_node,n_process);
 }
 
 Node* Brain::getEntity(const std::string& n_str)

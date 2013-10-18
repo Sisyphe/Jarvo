@@ -18,8 +18,6 @@ class FindPath: public VerticeProcess<Thing, RelationContent>
         Node* foundNode() const;
         virtual bool process(Node* n_node);
         virtual bool checkEdge(Relation* n_relation);
-        virtual Node::LinkDirection direction() const;
-        virtual TraversalMode traversalMode() const;
 
     protected:
 
@@ -30,7 +28,6 @@ class FindPath: public VerticeProcess<Thing, RelationContent>
         bool m_is_found;
         bool m_is_link_found;
         std::list<Relation*> m_relation_list;
-        Node::LinkDirection m_direction;
 };
 
 #endif

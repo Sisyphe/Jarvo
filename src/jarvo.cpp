@@ -178,8 +178,8 @@ void Jarvo::processQuestion(Sentence& n_sentence)
     {
         if(!n_sentence.subject()->node)
         {
-            say("Nenio, mi ne scias kio estas " + n_sentence.subject()->str_base + ".");
-            t_error=true;
+            //say("Nenio, mi ne scias kio estas " + n_sentence.subject()->str_base + ".");
+            //t_error=true;
         }
 
         t_subject_node = m_brain.getOrCreateNode(n_sentence.subjectGroup());
@@ -189,8 +189,8 @@ void Jarvo::processQuestion(Sentence& n_sentence)
     {
         if(!t_object_group.mainWord()->node)
         {
-            say("Nenio, mi ne scias kio estas " + t_object_group.mainWord()->str_base + ".");
-            t_error=true;
+            //say("Nenio, mi ne scias kio estas " + t_object_group.mainWord()->str_base + ".");
+            //t_error=true;
         }
 
         if(!t_object_group.isDeterminate() && *t_link_node->content() == Link::isLink)

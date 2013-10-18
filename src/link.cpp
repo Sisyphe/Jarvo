@@ -8,6 +8,11 @@ Link::Link(const std::string& n_verb):
     setVerb(n_verb);
 }
 
+bool Link::isIsLink(const Link& n_link)
+{
+    return (n_link.verb() == isLink.verb());
+}
+
 std::string Link::verb() const
 {
     return m_verb;
@@ -21,6 +26,11 @@ void Link::setVerb(const std::string& n_verb)
 void Link::addQualifier(const std::string& n_qualifier)
 {
     m_qualifiers.push_back(n_qualifier);
+}
+
+std::vector<std::string> Link::qualifiers() const
+{
+    return m_qualifiers;
 }
 
 void Link::addAdverb(const std::string& n_adverb)
