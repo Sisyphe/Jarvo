@@ -6,16 +6,17 @@ int main()
     Jarvo jarvo;
 
 //     jarvo.feed("Cxiu birdo estas bela.");
-    jarvo.feed("Kiki mangxas testulon.");
-    jarvo.feed("Kio mangxas la testulon ?");
+//     jarvo.feed("Kiki mangxas testulon.");
+//     jarvo.feed("Kio mangxas la testulon ?");
 //     jarvo.feed("\"françois\" estas la \"prezidento de ISIBOT\"");
 //     jarvo.feed("brain.dot estas dosiero.");
-//     jarvo.feed("Kio estas dosiero ?");
+    jarvo.feed("Kio estas dosiero ?");
     jarvo.feed("Kato mangxas birdon.");
     jarvo.feed("La birdo estas verda.");
+    jarvo.feed("Kato estas verda.");
     jarvo.feed("Kio estas verda ?");
-//     jarvo.feed("Kiki estas malgranda testulo.");
-//     jarvo.feed("Cxiu testulo estas verda.");
+    jarvo.feed("Kiki estas malgranda testulo.");
+    jarvo.feed("Cxiu testulo estas verda.");
 //     jarvo.feed("Testulo mangxas birdon.");
 //     jarvo.feed("La testulo estas verda.");
 //     jarvo.feed("Granda testulo mangxas birdon.");
@@ -52,14 +53,14 @@ int main()
 
     std::string n_str;
     std::cout << "Prompt: ";
-    getline(std::cin, n_str);
+    std::getline(std::cin, n_str);
 
     while(n_str!="quit")
     {
         jarvo.feed(n_str);
         n_str.erase();
         std::cout << "Prompt: ";
-        getline(std::cin, n_str);
+        std::getline(std::cin, n_str);
     }
 
     jarvo.dumpBrain();

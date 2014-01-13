@@ -6,6 +6,7 @@
 #include "thing.h"
 #include "word.h"
 #include "wordgroup.h"
+#include "findqualifiers.h"
 
 class FindThing: public VerticeProcess<Thing, RelationContent>
 {
@@ -31,6 +32,7 @@ class FindThing: public VerticeProcess<Thing, RelationContent>
         NodeContent::Type m_type;
         std::vector<Link> m_links;
         bool m_filter_type;
+        FindQualifiers m_qualifiers_finder;
 };
 
 #endif // FINDTHING_H

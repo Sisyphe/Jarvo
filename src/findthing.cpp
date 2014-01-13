@@ -20,27 +20,9 @@ FindThing::FindThing(const std::string& n_str, NodeContent::Type n_type):
 FindThing::FindThing(const WordGroup& n_group):
     m_node(0),
     m_type(NodeContent::THING),
-    m_filter_type(true)
+    m_filter_type(true),
+    m_qualifiers_finder(n_group.getComplements(WordGroup::ADJECTIVE))
 {
-    std::vector<WordGroup> t_complements = n_group.getComplements(WordGroup::ADJECTIVE);
-    std::vector<WordGroup>::const_iterator t_complement = t_complements.begin();
-
-    for(; t_complement != t_complements.end(); ++t_complement)
-    {
-        Link t_link("esti");
-        t_link.addQualifier(t_complement->str());
-
-        std::vector<WordGroup> t_adverbs(t_complement->getComplements(WordGroup::ADVERB));
-        std::vector<WordGroup>::iterator t_adverb(t_adverbs.begin());
-
-        for(; t_adverb != t_adverbs.end(); ++t_adverb)
-        {
-            t_link.addAdverb(t_adverb->str());
-        }
-
-        m_links.push_back(t_link);
-    }
-
     m_str = n_group.str();
 }
 
@@ -71,24 +53,15 @@ Node* FindThing::thingNode() const
 bool FindThing::process(Node* n_node)
 {
     bool t_continue = true;
-    bool t_is_found = true;
     std::vector<Link>::iterator it;
     Relation::It jt;
 
     if((n_node->content().type() != NodeContent::ENTITY || m_type == NodeContent::ENTITY) &&
        n_node->content().str() == m_str)
     {
-        it = m_links.begin();
+        m_qualifiers_finder.applyFrom(n_node);
 
-        while(t_is_found && it != m_links.end())
-        {
-            FindPath t_finder(*it);
-            t_finder.applyFrom(n_node);
-            t_is_found = t_finder.isPathFound();
-            ++it;
-        }
-
-        if(t_is_found)
+        if(m_qualifiers_finder.areQualifiersFound())
         {
             t_continue = false;
             m_node = n_node;

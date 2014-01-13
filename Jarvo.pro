@@ -39,6 +39,7 @@ SOURCES +=  src/main.cpp \
             src/word.cpp \
             src/wordgrouplist.cpp \
             src/dictionaryparser.cpp \
+            src/findqualifiers.cpp \
 
 HEADERS +=  inc/thing.h \
             inc/node.h \
@@ -66,3 +67,4 @@ HEADERS +=  inc/thing.h \
             inc/wordgroup.h \
             inc/wordgrouplist.h \
             inc/dictionaryparser.h \
+            inc/findqualifiers.h \

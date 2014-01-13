@@ -2,47 +2,52 @@
 #include <word.h>
 
 FindQualifiers::FindQualifiers(const std::vector<WordGroup>& n_qualifiers):
-    VerticeProcess<Thing, RelationContent>(FindQualifiers::POSTFIXED, Node::OUTPUT)
+    VerticeProcess<Thing, RelationContent>(FindQualifiers::POSTFIXED, Node::OUTPUT),
+    m_found_count(0)
 {
     std::vector<WordGroup> t_complements;
-    std::vector<WordGroup>::const_iterator t_complement = t_complements.begin();
-    std::vector<WordGroup>::iterator it = n_qualifiers.begin();
+    std::vector<WordGroup>::const_iterator t_qualifier = n_qualifiers.begin();
+    std::vector<std::pair<WordGroup, bool> >::iterator it;
 
-    for(; it != n_qualifiers.end(); ++it)
+    for(; t_qualifier != n_qualifiers.end(); ++t_qualifier)
     {
-        m_found_qualifiers[*it] = false;
+        m_found_qualifiers.push_back(std::pair<WordGroup, bool>(*t_qualifier, false));
+        it = --m_found_qualifiers.end();
 
-        t_complements = it->getComplements(WordGroup::ADJECTIVE);
+        Link t_link("esti");
+        t_link.addQualifier(t_qualifier->str());
 
-        for(; t_complement != t_complements.end(); ++t_complement)
+        std::vector<WordGroup> t_adverbs(t_qualifier->getComplements(WordGroup::ADVERB));
+        std::vector<WordGroup>::iterator t_adverb(t_adverbs.begin());
+
+        for(; t_adverb != t_adverbs.end(); ++t_adverb)
         {
-            Link t_link("esti");
-            t_link.addQualifier(t_complement->str());
-
-            std::vector<WordGroup> t_adverbs(t_complement->getComplements(WordGroup::ADVERB));
-            std::vector<WordGroup>::iterator t_adverb(t_adverbs.begin());
-
-            for(; t_adverb != t_adverbs.end(); ++t_adverb)
-            {
-                t_link.addAdverb(t_adverb->str());
-            }
-
-            m_links[t_link] = it;
+            t_link.addAdverb(t_adverb->str());
         }
+
+        m_links.push_back(std::pair<Link, std::vector<std::pair<WordGroup, bool> >::iterator>(t_link, it));
     }
 }
 
 bool FindQualifiers::isQualifierFound(const WordGroup& n_qualifier_group) const
 {
-    std::map<WordGroup, bool>::const_iterator it = m_found_qualifiers.find(n_qualifier_group);
+    bool t_is_found = false;
+    std::vector<std::pair<WordGroup, bool> >::const_iterator it;
 
-    return (it != m_found_qualifiers.end());
+    it = m_found_qualifiers.begin();
+    while(it != m_found_qualifiers.end() && !t_is_found)
+    {
+        t_is_found = (it->first.str() == n_qualifier_group.str() && it->second);
+        ++it;
+    }
+
+    return t_is_found;
 }
 
 bool FindQualifiers::areQualifiersFound() const
 {
     bool t_is_found = true;
-    std::map<WordGroup, bool>::const_iterator it = m_found_qualifiers.begin();
+    std::vector<std::pair<WordGroup, bool> >::const_iterator it = m_found_qualifiers.begin();
 
     while(it != m_found_qualifiers.end() && t_is_found)
     {
@@ -56,11 +61,11 @@ bool FindQualifiers::areQualifiersFound() const
 std::vector<WordGroup> FindQualifiers::foundQualifiers() const
 {
     std::vector<WordGroup> t_found_qualifiers;
-    std::map<WordGroup, bool>::const_iterator it = m_found_qualifiers.begin();
+    std::vector<std::pair<WordGroup, bool> >::const_iterator it = m_found_qualifiers.begin();
 
     for(; it != m_found_qualifiers.end(); ++it)
     {
-        t_found_qualifiers.push_back(*it);
+        t_found_qualifiers.push_back(it->first);
     }
 
     return t_found_qualifiers;
@@ -76,18 +81,19 @@ bool FindQualifiers::checkEdge(Relation* n_relation)
     Link* t_link = n_relation->content().link();
     bool t_continue = false;
     bool t_is_found = false;
-    std::map<Link, std::map<WordGroup, bool>::iterator>::iterator it;
+    std::vector<std::pair<Link, std::vector<std::pair<WordGroup, bool> >::iterator> >::iterator it;
 
     if(Link::isIsLink(*t_link))
     {
         t_continue = true;
 
         it = m_links.begin();
-        while(it != m_links.end() && !t_is_found)
+        while(it != m_links.end() && !t_is_found && m_found_count < m_links.size())
         {
-            if(t_link == it->first)
+            if(*t_link == it->first)
             {
                 t_is_found = true;
+                ++m_found_count;
                 it->second->second = true;
             }
 

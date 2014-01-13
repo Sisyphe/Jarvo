@@ -159,6 +159,7 @@ void Jarvo::processQuestion(Sentence& n_sentence)
     bool t_is_relation_found=false;
     WordGroup t_object_group = n_sentence.objectGroup();
     Node* t_found_node = 0;
+    std::string t_unknown_verb;
 
     if(!n_sentence.verbGroup().isEmpty())
     {
@@ -168,13 +169,18 @@ void Jarvo::processQuestion(Sentence& n_sentence)
         {
             t_link_node = m_brain.getOrCreateLinkNode(Link(n_sentence.verb()->str_base));
             n_sentence.verb()->link_node = t_link_node;
-            say("Nenio, mi ne scias kio estas " + n_sentence.verb()->str + ".");
+            t_unknown_verb = n_sentence.verb()->str_base;
+            if(Link::isIsLink(*n_sentence.verb()->link_node->content()))
+            {
+                t_unknown_verb += " " + n_sentence.objectGroup().str();
+            }
+            say("Nenio, mi ne scias kio estas \"" + t_unknown_verb + "\".");
             t_error=true;
         }
     }
     else t_error=true;
 
-    if(!n_sentence.subjectGroup().isEmpty() && !n_sentence.subjectGroup().isInterrogative())
+    if(!t_error && !n_sentence.subjectGroup().isEmpty())
     {
         if(!n_sentence.subject()->node)
         {
@@ -185,7 +191,7 @@ void Jarvo::processQuestion(Sentence& n_sentence)
         t_subject_node = m_brain.getOrCreateNode(n_sentence.subjectGroup());
     }
 
-    if(!t_object_group.isEmpty() && !n_sentence.objectGroup().isInterrogative())
+    if(!t_error && !t_object_group.isEmpty())
     {
         if(!t_object_group.mainWord()->node)
         {
@@ -198,12 +204,11 @@ void Jarvo::processQuestion(Sentence& n_sentence)
             t_object_group.setGeneral(true);
         }
 
-        t_object_node = m_brain.getOrCreateNode(t_object_group);
+        t_object_node = m_brain.getEntity(t_object_group.mainWord()->str_base);
     }
 
     if(!t_error)
     {
-
         if(n_sentence.subjectGroup().isInterrogative())
         {
             FindPath t_finder(*t_link_node->content(), Node::INPUT);
@@ -221,7 +226,7 @@ void Jarvo::processQuestion(Sentence& n_sentence)
             }
             else
             {
-                say("Nenio " + n_sentence.verbGroup().str() + " " + n_sentence.objectGroup().str() + ".");
+                say("Nenio " + n_sentence.verbGroup().mainWord()->str + " " + n_sentence.objectGroup().str() + ".");
             }
         }
         else if(n_sentence.objectGroup().isInterrogative())
