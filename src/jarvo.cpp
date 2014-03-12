@@ -241,12 +241,14 @@ void Jarvo::processQuestion(Sentence& n_sentence)
                 (
                     n_sentence.subjectGroup().str() + " " +
                     n_sentence.verb()->str + " "  +
-                    t_found_node->content().str() + "n."
+                    t_found_node->content().str() + ((Link::isIsLink(*t_link_node->content())
+                    || (n_sentence.objectGroup().mainWord()->is_special))?"":"n") + "."
                 );
             }
             else
             {
-                say(n_sentence.subjectGroup().str() + n_sentence.verbGroup().str() + " nenion.");
+                say(n_sentence.subjectGroup().str() + " " + n_sentence.verb()->str + " nenio"
+                + (Link::isIsLink(*t_link_node->content())?"":"n") + ".");
             }
         }
     }

@@ -1,7 +1,7 @@
 #include "findpath.h"
 
 FindPath::FindPath(Node* n_out_node, const Link& n_link, Node::LinkDirection n_direction):
-    VerticeProcess<Thing, RelationContent>(FindPath::POSTFIXED, n_direction),
+    VerticeProcess<Thing, RelationContent>(FindPath::PREFIXED, n_direction),
     m_out_node(n_out_node),
     m_link(n_link),
     m_link_found_node(0),
@@ -11,7 +11,7 @@ FindPath::FindPath(Node* n_out_node, const Link& n_link, Node::LinkDirection n_d
 }
 
 FindPath::FindPath(const Link& n_link, Node::LinkDirection n_direction):
-    VerticeProcess<Thing, RelationContent>(FindPath::POSTFIXED, n_direction),
+    VerticeProcess<Thing, RelationContent>(FindPath::PREFIXED, n_direction),
     m_out_node(0),
     m_link(n_link),
     m_link_found_node(0),

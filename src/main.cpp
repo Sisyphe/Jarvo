@@ -10,16 +10,16 @@ int main()
 //     jarvo.feed("Kio mangxas la testulon ?");
 //     jarvo.feed("\"françois\" estas la \"prezidento de ISIBOT\"");
 //     jarvo.feed("brain.dot estas dosiero.");
-    jarvo.feed("Kio estas dosiero ?");
-    jarvo.feed("Kato mangxas birdon.");
-    jarvo.feed("La birdo estas verda.");
-    jarvo.feed("Kato estas verda.");
-    jarvo.feed("Kio estas verda ?");
-    jarvo.feed("Kiki estas malgranda testulo.");
-    jarvo.feed("Cxiu testulo estas verda.");
-//     jarvo.feed("Testulo mangxas birdon.");
-//     jarvo.feed("La testulo estas verda.");
-//     jarvo.feed("Granda testulo mangxas birdon.");
+//     jarvo.feed("Kio estas dosiero ?");
+//     jarvo.feed("Kato mangxas birdon.");
+//     jarvo.feed("La birdo estas verda.");
+//     jarvo.feed("Kato estas verda.");
+//     jarvo.feed("Kio estas verda ?");
+     jarvo.feed("Kiki estas malgranda testulo.");
+     jarvo.feed("Cxiu testulo estas verda.");
+     jarvo.feed("Testulo mangxas birdon.");
+     jarvo.feed("La testulo estas verda.");
+     jarvo.feed("Granda testulo mangxas birdon.");
 //     jarvo.feed("La granda testulo estas verda.");
 //     jarvo.feed("La malgranda testulo estas bela.");
 //     jarvo.feed("Kiki estas testulo.");
@@ -50,6 +50,9 @@ int main()
 //     jarvo.feed("Diru \"Mi estas kreteno\"");
 //     jarvo.feed("\"dolphin\" estas programo");
 //     jarvo.feed("apertu \"dolphin\"");
+//     jarvo.feed("Mi amas Chloé");
+//     jarvo.feed("Mi estas Gérald");
+//     jarvo.feed("Gérald amas kiun ?");
 
     std::string n_str;
     std::cout << "Prompt: ";
